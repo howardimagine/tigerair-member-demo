@@ -167,7 +167,7 @@ function initCheckin() {
             }
 
             // Animate points
-            showPointsToast('+10 積分');
+            showPointsToast('+10 虎足跡');
         }
     });
 }

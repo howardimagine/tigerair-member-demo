@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台灣虎航 Tigerair | 會員中心</title>
-    <meta name="description" content="台灣虎航會員獎勵計畫 - 管理您的積分、會員等級與專屬優惠">
+    <title>台灣虎航 Tigerair | tigerclub 會員中心</title>
+    <meta name="description" content="台灣虎航 tigerclub 會員回饋 - 管理您的 tigerpoints 回饋金、會員等級與專屬優惠">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
                     <h4 class="user-name">Alex Chen</h4>
                     <span class="user-tier-badge">
                         <span class="material-icons-round">workspace_premium</span>
-                        黃金會員
+                        菁英虎 tigerexpert
                     </span>
                 </div>
             </div>
@@ -35,29 +35,29 @@
             <nav class="sidebar-nav">
                 <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
                     <span class="material-icons-round">dashboard</span>
-                    <span class="nav-label">控制面板</span>
+                    <span class="nav-label">首頁</span>
                 </a>
                 <a href="#" class="nav-item" data-page="rewards" id="nav-rewards">
                     <span class="material-icons-round">shopping_bag</span>
-                    <span class="nav-label">積分商城</span>
+                    <span class="nav-label">tigerselect虎禮選</span>
                 </a>
                 <a href="#" class="nav-item" data-page="tier" id="nav-tier">
                     <span class="material-icons-round">military_tech</span>
-                    <span class="nav-label">會員等級</span>
+                    <span class="nav-label">會員資訊</span>
                 </a>
                 <a href="#" class="nav-item" data-page="vouchers" id="nav-vouchers">
                     <span class="material-icons-round">confirmation_number</span>
-                    <span class="nav-label">我的卡包</span>
+                    <span class="nav-label">Voucher</span>
                 </a>
                 <a href="#" class="nav-item" data-page="settings" id="nav-settings">
                     <span class="material-icons-round">settings</span>
-                    <span class="nav-label">帳戶設置</span>
+                    <span class="nav-label">安全性設定</span>
                 </a>
             </nav>
 
             <div class="sidebar-cta">
                 <button class="btn-redeem" id="btn-sidebar-redeem" onclick="showRedemption()">
-                    立即兌換
+                    兌換 Voucher
                 </button>
             </div>
         </aside>
@@ -67,14 +67,14 @@
             <!-- Top Header Bar -->
             <header class="top-bar">
                 <div class="top-nav-tabs">
-                    <button class="top-tab active" data-page="dashboard" id="tab-dashboard">控制面板</button>
-                    <button class="top-tab" data-page="rewards" id="tab-rewards">積分商城</button>
-                    <button class="top-tab" data-page="tier" id="tab-tier">會員等級</button>
+                    <button class="top-tab active" data-page="dashboard" id="tab-dashboard">首頁</button>
+                    <button class="top-tab" data-page="rewards" id="tab-rewards">tigerselect虎禮選</button>
+                    <button class="top-tab" data-page="tier" id="tab-tier">會員資訊</button>
                 </div>
                 <div class="top-bar-right">
                     <div class="points-display" id="header-points">
                         <span class="points-value">25,420</span>
-                        <span class="points-label">積分</span>
+                        <span class="points-label">tigerpoints</span>
                     </div>
                     <button class="icon-btn" id="btn-notifications">
                         <span class="material-icons-round">notifications</span>
@@ -92,19 +92,19 @@
                     <!-- Points Hero Card -->
                     <div class="points-hero" id="points-hero">
                         <div class="hero-top">
-                            <span class="hero-label">您的積分總額</span>
+                            <span class="hero-label">您的 tigerpoints 回饋金</span>
                             <div class="hero-points">
                                 <span class="hero-points-value" id="hero-points-value">25,420</span>
-                                <span class="hero-points-unit">積分</span>
+                                <span class="hero-points-unit">點</span>
                             </div>
                         </div>
                         <div class="hero-weekly">
                             <span class="material-icons-round">trending_up</span>
-                            本週已賺取 1,200 積分
+                            本月已累積 1,200 虎足跡
                         </div>
                         <div class="hero-actions">
-                            <button class="btn-primary" id="btn-redeem-points" onclick="showRedemption()">兌換積分</button>
-                            <button class="btn-secondary" id="btn-earn-more" onclick="navigateTo('rewards')">賺取更多</button>
+                            <button class="btn-primary" id="btn-redeem-points" onclick="showRedemption()">兌換 Voucher</button>
+                            <button class="btn-secondary" id="btn-earn-more" onclick="navigateTo('rewards')">累積虎足跡</button>
                         </div>
                     </div>
 
@@ -130,21 +130,21 @@
                                 <div class="day"><small>週六</small></div>
                                 <div class="day"><small>週日</small></div>
                             </div>
-                            <button class="btn-checkin" id="btn-checkin">立即簽到 (+10 積分)</button>
+                            <button class="btn-checkin" id="btn-checkin">立即簽到 (+10 虎足跡)</button>
                         </div>
 
                         <!-- Tier Progress -->
                         <div class="card tier-progress-card" id="tier-progress-card">
-                            <span class="card-eyebrow">下一等級目標</span>
-                            <h3 class="tier-target-name">白金精英</h3>
-                            <p class="tier-target-desc">還差 <strong>4,580</strong> 積分 即可解鎖全球貴賓廳服務！</p>
+                            <span class="card-eyebrow">下一會員等級</span>
+                            <h3 class="tier-target-name">尊榮虎 tigerprime</h3>
+                            <p class="tier-target-desc">還差 <strong>4,580</strong> 虎足跡 即可升級會員等級！</p>
                             <div class="progress-bar-container">
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: 84.7%"></div>
                                 </div>
                                 <div class="progress-labels">
-                                    <span>黃金 25,420</span>
-                                    <span>白金 30,000</span>
+                                    <span>菁英虎 25,420</span>
+                                    <span>尊榮虎 30,000</span>
                                 </div>
                             </div>
                             <div class="tier-insight">
@@ -160,7 +160,7 @@
                     <!-- Recent Activity -->
                     <div class="card activity-card" id="activity-card">
                         <div class="card-header">
-                            <h3>近期動態</h3>
+                            <h3>回饋金紀錄</h3>
                             <button class="link-btn" id="btn-view-all">查看全部</button>
                         </div>
                         <div class="activity-list">
@@ -173,7 +173,7 @@
                                     <p>2024年10月24日 · 商務艙</p>
                                 </div>
                                 <div class="activity-points positive">
-                                    <span>+4,200 積分</span>
+                                    <span>+4,200 點</span>
                                     <small>已完成</small>
                                 </div>
                             </div>
@@ -182,11 +182,11 @@
                                     <span class="material-icons-round">storefront</span>
                                 </div>
                                 <div class="activity-details">
-                                    <h4>星巴克積分兌換</h4>
-                                    <p>2024年10月22日 · 合作夥伴轉換</p>
+                                    <h4>樂天聯名卡加碼回饋</h4>
+                                    <p>2024年10月22日 · 聯名卡消費</p>
                                 </div>
                                 <div class="activity-points positive">
-                                    <span>+450 積分</span>
+                                    <span>+450 點</span>
                                     <small>已完成</small>
                                 </div>
                             </div>
@@ -195,11 +195,11 @@
                                     <span class="material-icons-round">redeem</span>
                                 </div>
                                 <div class="activity-details">
-                                    <h4>演唱會門票兌換</h4>
-                                    <p>2024年10月19日 · 積分商城</p>
+                                    <h4>Voucher 兌換</h4>
+                                    <p>2024年10月19日 · tigerselect虎禮選</p>
                                 </div>
                                 <div class="activity-points negative">
-                                    <span>-1,500 積分</span>
+                                    <span>-1,500 點</span>
                                     <small>已兌換</small>
                                 </div>
                             </div>
@@ -213,8 +213,8 @@
                 <div class="page-content">
                     <div class="page-header-row">
                         <div>
-                            <h1 class="page-title">獎勵市場</h1>
-                            <p class="page-subtitle">Marketplace</p>
+                            <h1 class="page-title">tigerselect 虎禮選</h1>
+                            <p class="page-subtitle">Tiger Select</p>
                         </div>
                     </div>
 
@@ -228,7 +228,7 @@
                                 <p>在馬爾代夫體驗 5 晚的極致奢華之旅。</p>
                                 <div class="featured-price">
                                     <span class="price-value">145,000</span>
-                                    <span class="price-unit">積分 / 每次入住</span>
+                                    <span class="price-unit">點 / 每次入住</span>
                                 </div>
                                 <button class="btn-primary" id="btn-redeem-resort">立即兌換</button>
                             </div>
@@ -244,7 +244,7 @@
                             <h4>全球航線升艙券</h4>
                             <p>通過我們優質的合作夥伴網絡，將任何長途航班升級至商務艙。</p>
                             <div class="reward-footer">
-                                <span class="reward-points">28,000 積分</span>
+                                <span class="reward-points">28,000 點</span>
                                 <button class="btn-sm" onclick="showRedemption()">兌換</button>
                             </div>
                         </div>
@@ -255,7 +255,7 @@
                             <h4>米其林餐飲體驗</h4>
                             <p>在享譽全球的「地平線邊緣」廚房享受雙人 7 道菜品鑑套餐。</p>
                             <div class="reward-footer">
-                                <span class="reward-points">12,500 積分</span>
+                                <span class="reward-points">12,500 點</span>
                                 <button class="btn-sm" onclick="showRedemption()">兌換</button>
                             </div>
                         </div>
@@ -266,7 +266,7 @@
                             <h4>SkyPulse 智能手錶 X</h4>
                             <p>旅行者的終極伴侶。追蹤您的海拔、健身狀態及航班時間。</p>
                             <div class="reward-footer">
-                                <span class="reward-points">18,000 積分</span>
+                                <span class="reward-points">18,000 點</span>
                                 <button class="btn-sm" onclick="showRedemption()">兌換</button>
                             </div>
                         </div>
@@ -277,7 +277,7 @@
                             <h4>精英旅行者行李箱</h4>
                             <p>採用航空級鋁材打造，專為現代遊牧生活設計。輕巧、耐用且充滿時尚感。</p>
                             <div class="reward-footer">
-                                <span class="reward-points">22,000 積分</span>
+                                <span class="reward-points">22,000 點</span>
                                 <button class="btn-sm" onclick="showRedemption()">兌換</button>
                             </div>
                             <span class="reward-tag">全球免費運送</span>
@@ -287,7 +287,7 @@
                     <!-- Tier Reminder -->
                     <div class="tier-reminder-bar" id="tier-reminder">
                         <span class="material-icons-round">emoji_events</span>
-                        <p>距離<strong>白金會員</strong>還需 <strong>4,580</strong> 積分！本月賺取更多積分，解鎖免費頭等艙升艙和全球貴賓廳使用權。</p>
+                        <p>距離<strong>尊榮虎 tigerprime</strong>還需 <strong>4,580</strong> 虎足跡！持續累積虎足跡，解鎖回饋金倍率提升至機票金額 2%。</p>
                     </div>
                 </div>
             </section>
@@ -296,10 +296,10 @@
             <section class="page" id="page-tier">
                 <div class="page-content">
                     <div class="page-header-row tier-header-row">
-                        <h1 class="page-title">會員狀態</h1>
+                        <h1 class="page-title">會員資訊</h1>
                         <div class="tier-points-display">
                             <span class="tier-points-value">25,420</span>
-                            <span class="tier-points-label">目前可用積分</span>
+                            <span class="tier-points-label">目前可用 tigerpoints</span>
                         </div>
                     </div>
 
@@ -312,15 +312,15 @@
                                 </div>
                                 <div>
                                     <span class="tier-current-badge">目前等級</span>
-                                    <h2 class="tier-current-name">黃金會員</h2>
-                                    <p class="tier-since">自 2022 年起與您一同開啟旅程</p>
+                                    <h2 class="tier-current-name">菁英虎 tigerexpert</h2>
+                                    <p class="tier-since">2026/04/10 ~ 無結束日</p>
                                 </div>
                             </div>
                             <div class="tier-progress-section">
-                                <span class="card-eyebrow">下一等級目標</span>
+                                <span class="card-eyebrow">下一會員等級</span>
                                 <div class="tier-next-row">
-                                    <span class="tier-next-name">白金會員</span>
-                                    <span class="tier-next-gap">還差 4,580 積分</span>
+                                    <span class="tier-next-name">尊榮虎 tigerprime</span>
+                                    <span class="tier-next-gap">還差 4,580 虎足跡</span>
                                 </div>
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: 84.7%"></div>
@@ -331,14 +331,14 @@
                         <!-- Stats Cards -->
                         <div class="tier-stats-col">
                             <div class="stat-card" id="stat-flights">
-                                <span class="stat-eyebrow">已飛行次數</span>
+                                <span class="stat-eyebrow">已搭乘航班</span>
                                 <div class="stat-value-row">
                                     <span class="stat-value">24</span>
                                     <span class="material-icons-round stat-icon">flight_takeoff</span>
                                 </div>
                             </div>
                             <div class="stat-card" id="stat-multiplier">
-                                <span class="stat-eyebrow">獎勵倍率</span>
+                                <span class="stat-eyebrow">回饋金倍率</span>
                                 <div class="stat-value-row">
                                     <span class="stat-value">1.5x</span>
                                     <span class="material-icons-round stat-icon">trending_up</span>
@@ -350,8 +350,8 @@
                     <!-- Benefits -->
                     <div class="benefits-section">
                         <div class="benefits-header">
-                            <h3>黃金會員專屬權益</h3>
-                            <button class="link-btn" id="btn-compare-tiers">查看所有等級 →</button>
+                            <h3>菁英虎專屬權益</h3>
+                            <button class="link-btn" id="btn-compare-tiers">查看 tigerclub 會員回饋 →</button>
                         </div>
                         <div class="benefits-grid" id="benefits-grid">
                             <div class="benefit-card">
@@ -359,7 +359,7 @@
                                     <span class="material-icons-round">luggage</span>
                                 </div>
                                 <h4>額外行李額度</h4>
-                                <p>出行無憂。黃金會員在所有國際航線上可額外享受 23 公斤託運行李額度。</p>
+                                <p>出行無憂。菁英虎在所有國際航線上可額外享受 23 公斤託運行李額度。</p>
                             </div>
                             <div class="benefit-card">
                                 <div class="benefit-icon">
@@ -381,8 +381,8 @@
                     <!-- Upgrade CTA -->
                     <div class="upgrade-cta" id="upgrade-cta">
                         <div class="upgrade-text">
-                            <h2>準備好晉升白金等級了嗎？</h2>
-                            <p>立即預訂下一次旅程，所有跨洲航線均可賺取雙倍積分。下一次升級近在咫尺。</p>
+                            <h2>準備好晉升尊榮虎了嗎？</h2>
+                            <p>立即預訂下一次旅程，升級為尊榮虎後回饋金提升至機票金額 2%。下一次升級近在咫尺。</p>
                             <div class="upgrade-buttons">
                                 <button class="btn-primary">立即預訂</button>
                                 <button class="btn-secondary-light">等級對比</button>
@@ -404,8 +404,8 @@
                 <div class="page-content">
                     <div class="page-header-row">
                         <div>
-                            <h1 class="page-title">我的卡包</h1>
-                            <p class="page-subtitle">E-Vouchers</p>
+                            <h1 class="page-title">Voucher</h1>
+                            <p class="page-subtitle">tigerpoints 回饋金兌換 Voucher</p>
                         </div>
                     </div>
 
@@ -474,8 +474,8 @@
                             <span class="material-icons-round">group_add</span>
                         </div>
                         <div class="referral-text">
-                            <h3>推薦好友，賺取 1,000 積分</h3>
-                            <p>分享藍天！每當有一位好友加入虎航獎勵計畫，您都能獲得獎勵。</p>
+                            <h3>推薦好友，賺取 1,000 tigerpoints</h3>
+                            <p>分享藍天！每當有一位好友加入 tigerclub 會員回饋，您都能獲得獎勵。</p>
                         </div>
                         <button class="btn-primary" id="btn-refer">邀請好友</button>
                     </div>
@@ -483,7 +483,7 @@
                     <!-- Recent Activity -->
                     <div class="card activity-card" id="voucher-activity">
                         <div class="card-header">
-                            <h3><span class="material-icons-round">history</span> 最近活動</h3>
+                            <h3><span class="material-icons-round">history</span> 回饋金紀錄</h3>
                         </div>
                         <div class="activity-list">
                             <div class="activity-item">
@@ -495,7 +495,7 @@
                                     <p>今天 10:42 AM</p>
                                 </div>
                                 <div class="activity-points negative">
-                                    <span>-2,500 積分</span>
+                                    <span>-2,500 點</span>
                                 </div>
                             </div>
                             <div class="activity-item">
@@ -507,7 +507,7 @@
                                     <p>昨天</p>
                                 </div>
                                 <div class="activity-points positive">
-                                    <span>+1,200 積分</span>
+                                    <span>+1,200 點</span>
                                 </div>
                             </div>
                         </div>
@@ -518,7 +518,7 @@
             <!-- ===== PAGE: SETTINGS ===== -->
             <section class="page" id="page-settings">
                 <div class="page-content">
-                    <h1 class="page-title">帳戶設置</h1>
+                    <h1 class="page-title">安全性設定</h1>
                     <div class="settings-grid">
                         <div class="card settings-card">
                             <h3>個人資料</h3>
@@ -532,7 +532,7 @@
                             </div>
                             <div class="setting-row">
                                 <span class="setting-label">會員編號</span>
-                                <span class="setting-value">IT-2022-88431</span>
+                                <span class="setting-value">7470023181</span>
                             </div>
                             <div class="setting-row">
                                 <span class="setting-label">手機</span>
@@ -585,8 +585,8 @@
                                 <span class="detail-value">2025/01/20</span>
                             </div>
                             <div class="ticket-detail">
-                                <span class="detail-label">扣除積分</span>
-                                <span class="detail-value highlight">-18,000</span>
+                                <span class="detail-label">扣除回饋金</span>
+                                <span class="detail-value highlight">-18,000 點</span>
                             </div>
                         </div>
                     </div>
@@ -594,8 +594,8 @@
                     <div class="modal-next-tier">
                         <span class="material-icons-round">emoji_events</span>
                         <div>
-                            <h4>下一站：白金等級！</h4>
-                            <p>還差 4,500 積分即可升級等級。</p>
+                            <h4>下一站：尊榮虎 tigerprime！</h4>
+                            <p>還差 4,500 虎足跡即可升級會員等級。</p>
                         </div>
                     </div>
 
@@ -610,22 +610,22 @@
             <nav class="bottom-nav" id="bottom-nav">
                 <a href="#" class="bottom-nav-item active" data-page="dashboard" id="bnav-dashboard">
                     <span class="material-icons-round">dashboard</span>
-                    <span>主頁</span>
+                    <span>首頁</span>
                 </a>
                 <a href="#" class="bottom-nav-item" data-page="rewards" id="bnav-rewards">
                     <span class="material-icons-round">shopping_bag</span>
-                    <span>商城</span>
+                    <span>虎禮選</span>
                 </a>
                 <a href="#" class="bottom-nav-fab" data-page="rewards" id="bnav-fab">
                     <span class="material-icons-round">add</span>
                 </a>
                 <a href="#" class="bottom-nav-item" data-page="tier" id="bnav-tier">
                     <span class="material-icons-round">military_tech</span>
-                    <span>等級</span>
+                    <span>會員</span>
                 </a>
                 <a href="#" class="bottom-nav-item" data-page="settings" id="bnav-settings">
                     <span class="material-icons-round">settings</span>
-                    <span>設置</span>
+                    <span>設定</span>
                 </a>
             </nav>
         </main>
