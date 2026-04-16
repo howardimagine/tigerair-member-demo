@@ -498,16 +498,13 @@ html[data-theme="dark"] .hero-gradient {
   display: none;
 }
 
-/* LIGHT MODE: minimal, playful — 3D isometric travel objects on cream gradient */
+/* LIGHT MODE: flat neutral hero matched to the 3D render's backdrop */
 html[data-theme="light"] .hero-cinema {
   min-height: 480px;
-  background:
-    radial-gradient(circle at 80% 20%, rgba(255, 184, 0, 0.18) 0%, transparent 45%),
-    radial-gradient(circle at 10% 90%, rgba(255, 107, 0, 0.08) 0%, transparent 45%),
-    linear-gradient(140deg, #FFFAF2 0%, #FFEFDA 50%, #FFFAF2 100%);
+  background: #EDECE8;
 }
 
-/* Keep the bg layer visible in light mode, but only the dedicated light image */
+/* Place the 3D render on the right with no blending so colours stay true */
 html[data-theme="light"] .hero-bg-wrap {
   display: block;
   inset: 0;
@@ -520,23 +517,20 @@ html[data-theme="light"] .hero-bg-wrap::after {
   inset: 0;
   background-image: url('images/light-hero.jpg');
   background-repeat: no-repeat;
-  background-position: right -40px top 50%;
-  background-size: clamp(340px, 48%, 560px) auto;
-  mix-blend-mode: multiply;
-  opacity: 0.95;
+  background-position: right -20px center;
+  background-size: clamp(360px, 50%, 580px) auto;
   pointer-events: none;
 }
 
-/* Hide the dark-mode photos in light mode */
+/* Hide dark-mode photo layers */
 html[data-theme="light"] .hero-bg-img,
 html[data-theme="light"] .hero-noise {
   display: none;
 }
 
+/* Soft fade at the bottom so hero merges into page bg; no big gradient */
 html[data-theme="light"] .hero-gradient {
-  background:
-    linear-gradient(100deg, #FFFAF2 0%, rgba(255, 250, 242, 0.72) 42%, rgba(255, 250, 242, 0) 70%),
-    linear-gradient(180deg, transparent 60%, rgba(250, 250, 250, 0.6) 88%, #FAFAFA 100%);
+  background: linear-gradient(180deg, transparent 72%, rgba(237, 236, 232, 0.6) 88%, var(--bg) 100%);
 }
 
 html[data-theme="light"] .hero-illustration {
