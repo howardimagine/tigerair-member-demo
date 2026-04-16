@@ -498,28 +498,49 @@ html[data-theme="dark"] .hero-gradient {
   display: none;
 }
 
-/* LIGHT MODE: minimal, playful — hide photos, use gradient + illustration */
+/* LIGHT MODE: minimal, playful — 3D isometric travel objects on cream gradient */
 html[data-theme="light"] .hero-cinema {
-  min-height: 460px;
+  min-height: 480px;
   background:
-    radial-gradient(circle at 80% 20%, rgba(255, 184, 0, 0.22) 0%, transparent 45%),
-    radial-gradient(circle at 10% 90%, rgba(255, 107, 0, 0.10) 0%, transparent 45%),
-    linear-gradient(140deg, #FFF8F0 0%, #FFE8D4 50%, #FFF8F0 100%);
+    radial-gradient(circle at 80% 20%, rgba(255, 184, 0, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(255, 107, 0, 0.08) 0%, transparent 45%),
+    linear-gradient(140deg, #FFFAF2 0%, #FFEFDA 50%, #FFFAF2 100%);
 }
 
-html[data-theme="light"] .hero-bg-wrap,
+/* Keep the bg layer visible in light mode, but only the dedicated light image */
+html[data-theme="light"] .hero-bg-wrap {
+  display: block;
+  inset: 0;
+  opacity: 1;
+}
+
+html[data-theme="light"] .hero-bg-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('images/light-hero.jpg');
+  background-repeat: no-repeat;
+  background-position: right -40px top 50%;
+  background-size: clamp(340px, 48%, 560px) auto;
+  mix-blend-mode: multiply;
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+/* Hide the dark-mode photos in light mode */
+html[data-theme="light"] .hero-bg-img,
 html[data-theme="light"] .hero-noise {
   display: none;
 }
 
 html[data-theme="light"] .hero-gradient {
-  background: linear-gradient(180deg, transparent 0%, rgba(250, 250, 250, 0.2) 70%, #FAFAFA 100%);
+  background:
+    linear-gradient(100deg, #FFFAF2 0%, rgba(255, 250, 242, 0.72) 42%, rgba(255, 250, 242, 0) 70%),
+    linear-gradient(180deg, transparent 60%, rgba(250, 250, 250, 0.6) 88%, #FAFAFA 100%);
 }
 
 html[data-theme="light"] .hero-illustration {
-  display: block;
-  color: #FF6B00;
-  animation: spin-slow 30s linear infinite;
+  display: none;
 }
 
 @keyframes spin-slow {
