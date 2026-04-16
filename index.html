@@ -1,636 +1,551 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台灣虎航 Tigerair | tigerclub 會員中心</title>
-    <meta name="description" content="台灣虎航 tigerclub 會員回饋 - 管理您的 tigerpoints 回饋金、會員等級與專屬優惠">
+    <title>台灣虎航 tigerclub | 會員中心</title>
+    <meta name="description" content="tigerclub 會員回饋 — 讓您的機票更有價值">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- ===== STYLE TOGGLE ===== -->
+    <div class="style-toggle" id="styleToggle">
+        <div class="toggle-label" id="toggleLabel">
+            <span class="material-icons-round">palette</span>
+        </div>
+        <div class="toggle-panel" id="togglePanel">
+            <span class="toggle-title">切換風格</span>
+            <button class="toggle-btn active" data-theme="dark" id="btnDark">
+                <span class="material-icons-round">dark_mode</span>
+                Dark Premium
+            </button>
+            <button class="toggle-btn" data-theme="light" id="btnLight">
+                <span class="material-icons-round">light_mode</span>
+                Playful Orange
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== MOBILE HEADER ===== -->
+    <header class="mobile-header" id="mobileHeader">
+        <button class="menu-btn" id="menuBtn"><span class="material-icons-round">menu</span></button>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Tigerair.svg" alt="tigerair" class="mobile-logo">
+        <button class="icon-btn" id="btnNotif"><span class="material-icons-round">notifications</span><span class="notif-dot"></span></button>
+    </header>
+
+    <!-- ===== APP SHELL ===== -->
     <div class="app-shell">
-        <!-- ===== SIDEBAR ===== -->
+        <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <img src="logo.png" alt="tigerair 台灣虎航" class="sidebar-logo" id="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Tigerair.svg" alt="tigerair" class="sidebar-logo">
+                <span class="sidebar-brand">tigerclub</span>
             </div>
-
-            <div class="user-profile">
-                <div class="avatar" id="user-avatar">
-                    <span class="material-icons-round">person</span>
-                </div>
-                <div class="user-info">
-                    <h4 class="user-name">Alex Chen</h4>
-                    <span class="user-tier-badge">
-                        <span class="material-icons-round">workspace_premium</span>
-                        菁英虎 tigerexpert
-                    </span>
+            <div class="sidebar-profile">
+                <div class="sidebar-avatar"><span class="material-icons-round">person</span></div>
+                <div class="sidebar-user-info">
+                    <span class="sidebar-user-name">Alex Chen</span>
+                    <span class="sidebar-tier-badge"><span class="material-icons-round">workspace_premium</span>菁英虎 tigerexpert</span>
                 </div>
             </div>
-
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
-                    <span class="material-icons-round">dashboard</span>
-                    <span class="nav-label">首頁</span>
-                </a>
-                <a href="#" class="nav-item" data-page="rewards" id="nav-rewards">
-                    <span class="material-icons-round">shopping_bag</span>
-                    <span class="nav-label">tigerselect虎禮選</span>
-                </a>
-                <a href="#" class="nav-item" data-page="tier" id="nav-tier">
-                    <span class="material-icons-round">military_tech</span>
-                    <span class="nav-label">會員資訊</span>
-                </a>
-                <a href="#" class="nav-item" data-page="vouchers" id="nav-vouchers">
-                    <span class="material-icons-round">confirmation_number</span>
-                    <span class="nav-label">Voucher</span>
-                </a>
-                <a href="#" class="nav-item" data-page="settings" id="nav-settings">
-                    <span class="material-icons-round">settings</span>
-                    <span class="nav-label">安全性設定</span>
-                </a>
+                <a href="#" class="nav-item active" data-page="dashboard"><span class="material-icons-round">dashboard</span><span class="nav-label">首頁</span></a>
+                <a href="#" class="nav-item" data-page="rewards"><span class="material-icons-round">redeem</span><span class="nav-label">tigerselect 虎禮選</span></a>
+                <a href="#" class="nav-item" data-page="orders"><span class="material-icons-round">receipt_long</span><span class="nav-label">我的訂單</span></a>
+                <a href="#" class="nav-item" data-page="tier"><span class="material-icons-round">military_tech</span><span class="nav-label">會員資訊</span></a>
+                <a href="#" class="nav-item" data-page="vouchers"><span class="material-icons-round">confirmation_number</span><span class="nav-label">我的 Voucher</span></a>
+                <a href="#" class="nav-item" data-page="settings"><span class="material-icons-round">settings</span><span class="nav-label">安全性設定</span></a>
             </nav>
-
-            <div class="sidebar-cta">
-                <button class="btn-redeem" id="btn-sidebar-redeem" onclick="showRedemption()">
-                    兌換 Voucher
-                </button>
+            <div class="sidebar-footer">
+                <div class="sidebar-points">
+                    <span class="material-icons-round">toll</span>
+                    <div><strong id="sidebarPoints">2,580</strong><span> pts</span></div>
+                </div>
+                <button class="sidebar-cta-btn" onclick="showRedemption()">兌換 Voucher</button>
             </div>
         </aside>
 
-        <!-- ===== MAIN CONTENT ===== -->
+        <!-- MAIN -->
         <main class="main-content">
-            <!-- Top Header Bar -->
-            <header class="top-bar">
-                <div class="top-nav-tabs">
-                    <button class="top-tab active" data-page="dashboard" id="tab-dashboard">首頁</button>
-                    <button class="top-tab" data-page="rewards" id="tab-rewards">tigerselect虎禮選</button>
-                    <button class="top-tab" data-page="tier" id="tab-tier">會員資訊</button>
-                </div>
-                <div class="top-bar-right">
-                    <div class="points-display" id="header-points">
-                        <span class="points-value">25,420</span>
-                        <span class="points-label">tigerpoints</span>
-                    </div>
-                    <button class="icon-btn" id="btn-notifications">
-                        <span class="material-icons-round">notifications</span>
-                        <span class="notification-dot"></span>
-                    </button>
-                    <div class="header-avatar" id="header-avatar">
-                        <span class="material-icons-round">person</span>
-                    </div>
-                </div>
-            </header>
 
-            <!-- ===== PAGE: DASHBOARD ===== -->
+            <!-- ===================== DASHBOARD ===================== -->
             <section class="page active" id="page-dashboard">
+
+                <!-- NETFLIX-STYLE HERO -->
+                <div class="hero-cinema parallax-container">
+                    <div class="hero-bg-wrap" data-parallax="0.12">
+                        <img src="images/jezael-melgoza-alY6_OpdwRQ-unsplash.jpg" alt="" class="hero-bg-img active" data-slide="0">
+                        <img src="images/su-san-lee-E_eWwM29wfU-unsplash.jpg" alt="" class="hero-bg-img" data-slide="1">
+                        <img src="images/masaaki-komori-qwPSnBvdhtI-unsplash.jpg" alt="" class="hero-bg-img" data-slide="2">
+                    </div>
+                    <div class="hero-gradient"></div>
+                    <div class="hero-noise"></div>
+                    <div class="hero-illustration">
+                        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.4"/>
+                            <circle cx="100" cy="100" r="50" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4" opacity="0.25"/>
+                            <circle cx="100" cy="100" r="30" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1 3" opacity="0.2"/>
+                        </svg>
+                    </div>
+                    <div class="hero-inner">
+                        <div class="hero-welcome">
+                            <span class="hero-greeting">Welcome back,</span>
+                            <h1 class="hero-name">Alex Chen</h1>
+                            <p class="hero-tier-line"><span class="material-icons-round">workspace_premium</span>菁英虎 tigerexpert<span class="hero-dot">·</span>會員編號 7470 0231 81</p>
+                        </div>
+                        <div class="hero-row">
+                            <div class="membership-card" id="memberCard">
+                                <div class="card-shine"></div>
+                                <div class="mc-top">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Tigerair.svg" alt="" class="mc-logo">
+                                    <span class="mc-program">tigerclub</span>
+                                </div>
+                                <div class="mc-number">7470 0231 81</div>
+                                <div class="mc-name">ALEX CHEN</div>
+                                <div class="mc-bottom">
+                                    <div class="mc-field"><span class="mc-lbl">MEMBER TIER</span><span class="mc-val">菁英虎 TIGEREXPERT</span></div>
+                                    <div class="mc-field"><span class="mc-lbl">VALID</span><span class="mc-val">永久有效</span></div>
+                                </div>
+                                <div class="mc-pattern"></div>
+                            </div>
+                            <div class="hero-stats">
+                                <div class="hero-stat-main">
+                                    <span class="hero-label">旅遊基金</span>
+                                    <div class="hero-points-row"><span class="hero-points-value" id="heroPointsVal">2,580</span><span class="hero-points-unit">tigerpoints</span></div>
+                                    <span class="hero-equiv">≈ NT$2,580 可折抵機票與附加服務</span>
+                                </div>
+                                <div class="hero-pills">
+                                    <span class="stat-pill"><span class="material-icons-round">trending_up</span>本月 +320 虎足跡</span>
+                                    <span class="stat-pill"><span class="material-icons-round">flight_takeoff</span>已搭乘 6 趟航班</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="page-content">
-                    <!-- Points Hero Card -->
-                    <div class="points-hero" id="points-hero">
-                        <div class="hero-top">
-                            <span class="hero-label">您的 tigerpoints 回饋金</span>
-                            <div class="hero-points">
-                                <span class="hero-points-value" id="hero-points-value">25,420</span>
-                                <span class="hero-points-unit">點</span>
+                    <!-- QUICK ACTIONS -->
+                    <div class="quick-actions">
+                        <button class="qa-btn" onclick="showRedemption()">
+                            <div class="qa-icon"><span class="material-icons-round">swap_horiz</span></div>
+                            <span class="qa-text">兌換 Voucher</span>
+                        </button>
+                        <button class="qa-btn" onclick="navigateTo('rewards')">
+                            <div class="qa-icon"><span class="material-icons-round">flight</span></div>
+                            <span class="qa-text">登錄航班</span>
+                        </button>
+                        <button class="qa-btn" onclick="navigateTo('tier')">
+                            <div class="qa-icon"><span class="material-icons-round">rocket_launch</span></div>
+                            <span class="qa-text">升等攻略</span>
+                        </button>
+                        <button class="qa-btn" onclick="navigateTo('orders')">
+                            <div class="qa-icon"><span class="material-icons-round">airplane_ticket</span></div>
+                            <span class="qa-text">立即訂票</span>
+                        </button>
+                        <button class="qa-btn" onclick="navigateTo('vouchers')">
+                            <div class="qa-icon"><span class="material-icons-round">confirmation_number</span></div>
+                            <span class="qa-text">我的 Voucher</span>
+                        </button>
+                        <button class="qa-btn" onclick="navigateTo('settings')">
+                            <div class="qa-icon"><span class="material-icons-round">support_agent</span></div>
+                            <span class="qa-text">客服中心</span>
+                        </button>
+                    </div>
+
+                    <!-- 我的行程 -->
+                    <section class="dash-section">
+                        <div class="section-head">
+                            <h2>我的行程</h2>
+                            <button class="link-btn" onclick="navigateTo('orders')">查看全部 →</button>
+                        </div>
+                        <div class="trips-scroll">
+                            <div class="trip-ticket">
+                                <div class="ticket-accent"></div>
+                                <div class="ticket-body">
+                                    <div class="ticket-route">
+                                        <div class="ticket-port">
+                                            <span class="port-code">TPE</span>
+                                            <span class="port-city">台北桃園</span>
+                                        </div>
+                                        <div class="ticket-route-mid">
+                                            <span class="route-line"></span>
+                                            <span class="material-icons-round route-icon">flight</span>
+                                            <span class="route-line"></span>
+                                        </div>
+                                        <div class="ticket-port">
+                                            <span class="port-code">NRT</span>
+                                            <span class="port-city">東京成田</span>
+                                        </div>
+                                    </div>
+                                    <div class="ticket-meta">
+                                        <div class="ticket-info"><span class="ticket-info-lbl">航班</span><span>IT 200</span></div>
+                                        <div class="ticket-info"><span class="ticket-info-lbl">日期</span><span>2026/05/15</span></div>
+                                        <div class="ticket-info"><span class="ticket-info-lbl">時間</span><span>08:30 — 12:45</span></div>
+                                    </div>
+                                </div>
+                                <div class="ticket-side">
+                                    <span class="ticket-status upcoming">即將出發</span>
+                                    <span class="ticket-countdown">29 天後</span>
+                                </div>
+                            </div>
+                            <div class="trip-ticket">
+                                <div class="ticket-accent"></div>
+                                <div class="ticket-body">
+                                    <div class="ticket-route">
+                                        <div class="ticket-port">
+                                            <span class="port-code">NRT</span>
+                                            <span class="port-city">東京成田</span>
+                                        </div>
+                                        <div class="ticket-route-mid">
+                                            <span class="route-line"></span>
+                                            <span class="material-icons-round route-icon">flight</span>
+                                            <span class="route-line"></span>
+                                        </div>
+                                        <div class="ticket-port">
+                                            <span class="port-code">TPE</span>
+                                            <span class="port-city">台北桃園</span>
+                                        </div>
+                                    </div>
+                                    <div class="ticket-meta">
+                                        <div class="ticket-info"><span class="ticket-info-lbl">航班</span><span>IT 201</span></div>
+                                        <div class="ticket-info"><span class="ticket-info-lbl">日期</span><span>2026/05/20</span></div>
+                                        <div class="ticket-info"><span class="ticket-info-lbl">時間</span><span>14:00 — 17:15</span></div>
+                                    </div>
+                                </div>
+                                <div class="ticket-side">
+                                    <span class="ticket-status upcoming">即將出發</span>
+                                    <span class="ticket-countdown">34 天後</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="hero-weekly">
-                            <span class="material-icons-round">trending_up</span>
-                            本月已累積 1,200 虎足跡
+                    </section>
+
+                    <!-- CINEMATIC TRAVEL BANNER (dark mode) -->
+                    <div class="travel-banner parallax-container dark-only">
+                        <div class="travel-banner-bg" data-parallax="0.2">
+                            <img src="images/su-san-lee-E_eWwM29wfU-unsplash.jpg" alt="">
                         </div>
-                        <div class="hero-actions">
-                            <button class="btn-primary" id="btn-redeem-points" onclick="showRedemption()">兌換 Voucher</button>
-                            <button class="btn-secondary" id="btn-earn-more" onclick="navigateTo('rewards')">累積虎足跡</button>
+                        <div class="travel-banner-overlay"></div>
+                        <div class="travel-banner-content">
+                            <span class="travel-banner-eyebrow">TIGERCLUB EXCLUSIVE</span>
+                            <h2>每次飛行，離下一程更近</h2>
+                            <p>搭乘即累積虎足跡，180 天累計 150 足跡晉升尊榮虎，回饋倍率翻倍</p>
                         </div>
                     </div>
 
-                    <div class="dashboard-grid">
-                        <!-- Daily Check-in -->
-                        <div class="card checkin-card" id="checkin-card">
-                            <div class="card-header">
-                                <div class="card-title-group">
-                                    <h3>每日簽到</h3>
-                                    <span class="badge badge-active">活躍狀態</span>
-                                </div>
-                                <div class="streak-info">
-                                    <span class="material-icons-round">local_fire_department</span>
-                                    <span>4 天連續</span>
-                                </div>
-                            </div>
-                            <div class="checkin-days" id="checkin-days">
-                                <div class="day checked"><span class="material-icons-round">check</span><small>週一</small></div>
-                                <div class="day checked"><span class="material-icons-round">check</span><small>週二</small></div>
-                                <div class="day checked"><span class="material-icons-round">check</span><small>週三</small></div>
-                                <div class="day checked"><span class="material-icons-round">check</span><small>週四</small></div>
-                                <div class="day today"><span class="material-icons-round">card_giftcard</span><small>今天</small></div>
-                                <div class="day"><small>週六</small></div>
-                                <div class="day"><small>週日</small></div>
-                            </div>
-                            <button class="btn-checkin" id="btn-checkin">立即簽到 (+10 虎足跡)</button>
+                    <!-- PLAYFUL CELEBRATION CARD (light mode) -->
+                    <div class="playful-celebration light-only">
+                        <div class="playful-emoji">✈️</div>
+                        <div class="playful-text">
+                            <h3>恭喜！您已累積 68 虎足跡</h3>
+                            <p>再 <strong>1 趟旅行</strong>，就能升等尊榮虎，回饋 2 倍！</p>
                         </div>
-
-                        <!-- Tier Progress -->
-                        <div class="card tier-progress-card" id="tier-progress-card">
-                            <span class="card-eyebrow">下一會員等級</span>
-                            <h3 class="tier-target-name">尊榮虎 tigerprime</h3>
-                            <p class="tier-target-desc">還差 <strong>4,580</strong> 虎足跡 即可升級會員等級！</p>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 84.7%"></div>
-                                </div>
-                                <div class="progress-labels">
-                                    <span>菁英虎 25,420</span>
-                                    <span>尊榮虎 30,000</span>
-                                </div>
-                            </div>
-                            <div class="tier-insight">
-                                <span class="material-icons-round">rocket_launch</span>
-                                <div>
-                                    <strong>升級速度快於 85% 用戶</strong>
-                                    <p>保持現狀即可在下月升級</p>
-                                </div>
-                            </div>
+                        <div class="playful-deco">
+                            <span class="deco-dot d1"></span>
+                            <span class="deco-dot d2"></span>
+                            <span class="deco-dot d3"></span>
                         </div>
                     </div>
 
-                    <!-- Recent Activity -->
-                    <div class="card activity-card" id="activity-card">
-                        <div class="card-header">
-                            <h3>回饋金紀錄</h3>
-                            <button class="link-btn" id="btn-view-all">查看全部</button>
+                    <!-- TIER PROGRESS + CHECK-IN -->
+                    <div class="dash-grid-2">
+                        <div class="card tier-progress-card">
+                            <div class="card-head">
+                                <div><span class="card-eyebrow">下一會員等級</span><h3>尊榮虎 tigerprime</h3></div>
+                                <div class="tier-icon-badge"><span class="material-icons-round">emoji_events</span></div>
+                            </div>
+                            <p class="tier-desc">還差 <strong>82</strong> 虎足跡即可升等 — 約 <strong>1 趟旅行</strong></p>
+                            <div class="progress-bar">
+                                <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
+                                <div class="progress-labels"><span>68 / 150 虎足跡</span><span>180天內</span></div>
+                            </div>
+                            <div class="benefit-chips">
+                                <span class="benefit-chip"><span class="material-icons-round">arrow_upward</span>回饋 2%</span>
+                                <span class="benefit-chip"><span class="material-icons-round">bolt</span>促銷優先</span>
+                            </div>
                         </div>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <div class="activity-icon flight">
-                                    <span class="material-icons-round">flight</span>
-                                </div>
-                                <div class="activity-details">
-                                    <h4>航班：TPE 至 NRT</h4>
-                                    <p>2024年10月24日 · 商務艙</p>
-                                </div>
-                                <div class="activity-points positive">
-                                    <span>+4,200 點</span>
-                                    <small>已完成</small>
-                                </div>
+                        <div class="card checkin-card">
+                            <div class="card-head">
+                                <div><h3>每日簽到</h3><span class="streak-badge"><span class="material-icons-round">local_fire_department</span>4 天連續</span></div>
+                                <span class="badge badge-active">進行中</span>
                             </div>
-                            <div class="activity-item">
-                                <div class="activity-icon partner">
-                                    <span class="material-icons-round">storefront</span>
-                                </div>
-                                <div class="activity-details">
-                                    <h4>樂天聯名卡加碼回饋</h4>
-                                    <p>2024年10月22日 · 聯名卡消費</p>
-                                </div>
-                                <div class="activity-points positive">
-                                    <span>+450 點</span>
-                                    <small>已完成</small>
-                                </div>
+                            <div class="checkin-days">
+                                <div class="day checked"><span class="material-icons-round">check</span><small>一</small></div>
+                                <div class="day checked"><span class="material-icons-round">check</span><small>二</small></div>
+                                <div class="day checked"><span class="material-icons-round">check</span><small>三</small></div>
+                                <div class="day checked"><span class="material-icons-round">check</span><small>四</small></div>
+                                <div class="day today"><span class="material-icons-round">card_giftcard</span><small>五</small></div>
+                                <div class="day"><small>六</small></div>
+                                <div class="day bonus"><span class="material-icons-round">star</span><small>日</small></div>
                             </div>
-                            <div class="activity-item">
-                                <div class="activity-icon redeem">
-                                    <span class="material-icons-round">redeem</span>
-                                </div>
-                                <div class="activity-details">
-                                    <h4>Voucher 兌換</h4>
-                                    <p>2024年10月19日 · tigerselect虎禮選</p>
-                                </div>
-                                <div class="activity-points negative">
-                                    <span>-1,500 點</span>
-                                    <small>已兌換</small>
-                                </div>
-                            </div>
+                            <button class="btn-checkin" id="btnCheckin"><span class="material-icons-round">touch_app</span>立即簽到 (+10 虎足跡)</button>
                         </div>
                     </div>
+
+                    <!-- ACTIVITY -->
+                    <section class="dash-section">
+                        <div class="section-head"><h2>回饋金紀錄</h2><button class="link-btn">查看全部 →</button></div>
+                        <div class="card">
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon flight-icon"><span class="material-icons-round">flight</span></div>
+                                    <div class="activity-details"><h4>航班：TPE → NRT</h4><p>2026/04/10 · 經濟艙</p></div>
+                                    <div class="activity-points positive">+1,200</div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon partner-icon"><span class="material-icons-round">credit_card</span></div>
+                                    <div class="activity-details"><h4>樂天聯名卡加碼</h4><p>2026/04/08 · 活動加碼</p></div>
+                                    <div class="activity-points positive">+380</div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon redeem-icon"><span class="material-icons-round">confirmation_number</span></div>
+                                    <div class="activity-details"><h4>Voucher 兌換</h4><p>2026/04/05 · NT$1,000</p></div>
+                                    <div class="activity-points negative">-1,000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </section>
 
-            <!-- ===== PAGE: REWARDS MARKET ===== -->
+            <!-- ===================== REWARDS ===================== -->
             <section class="page" id="page-rewards">
                 <div class="page-content">
-                    <div class="page-header-row">
-                        <div>
-                            <h1 class="page-title">tigerselect 虎禮選</h1>
-                            <p class="page-subtitle">Tiger Select</p>
+                    <div class="page-header"><h1 class="page-title">tigerselect 虎禮選</h1><p class="page-subtitle">用回饋金兌換，折抵機票與附加服務</p></div>
+                    <div class="featured-reward parallax-container">
+                        <div class="featured-bg" data-parallax="0.2"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1200&q=80" alt=""></div>
+                        <div class="featured-overlay"></div>
+                        <div class="featured-content">
+                            <span class="featured-badge">精選推薦</span>
+                            <h2>東京來回機票折抵</h2>
+                            <p>TPE ⇄ NRT 經濟艙</p>
+                            <div class="featured-price"><span class="price-val">5,000</span><span class="price-unit">tigerpoints 起</span></div>
+                            <button class="btn-primary" onclick="showRedemption()">立即兌換</button>
                         </div>
                     </div>
+                    <div class="rewards-grid">
+                        <div class="reward-card"><div class="reward-img"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&q=80" alt=""><span class="reward-price-tag">3,000 pts</span></div><div class="reward-body"><h4>大阪單程折抵</h4><p>TPE → KIX</p></div></div>
+                        <div class="reward-card"><div class="reward-img"><img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=600&q=80" alt=""><span class="reward-price-tag">2,000 pts</span></div><div class="reward-body"><h4>沖繩度假折抵</h4><p>TPE → OKA</p></div></div>
+                        <div class="reward-card"><div class="reward-img"><img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80" alt=""><span class="reward-price-tag">4,500 pts</span></div><div class="reward-body"><h4>首爾來回折抵</h4><p>TPE ⇄ ICN</p></div></div>
+                        <div class="reward-card"><div class="reward-img"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt=""><span class="reward-price-tag">500 pts</span></div><div class="reward-body"><h4>額外行李 20kg</h4><p>任一國際航線</p></div></div>
+                    </div>
+                    <div class="tier-reminder"><span class="material-icons-round">emoji_events</span><p>升為<strong>尊榮虎</strong>後，回饋倍率提升至 <strong>2%</strong>，累積更快！</p></div>
+                </div>
+            </section>
 
-                    <!-- Featured Reward -->
-                    <div class="featured-reward" id="featured-reward">
-                        <img src="resort.png" alt="寧靜灣別墅度假村" class="featured-image">
-                        <div class="featured-overlay">
-                            <div class="featured-content">
-                                <span class="featured-badge">精選推薦</span>
-                                <h2>寧靜灣別墅度假村</h2>
-                                <p>在馬爾代夫體驗 5 晚的極致奢華之旅。</p>
-                                <div class="featured-price">
-                                    <span class="price-value">145,000</span>
-                                    <span class="price-unit">點 / 每次入住</span>
+            <!-- ===================== ORDERS ===================== -->
+            <section class="page" id="page-orders">
+                <div class="page-content">
+                    <div class="page-header"><h1 class="page-title">我的訂單</h1><p class="page-subtitle">管理您的機票預訂與行程紀錄</p></div>
+
+                    <div class="orders-tabs">
+                        <button class="otab active">全部</button>
+                        <button class="otab">即將出發</button>
+                        <button class="otab">已完成</button>
+                        <button class="otab">已取消</button>
+                    </div>
+
+                    <div class="orders-list">
+                        <!-- Order 1 — Upcoming -->
+                        <div class="order-card">
+                            <div class="order-header">
+                                <div class="order-id">
+                                    <span class="order-label">訂單編號</span>
+                                    <span class="order-num">TG-20260415-8821</span>
                                 </div>
-                                <button class="btn-primary" id="btn-redeem-resort">立即兌換</button>
+                                <span class="order-status upcoming">即將出發</span>
+                            </div>
+                            <div class="order-route-row">
+                                <div class="order-leg">
+                                    <div class="order-port"><span class="order-port-code">TPE</span><span class="order-port-city">台北桃園</span></div>
+                                    <div class="order-route-line"><span class="route-dash"></span><span class="material-icons-round">flight</span><span class="route-dash"></span></div>
+                                    <div class="order-port"><span class="order-port-code">NRT</span><span class="order-port-city">東京成田</span></div>
+                                </div>
+                                <div class="order-leg">
+                                    <div class="order-port"><span class="order-port-code">NRT</span><span class="order-port-city">東京成田</span></div>
+                                    <div class="order-route-line"><span class="route-dash"></span><span class="material-icons-round">flight</span><span class="route-dash"></span></div>
+                                    <div class="order-port"><span class="order-port-code">TPE</span><span class="order-port-city">台北桃園</span></div>
+                                </div>
+                            </div>
+                            <div class="order-info-row">
+                                <div class="order-info"><span class="oi-label">去程</span><span>2026/05/15 08:30</span></div>
+                                <div class="order-info"><span class="oi-label">回程</span><span>2026/05/20 14:00</span></div>
+                                <div class="order-info"><span class="oi-label">旅客</span><span>1 位成人</span></div>
+                                <div class="order-info"><span class="oi-label">金額</span><span class="order-price">NT$8,420</span></div>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-primary btn-sm">線上報到</button>
+                                <button class="btn-ghost btn-sm">管理訂單</button>
+                                <span class="order-earn">預計獲得 <strong>84</strong> 虎足跡 + <strong>84</strong> 回饋金</span>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Rewards Grid -->
-                    <div class="rewards-grid" id="rewards-grid">
-                        <div class="reward-card" id="reward-upgrade">
-                            <div class="reward-icon-wrap upgrade">
-                                <span class="material-icons-round">airline_seat_flat</span>
+                        <!-- Order 2 — Completed -->
+                        <div class="order-card completed">
+                            <div class="order-header">
+                                <div class="order-id">
+                                    <span class="order-label">訂單編號</span>
+                                    <span class="order-num">TG-20260328-5543</span>
+                                </div>
+                                <span class="order-status done">已完成</span>
                             </div>
-                            <h4>全球航線升艙券</h4>
-                            <p>通過我們優質的合作夥伴網絡，將任何長途航班升級至商務艙。</p>
-                            <div class="reward-footer">
-                                <span class="reward-points">28,000 點</span>
-                                <button class="btn-sm" onclick="showRedemption()">兌換</button>
+                            <div class="order-route-row">
+                                <div class="order-leg">
+                                    <div class="order-port"><span class="order-port-code">TPE</span><span class="order-port-city">台北桃園</span></div>
+                                    <div class="order-route-line"><span class="route-dash"></span><span class="material-icons-round">flight</span><span class="route-dash"></span></div>
+                                    <div class="order-port"><span class="order-port-code">KIX</span><span class="order-port-city">大阪關西</span></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="reward-card" id="reward-dining">
-                            <div class="reward-icon-wrap dining">
-                                <span class="material-icons-round">restaurant</span>
+                            <div class="order-info-row">
+                                <div class="order-info"><span class="oi-label">日期</span><span>2026/03/28 10:15</span></div>
+                                <div class="order-info"><span class="oi-label">旅客</span><span>1 位成人</span></div>
+                                <div class="order-info"><span class="oi-label">金額</span><span class="order-price">NT$4,280</span></div>
+                                <div class="order-info"><span class="oi-label">回饋</span><span class="text-success">+42 虎足跡 / +42 回饋金</span></div>
                             </div>
-                            <h4>米其林餐飲體驗</h4>
-                            <p>在享譽全球的「地平線邊緣」廚房享受雙人 7 道菜品鑑套餐。</p>
-                            <div class="reward-footer">
-                                <span class="reward-points">12,500 點</span>
-                                <button class="btn-sm" onclick="showRedemption()">兌換</button>
-                            </div>
-                        </div>
-                        <div class="reward-card" id="reward-watch">
-                            <div class="reward-icon-wrap tech">
-                                <span class="material-icons-round">watch</span>
-                            </div>
-                            <h4>SkyPulse 智能手錶 X</h4>
-                            <p>旅行者的終極伴侶。追蹤您的海拔、健身狀態及航班時間。</p>
-                            <div class="reward-footer">
-                                <span class="reward-points">18,000 點</span>
-                                <button class="btn-sm" onclick="showRedemption()">兌換</button>
+                            <div class="order-actions">
+                                <button class="btn-ghost btn-sm">查看明細</button>
+                                <button class="btn-ghost btn-sm">再次訂票</button>
                             </div>
                         </div>
-                        <div class="reward-card" id="reward-luggage">
-                            <div class="reward-icon-wrap travel">
-                                <span class="material-icons-round">luggage</span>
-                            </div>
-                            <h4>精英旅行者行李箱</h4>
-                            <p>採用航空級鋁材打造，專為現代遊牧生活設計。輕巧、耐用且充滿時尚感。</p>
-                            <div class="reward-footer">
-                                <span class="reward-points">22,000 點</span>
-                                <button class="btn-sm" onclick="showRedemption()">兌換</button>
-                            </div>
-                            <span class="reward-tag">全球免費運送</span>
-                        </div>
-                    </div>
 
-                    <!-- Tier Reminder -->
-                    <div class="tier-reminder-bar" id="tier-reminder">
-                        <span class="material-icons-round">emoji_events</span>
-                        <p>距離<strong>尊榮虎 tigerprime</strong>還需 <strong>4,580</strong> 虎足跡！持續累積虎足跡，解鎖回饋金倍率提升至機票金額 2%。</p>
+                        <!-- Order 3 — Completed -->
+                        <div class="order-card completed">
+                            <div class="order-header">
+                                <div class="order-id">
+                                    <span class="order-label">訂單編號</span>
+                                    <span class="order-num">TG-20260210-3319</span>
+                                </div>
+                                <span class="order-status done">已完成</span>
+                            </div>
+                            <div class="order-route-row">
+                                <div class="order-leg">
+                                    <div class="order-port"><span class="order-port-code">TPE</span><span class="order-port-city">台北桃園</span></div>
+                                    <div class="order-route-line"><span class="route-dash"></span><span class="material-icons-round">flight</span><span class="route-dash"></span></div>
+                                    <div class="order-port"><span class="order-port-code">OKA</span><span class="order-port-city">沖繩那霸</span></div>
+                                </div>
+                            </div>
+                            <div class="order-info-row">
+                                <div class="order-info"><span class="oi-label">日期</span><span>2026/02/10 07:00</span></div>
+                                <div class="order-info"><span class="oi-label">旅客</span><span>2 位成人</span></div>
+                                <div class="order-info"><span class="oi-label">金額</span><span class="order-price">NT$6,160</span></div>
+                                <div class="order-info"><span class="oi-label">回饋</span><span class="text-success">+61 虎足跡 / +61 回饋金</span></div>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-ghost btn-sm">查看明細</button>
+                                <button class="btn-ghost btn-sm">再次訂票</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ===== PAGE: MEMBER TIER ===== -->
+            <!-- ===================== TIER ===================== -->
             <section class="page" id="page-tier">
                 <div class="page-content">
-                    <div class="page-header-row tier-header-row">
-                        <h1 class="page-title">會員資訊</h1>
-                        <div class="tier-points-display">
-                            <span class="tier-points-value">25,420</span>
-                            <span class="tier-points-label">目前可用 tigerpoints</span>
-                        </div>
-                    </div>
-
-                    <div class="tier-status-grid">
-                        <!-- Current Tier Card -->
-                        <div class="tier-status-card" id="tier-status-card">
+                    <div class="page-header"><h1 class="page-title">會員資訊</h1></div>
+                    <div class="tier-top-grid">
+                        <div class="card tier-status-card">
                             <div class="tier-badge-row">
-                                <div class="tier-trophy">
-                                    <span class="material-icons-round">emoji_events</span>
-                                </div>
-                                <div>
-                                    <span class="tier-current-badge">目前等級</span>
-                                    <h2 class="tier-current-name">菁英虎 tigerexpert</h2>
-                                    <p class="tier-since">2026/04/10 ~ 無結束日</p>
-                                </div>
+                                <div class="tier-trophy"><span class="material-icons-round">emoji_events</span></div>
+                                <div><span class="tier-current-badge">目前等級</span><h2 class="tier-current-name">菁英虎 tigerexpert</h2><p class="tier-since">效期：永久有效</p></div>
                             </div>
                             <div class="tier-progress-section">
-                                <span class="card-eyebrow">下一會員等級</span>
-                                <div class="tier-next-row">
-                                    <span class="tier-next-name">尊榮虎 tigerprime</span>
-                                    <span class="tier-next-gap">還差 4,580 虎足跡</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 84.7%"></div>
-                                </div>
+                                <span class="card-eyebrow">升等至 尊榮虎 tigerprime</span>
+                                <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
+                                <div class="progress-labels"><span>68 / 150 虎足跡</span><span>180天內累計</span></div>
                             </div>
                         </div>
-
-                        <!-- Stats Cards -->
                         <div class="tier-stats-col">
-                            <div class="stat-card" id="stat-flights">
-                                <span class="stat-eyebrow">已搭乘航班</span>
-                                <div class="stat-value-row">
-                                    <span class="stat-value">24</span>
-                                    <span class="material-icons-round stat-icon">flight_takeoff</span>
-                                </div>
-                            </div>
-                            <div class="stat-card" id="stat-multiplier">
-                                <span class="stat-eyebrow">回饋金倍率</span>
-                                <div class="stat-value-row">
-                                    <span class="stat-value">1.5x</span>
-                                    <span class="material-icons-round stat-icon">trending_up</span>
-                                </div>
-                            </div>
+                            <div class="card stat-card"><span class="stat-eyebrow">已搭乘航班</span><div class="stat-value-row"><span class="stat-value">6</span><span class="material-icons-round stat-icon">flight_takeoff</span></div></div>
+                            <div class="card stat-card"><span class="stat-eyebrow">回饋金倍率</span><div class="stat-value-row"><span class="stat-value">1%</span><span class="material-icons-round stat-icon">percent</span></div></div>
                         </div>
                     </div>
-
-                    <!-- Benefits -->
-                    <div class="benefits-section">
-                        <div class="benefits-header">
-                            <h3>菁英虎專屬權益</h3>
-                            <button class="link-btn" id="btn-compare-tiers">查看 tigerclub 會員回饋 →</button>
-                        </div>
-                        <div class="benefits-grid" id="benefits-grid">
-                            <div class="benefit-card">
-                                <div class="benefit-icon">
-                                    <span class="material-icons-round">luggage</span>
-                                </div>
-                                <h4>額外行李額度</h4>
-                                <p>出行無憂。菁英虎在所有國際航線上可額外享受 23 公斤託運行李額度。</p>
-                            </div>
-                            <div class="benefit-card">
-                                <div class="benefit-icon">
-                                    <span class="material-icons-round">priority_high</span>
-                                </div>
-                                <h4>優先登機</h4>
-                                <p>告別排隊。享受專屬的第 1 區登機特權，率先進入機艙安頓休息。</p>
-                            </div>
-                            <div class="benefit-card">
-                                <div class="benefit-icon">
-                                    <span class="material-icons-round">deck</span>
-                                </div>
-                                <h4>貴賓休息室</h4>
-                                <p>愜意放鬆。為您和一位隨行同伴提供全球合作貴賓休息室的免費使用權。</p>
-                            </div>
+                    <div class="card tier-compare-card">
+                        <h3>等級權益比較</h3>
+                        <div class="tier-table">
+                            <div class="tier-col"><div class="tier-col-header expert">菁英虎<br><small>tigerexpert</small></div><div class="tier-cell">回饋金 = 機票 <strong>1%</strong></div><div class="tier-cell">註冊即取得</div><div class="tier-cell">永久有效</div><div class="tier-cell dim">促銷優先 ✕</div></div>
+                            <div class="tier-col highlight"><div class="tier-col-header prime">尊榮虎<br><small>tigerprime</small></div><div class="tier-cell">回饋金 = 機票 <strong>2%</strong></div><div class="tier-cell">180天累計 150 虎足跡</div><div class="tier-cell">180天（搭乘即續）</div><div class="tier-cell accent">促銷優先 ✓</div></div>
                         </div>
                     </div>
-
-                    <!-- Upgrade CTA -->
-                    <div class="upgrade-cta" id="upgrade-cta">
-                        <div class="upgrade-text">
-                            <h2>準備好晉升尊榮虎了嗎？</h2>
-                            <p>立即預訂下一次旅程，升級為尊榮虎後回饋金提升至機票金額 2%。下一次升級近在咫尺。</p>
-                            <div class="upgrade-buttons">
-                                <button class="btn-primary">立即預訂</button>
-                                <button class="btn-secondary-light">等級對比</button>
-                            </div>
-                        </div>
-                        <div class="upgrade-illustration">
-                            <div class="cloud cloud-1"></div>
-                            <div class="cloud cloud-2"></div>
-                            <div class="plane-icon">
-                                <span class="material-icons-round">flight</span>
-                            </div>
-                        </div>
+                    <div class="upgrade-cta parallax-container">
+                        <div class="upgrade-bg" data-parallax="0.15"><img src="images/masaaki-komori-qwPSnBvdhtI-unsplash.jpg" alt=""></div>
+                        <div class="upgrade-overlay"></div>
+                        <div class="upgrade-content"><h2>準備好晉升尊榮虎了嗎？</h2><p>只要再搭乘 <strong>1 趟旅行</strong>，即可享 2% 回饋倍率</p><div class="upgrade-actions"><button class="btn-primary">立即預訂航班</button><button class="btn-ghost">了解續等規則</button></div></div>
                     </div>
                 </div>
             </section>
 
-            <!-- ===== PAGE: VOUCHERS ===== -->
+            <!-- ===================== VOUCHERS ===================== -->
             <section class="page" id="page-vouchers">
                 <div class="page-content">
-                    <div class="page-header-row">
-                        <div>
-                            <h1 class="page-title">Voucher</h1>
-                            <p class="page-subtitle">tigerpoints 回饋金兌換 Voucher</p>
+                    <div class="page-header"><h1 class="page-title">我的 Voucher</h1><p class="page-subtitle">回饋金兌換 Voucher，折抵機票及附加服務</p></div>
+                    <div class="vouchers-grid">
+                        <div class="voucher-card">
+                            <div class="voucher-left"><div class="voucher-amount">NT$1,000</div><div class="voucher-code">VCH-TG-20260405-A1</div></div>
+                            <div class="voucher-divider"></div>
+                            <div class="voucher-right"><div class="voucher-status active-status">可使用</div><div class="voucher-expiry"><span class="material-icons-round">schedule</span>剩餘 <strong>42</strong> 天</div><button class="btn-primary btn-sm">使用 Voucher →</button><small class="voucher-hint">前往訂票，付款選擇 Voucher</small></div>
+                        </div>
+                        <div class="voucher-card urgent-voucher">
+                            <div class="voucher-left"><div class="voucher-amount">NT$500</div><div class="voucher-code">VCH-TG-20260320-B3</div></div>
+                            <div class="voucher-divider"></div>
+                            <div class="voucher-right"><div class="voucher-status warning-status">即將到期</div><div class="voucher-expiry urgent"><span class="material-icons-round">warning</span>剩餘 <strong>5</strong> 天</div><button class="btn-primary btn-sm btn-urgent">立即使用 →</button><small class="voucher-hint">逾期失效不補發</small></div>
                         </div>
                     </div>
-
-                    <div class="vouchers-grid" id="vouchers-grid">
-                        <div class="voucher-card" id="voucher-lounge">
-                            <div class="voucher-header lounge">
-                                <span class="material-icons-round">deck</span>
-                            </div>
-                            <div class="voucher-body">
-                                <h4>全球休息室通行證</h4>
-                                <p>適用於全球 1,200 多個機場休息室。</p>
-                                <div class="voucher-expiry">
-                                    <span class="material-icons-round">event</span>
-                                    有效期至 2025年12月12日
-                                </div>
-                            </div>
-                            <div class="voucher-qr">
-                                <div class="qr-placeholder">
-                                    <span class="material-icons-round">qr_code_2</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="voucher-card" id="voucher-dining">
-                            <div class="voucher-header dining">
-                                <span class="material-icons-round">restaurant</span>
-                            </div>
-                            <div class="voucher-body">
-                                <h4>天空美食 75 折</h4>
-                                <p>可在 3 號航廈的任何合作餐廳兌換。</p>
-                                <div class="voucher-expiry">
-                                    <span class="material-icons-round">event</span>
-                                    有效期至 2025年11月05日
-                                </div>
-                            </div>
-                            <div class="voucher-qr">
-                                <div class="qr-placeholder">
-                                    <span class="material-icons-round">qr_code_2</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="voucher-card" id="voucher-baggage">
-                            <div class="voucher-header baggage">
-                                <span class="material-icons-round">luggage</span>
-                            </div>
-                            <div class="voucher-body">
-                                <h4>額外行李額 (20kg)</h4>
-                                <p>在您的下一次航班上增加一件託運行李。</p>
-                                <div class="voucher-expiry">
-                                    <span class="material-icons-round">event</span>
-                                    有效期至 2026年01月20日
-                                </div>
-                            </div>
-                            <div class="voucher-qr">
-                                <div class="qr-placeholder">
-                                    <span class="material-icons-round">qr_code_2</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Referral Banner -->
-                    <div class="referral-banner" id="referral-banner">
-                        <div class="referral-icon">
-                            <span class="material-icons-round">group_add</span>
-                        </div>
-                        <div class="referral-text">
-                            <h3>推薦好友，賺取 1,000 tigerpoints</h3>
-                            <p>分享藍天！每當有一位好友加入 tigerclub 會員回饋，您都能獲得獎勵。</p>
-                        </div>
-                        <button class="btn-primary" id="btn-refer">邀請好友</button>
-                    </div>
-
-                    <!-- Recent Activity -->
-                    <div class="card activity-card" id="voucher-activity">
-                        <div class="card-header">
-                            <h3><span class="material-icons-round">history</span> 回饋金紀錄</h3>
-                        </div>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <div class="activity-icon redeem">
-                                    <span class="material-icons-round">shopping_cart</span>
-                                </div>
-                                <div class="activity-details">
-                                    <h4>購買休息室通行證</h4>
-                                    <p>今天 10:42 AM</p>
-                                </div>
-                                <div class="activity-points negative">
-                                    <span>-2,500 點</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon flight">
-                                    <span class="material-icons-round">flight</span>
-                                </div>
-                                <div class="activity-details">
-                                    <h4>航班 IT-402 獎勵</h4>
-                                    <p>昨天</p>
-                                </div>
-                                <div class="activity-points positive">
-                                    <span>+1,200 點</span>
-                                </div>
-                            </div>
+                    <div class="referral-banner"><div class="referral-icon"><span class="material-icons-round">group_add</span></div><div class="referral-text"><h3>推薦好友加入 tigerclub</h3><p>每成功推薦 1 位，雙方各得 <strong>500 tigerpoints</strong></p></div><button class="btn-primary">邀請好友</button></div>
+                    <div class="card how-to-card">
+                        <h3>Voucher 使用說明</h3>
+                        <div class="steps-row">
+                            <div class="step"><div class="step-num">1</div><p>累積 100+ 回饋金</p></div>
+                            <div class="step-arrow"><span class="material-icons-round">arrow_forward</span></div>
+                            <div class="step"><div class="step-num">2</div><p>兌換為 Voucher<br><small>以 100 為單位</small></p></div>
+                            <div class="step-arrow"><span class="material-icons-round">arrow_forward</span></div>
+                            <div class="step"><div class="step-num">3</div><p>訂票時折抵<br><small>60 天內使用</small></p></div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ===== PAGE: SETTINGS ===== -->
+            <!-- ===================== SETTINGS ===================== -->
             <section class="page" id="page-settings">
                 <div class="page-content">
-                    <h1 class="page-title">安全性設定</h1>
+                    <div class="page-header"><h1 class="page-title">安全性設定</h1></div>
+                    <div class="settings-alert"><span class="material-icons-round">warning</span><p>會員資料須與<strong>護照完全一致</strong>（含空格、標點），否則影響回饋金累計及 Voucher 使用。</p></div>
                     <div class="settings-grid">
-                        <div class="card settings-card">
-                            <h3>個人資料</h3>
-                            <div class="setting-row">
-                                <span class="setting-label">姓名</span>
-                                <span class="setting-value">Alex Chen</span>
-                            </div>
-                            <div class="setting-row">
-                                <span class="setting-label">電子郵件</span>
-                                <span class="setting-value">alex.chen@email.com</span>
-                            </div>
-                            <div class="setting-row">
-                                <span class="setting-label">會員編號</span>
-                                <span class="setting-value">7470023181</span>
-                            </div>
-                            <div class="setting-row">
-                                <span class="setting-label">手機</span>
-                                <span class="setting-value">+886 912-345-678</span>
-                            </div>
-                        </div>
-                        <div class="card settings-card">
-                            <h3>偏好設定</h3>
-                            <div class="setting-row">
-                                <span class="setting-label">語言</span>
-                                <span class="setting-value">繁體中文</span>
-                            </div>
-                            <div class="setting-row">
-                                <span class="setting-label">貨幣</span>
-                                <span class="setting-value">TWD (新台幣)</span>
-                            </div>
-                            <div class="setting-row">
-                                <span class="setting-label">通知</span>
-                                <span class="setting-value toggle-on">已開啟</span>
-                            </div>
-                        </div>
+                        <div class="card settings-card"><h3>個人資料</h3><div class="setting-row"><span class="setting-label">姓名</span><span class="setting-value">Alex Chen</span></div><div class="setting-row"><span class="setting-label">電子郵件</span><span class="setting-value">alex.chen@email.com</span></div><div class="setting-row"><span class="setting-label">會員編號</span><span class="setting-value">7470023181</span></div><div class="setting-row"><span class="setting-label">手機</span><span class="setting-value">+886 912-345-678</span></div></div>
+                        <div class="card settings-card"><h3>偏好設定</h3><div class="setting-row"><span class="setting-label">語言</span><span class="setting-value">繁體中文</span></div><div class="setting-row"><span class="setting-label">貨幣</span><span class="setting-value">TWD (新台幣)</span></div><div class="setting-row"><span class="setting-label">通知</span><span class="setting-value toggle-on">已開啟</span></div></div>
                     </div>
                 </div>
             </section>
 
-            <!-- ===== MODAL: REDEMPTION SUCCESS ===== -->
-            <div class="modal-overlay" id="modal-overlay">
-                <div class="modal-card" id="modal-redemption">
-                    <div class="modal-success-icon">
-                        <span class="material-icons-round">check_circle</span>
+            <!-- MODAL -->
+            <div class="modal-overlay" id="modalOverlay">
+                <div class="modal-card">
+                    <div class="modal-success-icon"><span class="material-icons-round">check_circle</span></div>
+                    <h2>Voucher 兌換成功</h2>
+                    <p class="modal-desc">已成功兌換 <strong>NT$1,000 Voucher</strong>，請於 60 天內使用。</p>
+                    <div class="modal-voucher-preview">
+                        <div class="mvp-row"><span>Voucher 面額</span><strong>NT$1,000</strong></div>
+                        <div class="mvp-row"><span>扣除回饋金</span><strong class="negative">-1,000 pts</strong></div>
+                        <div class="mvp-row"><span>有效期限</span><strong>2026/06/16</strong></div>
                     </div>
-                    <h2>太棒了！兌換申請已成功提交</h2>
-                    <p class="modal-desc">收拾好行囊！您的旅程已正式確認。詳細資訊已發送至您的註冊郵箱。</p>
-
-                    <div class="modal-ticket" id="modal-ticket">
-                        <div class="ticket-header">
-                            <span class="material-icons-round">flight_takeoff</span>
-                            <div>
-                                <h4>往返東京機票</h4>
-                                <p>豪華經濟艙 · TPE ⇄ NRT</p>
-                            </div>
-                        </div>
-                        <div class="ticket-details">
-                            <div class="ticket-detail">
-                                <span class="detail-label">出發日期</span>
-                                <span class="detail-value">2025/01/15</span>
-                            </div>
-                            <div class="ticket-detail">
-                                <span class="detail-label">回程日期</span>
-                                <span class="detail-value">2025/01/20</span>
-                            </div>
-                            <div class="ticket-detail">
-                                <span class="detail-label">扣除回饋金</span>
-                                <span class="detail-value highlight">-18,000 點</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-next-tier">
-                        <span class="material-icons-round">emoji_events</span>
-                        <div>
-                            <h4>下一站：尊榮虎 tigerprime！</h4>
-                            <p>還差 4,500 虎足跡即可升級會員等級。</p>
-                        </div>
-                    </div>
-
-                    <div class="modal-actions">
-                        <button class="btn-primary" id="btn-modal-close" onclick="closeModal()">返回首頁</button>
-                        <button class="btn-secondary" id="btn-modal-details">查看詳情</button>
-                    </div>
+                    <div class="modal-actions"><button class="btn-primary" onclick="closeModal()">返回首頁</button><button class="btn-ghost">前往訂票 →</button></div>
                 </div>
             </div>
 
-            <!-- ===== BOTTOM NAV (MOBILE) ===== -->
-            <nav class="bottom-nav" id="bottom-nav">
-                <a href="#" class="bottom-nav-item active" data-page="dashboard" id="bnav-dashboard">
-                    <span class="material-icons-round">dashboard</span>
-                    <span>首頁</span>
-                </a>
-                <a href="#" class="bottom-nav-item" data-page="rewards" id="bnav-rewards">
-                    <span class="material-icons-round">shopping_bag</span>
-                    <span>虎禮選</span>
-                </a>
-                <a href="#" class="bottom-nav-fab" data-page="rewards" id="bnav-fab">
-                    <span class="material-icons-round">add</span>
-                </a>
-                <a href="#" class="bottom-nav-item" data-page="tier" id="bnav-tier">
-                    <span class="material-icons-round">military_tech</span>
-                    <span>會員</span>
-                </a>
-                <a href="#" class="bottom-nav-item" data-page="settings" id="bnav-settings">
-                    <span class="material-icons-round">settings</span>
-                    <span>設定</span>
-                </a>
+            <!-- Bottom Nav (mobile) -->
+            <nav class="bottom-nav" id="bottomNav">
+                <a href="#" class="bnav-item active" data-page="dashboard"><span class="material-icons-round">dashboard</span><span>首頁</span></a>
+                <a href="#" class="bnav-item" data-page="rewards"><span class="material-icons-round">redeem</span><span>虎禮選</span></a>
+                <a href="#" class="bnav-fab" data-page="orders"><span class="material-icons-round">airplane_ticket</span></a>
+                <a href="#" class="bnav-item" data-page="tier"><span class="material-icons-round">military_tech</span><span>會員</span></a>
+                <a href="#" class="bnav-item" data-page="settings"><span class="material-icons-round">more_horiz</span><span>更多</span></a>
             </nav>
         </main>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>

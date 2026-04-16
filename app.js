@@ -1,283 +1,307 @@
 /* ============================================================
-   TIGERAIR 台灣虎航 — MEMBER SYSTEM APPLICATION
+   TIGERCLUB — PREMIUM MEMBER PORTAL
+   Features: Theme Toggle, Parallax, 3D Card, Animations
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
-    initAnimations();
+    initThemeToggle();
+    initParallax();
+    initMemberCardTilt();
     initCheckin();
-    animatePointsCounter();
+    initOrderTabs();
+    initHeroSlideshow();
+    animateCounters();
+    triggerPageAnimations('dashboard');
 });
 
-/* ---------- NAVIGATION ---------- */
+/* ========== HERO SLIDESHOW (cross-fade every 5s) ========== */
+function initHeroSlideshow() {
+    const slides = document.querySelectorAll('.hero-bg-img');
+    if (slides.length < 2) return;
+    let idx = 0;
+    setInterval(() => {
+        slides[idx].classList.remove('active');
+        idx = (idx + 1) % slides.length;
+        slides[idx].classList.add('active');
+    }, 5000);
+}
+
+/* ========== NAVIGATION ========== */
 function initNavigation() {
-    // Sidebar nav items
-    const sidebarItems = document.querySelectorAll('.sidebar-nav .nav-item');
-    // Top tabs
-    const topTabs = document.querySelectorAll('.top-tab');
-    // Bottom nav items
-    const bottomItems = document.querySelectorAll('.bottom-nav-item, .bottom-nav-fab');
-
-    const allNavItems = [...sidebarItems, ...topTabs, ...bottomItems];
-
-    allNavItems.forEach(item => {
-        item.addEventListener('click', (e) => {
+    const allNav = document.querySelectorAll('[data-page]');
+    allNav.forEach(item => {
+        item.addEventListener('click', e => {
             e.preventDefault();
             const page = item.dataset.page;
             if (page) navigateTo(page);
         });
     });
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    if (menuBtn && sidebar) {
+        menuBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+        document.addEventListener('click', e => {
+            if (sidebar.classList.contains('open') &&
+                !sidebar.contains(e.target) &&
+                e.target !== menuBtn &&
+                !menuBtn.contains(e.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+    }
 }
 
 function navigateTo(pageName) {
-    // Hide all pages
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
-
-    // Show target page
-    const targetPage = document.getElementById(`page-${pageName}`);
-    if (targetPage) {
-        targetPage.classList.add('active');
-    }
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(`page-${pageName}`);
+    if (target) target.classList.add('active');
 
     // Update sidebar nav
-    document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
-        item.classList.toggle('active', item.dataset.page === pageName);
-    });
-
-    // Update top tabs
-    document.querySelectorAll('.top-tab').forEach(tab => {
-        tab.classList.toggle('active', tab.dataset.page === pageName);
-    });
+    document.querySelectorAll('.sidebar-nav .nav-item').forEach(i =>
+        i.classList.toggle('active', i.dataset.page === pageName)
+    );
 
     // Update bottom nav
-    document.querySelectorAll('.bottom-nav-item').forEach(item => {
-        item.classList.toggle('active', item.dataset.page === pageName);
-    });
+    document.querySelectorAll('.bnav-item, .bnav-fab').forEach(b =>
+        b.classList.toggle('active', b.dataset.page === pageName)
+    );
+
+    // Close mobile sidebar
+    document.getElementById('sidebar')?.classList.remove('open');
 
     // Scroll to top
+    document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Re-trigger animations for the new page
+    // Re-trigger animations
     triggerPageAnimations(pageName);
 }
-
-// Make navigateTo available globally
 window.navigateTo = navigateTo;
 
-/* ---------- PAGE ANIMATIONS ---------- */
-function triggerPageAnimations(pageName) {
-    const page = document.getElementById(`page-${pageName}`);
-    if (!page) return;
+/* ========== THEME TOGGLE ========== */
+function initThemeToggle() {
+    const toggle = document.getElementById('styleToggle');
+    const label = document.getElementById('toggleLabel');
+    const panel = document.getElementById('togglePanel');
+    const btnDark = document.getElementById('btnDark');
+    const btnLight = document.getElementById('btnLight');
 
-    const animatedElements = page.querySelectorAll('.card, .featured-reward, .reward-card, .voucher-card, .tier-status-card, .stat-card, .benefit-card, .upgrade-cta, .referral-banner, .tier-reminder-bar, .points-hero');
+    if (!toggle) return;
 
-    animatedElements.forEach((el, index) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(24px)';
-
-        setTimeout(() => {
-            el.style.transition = `opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)`;
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }, 80 * index);
+    label.addEventListener('click', e => {
+        e.stopPropagation();
+        panel.classList.toggle('open');
     });
+
+    document.addEventListener('click', e => {
+        if (!toggle.contains(e.target)) panel.classList.remove('open');
+    });
+
+    [btnDark, btnLight].forEach(btn => {
+        btn.addEventListener('click', () => {
+            const theme = btn.dataset.theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            btnDark.classList.toggle('active', theme === 'dark');
+            btnLight.classList.toggle('active', theme === 'light');
+            localStorage.setItem('tigerclub-theme', theme);
+        });
+    });
+
+    const saved = localStorage.getItem('tigerclub-theme');
+    if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+        btnDark.classList.toggle('active', saved === 'dark');
+        btnLight.classList.toggle('active', saved === 'light');
+    }
 }
 
-function initAnimations() {
-    // Initial page load animations
-    triggerPageAnimations('dashboard');
+/* ========== PARALLAX ========== */
+function initParallax() {
+    const mainContent = document.querySelector('.main-content');
+    if (!mainContent) return;
 
-    // Intersection Observer for scroll animations
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+    const update = () => {
+        const scrollTop = mainContent.scrollTop || window.scrollY;
+        document.querySelectorAll('[data-parallax]').forEach(el => {
+            const speed = parseFloat(el.dataset.parallax) || 0.3;
+            const container = el.closest('.parallax-container');
+            if (!container) return;
+            const rect = container.getBoundingClientRect();
+            if (rect.bottom > 0 && rect.top < window.innerHeight) {
+                const offset = (scrollTop - (container.offsetTop || 0)) * speed;
+                el.style.transform = `translateY(${offset}px) scale(1.1)`;
             }
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px'
-    });
+    };
 
-    document.querySelectorAll('.card, .reward-card, .voucher-card, .benefit-card').forEach(el => {
-        observer.observe(el);
-    });
+    mainContent.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    window.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    update();
 }
 
-/* ---------- POINTS COUNTER ANIMATION ---------- */
-function animatePointsCounter() {
-    const counterEl = document.getElementById('hero-points-value');
-    if (!counterEl) return;
+/* ========== 3D MEMBERSHIP CARD ========== */
+function initMemberCardTilt() {
+    const card = document.getElementById('memberCard');
+    if (!card) return;
 
-    const target = 25420;
-    const duration = 1500;
-    const startTime = performance.now();
+    card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(1000px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
 
-    function update(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-
-        // Ease out cubic
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const current = Math.round(eased * target);
-
-        counterEl.textContent = current.toLocaleString();
-
-        if (progress < 1) {
-            requestAnimationFrame(update);
+        const shine = card.querySelector('.card-shine');
+        if (shine) {
+            shine.style.background = `radial-gradient(circle at ${(x + 0.5) * 100}% ${(y + 0.5) * 100}%, rgba(255,255,255,0.12) 0%, transparent 60%)`;
         }
-    }
+    });
 
-    requestAnimationFrame(update);
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0)';
+        card.style.transition = 'transform 0.5s ease';
+        const shine = card.querySelector('.card-shine');
+        if (shine) shine.style.background = 'none';
+    });
+
+    card.addEventListener('mouseenter', () => {
+        card.style.transition = 'none';
+    });
 }
 
-/* ---------- DAILY CHECK-IN ---------- */
+/* ========== DAILY CHECK-IN ========== */
 function initCheckin() {
-    const btn = document.getElementById('btn-checkin');
+    const btn = document.getElementById('btnCheckin');
     if (!btn) return;
 
     btn.addEventListener('click', () => {
-        const todayEl = document.querySelector('.day.today');
-        if (todayEl) {
-            // Mark today as checked
-            todayEl.classList.remove('today');
-            todayEl.classList.add('checked');
-            todayEl.innerHTML = '<span class="material-icons-round">check</span><small>今天</small>';
-
-            // Highlight next day
-            const nextDay = todayEl.nextElementSibling;
-            if (nextDay && !nextDay.classList.contains('checked')) {
-                nextDay.classList.add('today');
-                nextDay.innerHTML = '<span class="material-icons-round">card_giftcard</span>' + nextDay.innerHTML;
-            }
-
-            // Update button
-            btn.textContent = '✓ 已簽到';
-            btn.style.background = 'linear-gradient(135deg, #0d7a4e, #4edea3)';
-            btn.style.color = '#fff';
-            btn.disabled = true;
-
-            // Update streak
-            const streakEl = document.querySelector('.streak-info span:last-child');
-            if (streakEl) {
-                streakEl.textContent = '5 天連續';
-            }
-
-            // Animate points
-            showPointsToast('+10 虎足跡');
+        const today = document.querySelector('.day.today');
+        if (today) {
+            today.classList.remove('today');
+            today.classList.add('checked');
+            today.innerHTML = '<span class="material-icons-round">check</span><small>五</small>';
         }
+        btn.innerHTML = '<span class="material-icons-round">check_circle</span> 已簽到';
+        btn.classList.add('checked-state');
+        btn.disabled = true;
+
+        const streak = document.querySelector('.streak-badge');
+        if (streak) streak.innerHTML = '<span class="material-icons-round">local_fire_department</span> 5 天連續';
+
+        showToast('+10 虎足跡', 'success');
     });
 }
 
-/* ---------- POINTS TOAST ---------- */
-function showPointsToast(message) {
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position: fixed;
-        top: 80px;
-        right: 40px;
-        padding: 14px 24px;
-        background: linear-gradient(135deg, #0d7a4e, #4edea3);
-        color: #fff;
-        border-radius: 9999px;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700;
-        font-size: 0.9rem;
-        z-index: 2000;
-        box-shadow: 0 8px 24px rgba(13, 122, 78, 0.3);
-        animation: toastIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    `;
-    toast.textContent = message;
+/* ========== ORDER TABS ========== */
+function initOrderTabs() {
+    document.querySelectorAll('.otab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.otab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+        });
+    });
+}
 
-    // Add animation keyframes
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes toastIn {
-            from { opacity: 0; transform: translateY(-16px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes toastOut {
-            from { opacity: 1; transform: translateY(0) scale(1); }
-            to { opacity: 0; transform: translateY(-16px) scale(0.9); }
-        }
-    `;
-    document.head.appendChild(style);
+/* ========== TOAST ========== */
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `<span class="material-icons-round">${type === 'success' ? 'check_circle' : 'info'}</span> ${message}`;
     document.body.appendChild(toast);
 
+    requestAnimationFrame(() => toast.classList.add('show'));
     setTimeout(() => {
-        toast.style.animation = 'toastOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-        setTimeout(() => {
-            toast.remove();
-            style.remove();
-        }, 300);
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
     }, 2500);
 }
 
-/* ---------- MODAL (REDEMPTION) ---------- */
+/* ========== MODAL ========== */
 function showRedemption() {
-    const modal = document.getElementById('modal-overlay');
+    const modal = document.getElementById('modalOverlay');
     if (modal) {
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 }
-
 function closeModal() {
-    const modal = document.getElementById('modal-overlay');
+    const modal = document.getElementById('modalOverlay');
     if (modal) {
         modal.classList.remove('active');
         document.body.style.overflow = '';
     }
 }
-
-// Make modal functions globally available
 window.showRedemption = showRedemption;
 window.closeModal = closeModal;
 
-// Close modal on overlay click
-document.getElementById('modal-overlay')?.addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) {
-        closeModal();
-    }
+document.getElementById('modalOverlay')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
 });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-// Close modal on Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        closeModal();
+/* ========== COUNTER ANIMATION ========== */
+function animateCounters() {
+    const el = document.getElementById('heroPointsVal');
+    if (!el) return;
+    const target = 2580;
+    const duration = 1800;
+    const start = performance.now();
+
+    function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const val = Math.round(eased * target);
+        const formatted = val.toLocaleString();
+        el.textContent = formatted;
+
+        // Sync sidebar points
+        const sidebar = document.getElementById('sidebarPoints');
+        if (sidebar) sidebar.textContent = formatted;
+
+        if (progress < 1) requestAnimationFrame(tick);
     }
-});
+    requestAnimationFrame(tick);
+}
 
-/* ---------- HOVER EFFECTS ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-    // Add ripple-like hover state to interactive cards
-    const interactiveCards = document.querySelectorAll('.reward-card, .benefit-card, .voucher-card');
-    interactiveCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-        });
+/* ========== PAGE ANIMATIONS ========== */
+function triggerPageAnimations(pageName) {
+    const page = document.getElementById(`page-${pageName}`);
+    if (!page) return;
+
+    const els = page.querySelectorAll('.card, .trip-ticket, .order-card, .hero-cinema, .featured-reward, .reward-card, .voucher-card, .tier-status-card, .stat-card, .upgrade-cta, .referral-banner, .tier-reminder, .tier-compare-card, .how-to-card, .settings-card, .settings-alert, .quick-actions');
+
+    els.forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px)';
+        setTimeout(() => {
+            el.style.transition = 'opacity 0.45s cubic-bezier(0.4,0,0.2,1), transform 0.45s cubic-bezier(0.4,0,0.2,1)';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, 60 * i);
     });
 
-    // Progress bar animation on scroll
-    const progressBars = document.querySelectorAll('.progress-fill');
-    const progressObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const bar = entry.target;
-                const width = bar.style.width;
-                bar.style.width = '0%';
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        bar.style.width = width;
-                    });
-                });
-                progressObserver.unobserve(bar);
-            }
+    // Animate progress bars
+    setTimeout(() => {
+        page.querySelectorAll('.progress-fill').forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0%';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => { bar.style.width = width; });
+            });
         });
-    }, { threshold: 0.5 });
+    }, 200);
+}
 
-    progressBars.forEach(bar => progressObserver.observe(bar));
-});
+/* ========== INTERSECTION OBSERVER ========== */
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.card, .reward-card, .voucher-card, .trip-ticket, .order-card').forEach(el => observer.observe(el));
