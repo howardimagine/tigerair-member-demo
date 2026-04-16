@@ -498,13 +498,13 @@ html[data-theme="dark"] .hero-gradient {
   display: none;
 }
 
-/* LIGHT MODE: flat neutral hero matched to the 3D render's backdrop */
+/* LIGHT MODE: pure white hero, image centered + scaled proportionally */
 html[data-theme="light"] .hero-cinema {
-  min-height: 480px;
-  background: #EDECE8;
+  min-height: 640px;
+  background: #FFFFFF;
+  align-items: stretch;
 }
 
-/* Place the 3D render on the right with no blending so colours stay true */
 html[data-theme="light"] .hero-bg-wrap {
   display: block;
   inset: 0;
@@ -517,24 +517,43 @@ html[data-theme="light"] .hero-bg-wrap::after {
   inset: 0;
   background-image: url('images/light-hero.jpg');
   background-repeat: no-repeat;
-  background-position: right -20px center;
-  background-size: clamp(360px, 50%, 580px) auto;
+  background-position: center center;
+  background-size: contain;
   pointer-events: none;
 }
 
-/* Hide dark-mode photo layers */
+/* Hide dark-mode-only layers */
 html[data-theme="light"] .hero-bg-img,
-html[data-theme="light"] .hero-noise {
-  display: none;
-}
-
-/* Soft fade at the bottom so hero merges into page bg; no big gradient */
-html[data-theme="light"] .hero-gradient {
-  background: linear-gradient(180deg, transparent 72%, rgba(237, 236, 232, 0.6) 88%, var(--bg) 100%);
-}
-
+html[data-theme="light"] .hero-noise,
 html[data-theme="light"] .hero-illustration {
   display: none;
+}
+
+/* NO gradients on top of the image — just a clean bottom fade to page bg */
+html[data-theme="light"] .hero-gradient {
+  background: linear-gradient(180deg, transparent 78%, rgba(255, 255, 255, 0.9) 94%, var(--bg) 100%);
+}
+
+/* Restructure hero-inner in light mode: welcome top, card+stats bottom, image between */
+html[data-theme="light"] .hero-inner {
+  justify-content: space-between;
+  padding-top: 36px;
+  padding-bottom: 40px;
+}
+
+html[data-theme="light"] .hero-row {
+  /* Card + stats sit at bottom on a white card to stay readable over the image bleed */
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 24px;
+  padding: 20px 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  gap: 24px;
+}
+
+html[data-theme="light"] .hero-welcome {
+  /* Welcome text sits on white backdrop, image blooms below */
 }
 
 @keyframes spin-slow {
