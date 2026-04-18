@@ -498,62 +498,94 @@ html[data-theme="dark"] .hero-gradient {
   display: none;
 }
 
-/* LIGHT MODE: pure white hero, image centered + scaled proportionally */
+/* LIGHT MODE: unified banner — card | info+welcome | tiger */
 html[data-theme="light"] .hero-cinema {
-  min-height: 640px;
-  background: #FFFFFF;
+  min-height: auto;
+  background: transparent;
   align-items: stretch;
+  padding: 20px 0 0;
 }
 
 html[data-theme="light"] .hero-bg-wrap {
-  display: block;
-  inset: 0;
-  opacity: 1;
-}
-
-html[data-theme="light"] .hero-bg-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('images/light-hero.jpg');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  pointer-events: none;
+  display: none;
 }
 
 /* Hide dark-mode-only layers */
 html[data-theme="light"] .hero-bg-img,
 html[data-theme="light"] .hero-noise,
-html[data-theme="light"] .hero-illustration {
+html[data-theme="light"] .hero-illustration,
+html[data-theme="light"] .hero-gradient {
   display: none;
 }
 
-/* NO gradients on top of the image — just a clean bottom fade to page bg */
-html[data-theme="light"] .hero-gradient {
-  background: linear-gradient(180deg, transparent 78%, rgba(255, 255, 255, 0.9) 94%, var(--bg) 100%);
+/* Tiger walking video */
+.hero-tiger-walk {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
 }
 
-/* Restructure hero-inner in light mode: welcome top, card+stats bottom, image between */
+.hero-tiger-walk video {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: contrast(1.02);
+}
+
+html[data-theme="dark"] .hero-tiger-walk { display: none; }
+
+/* Light-mode unified banner: CSS grid across inner to place card | info | tiger */
 html[data-theme="light"] .hero-inner {
-  justify-content: space-between;
-  padding-top: 36px;
-  padding-bottom: 40px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "card welcome tiger"
+    "card stats   tiger";
+  align-items: center;
+  gap: 16px 32px;
+  max-width: 1100px;
+  padding: 28px 32px;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 184, 0, 0.12) 0%, transparent 55%),
+    linear-gradient(135deg, #FFF9F0 0%, #FFFFFF 100%);
+  box-shadow: 0 8px 28px rgba(255, 107, 0, 0.08);
+  margin: 8px auto 0;
 }
 
+/* Unwrap .hero-row so card + stats become direct grid cells */
 html[data-theme="light"] .hero-row {
-  /* Card + stats sit at bottom on a white card to stay readable over the image bleed */
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 24px;
-  padding: 20px 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-  gap: 24px;
+  display: contents;
 }
 
 html[data-theme="light"] .hero-welcome {
-  /* Welcome text sits on white backdrop, image blooms below */
+  grid-area: welcome;
+  align-self: end;
+}
+
+html[data-theme="light"] .membership-card {
+  grid-area: card;
+  align-self: center;
+}
+
+html[data-theme="light"] .hero-stats {
+  grid-area: stats;
+  align-self: start;
+  margin-top: 4px;
+}
+
+html[data-theme="light"] .hero-tiger-walk {
+  grid-area: tiger;
+  align-self: stretch;
+  width: 220px;
+  height: 100%;
+  min-height: 240px;
 }
 
 @keyframes spin-slow {
@@ -2567,12 +2599,38 @@ html[data-theme="dark"] .urgent-voucher {
 
   .hero-row {
     flex-direction: column;
+    align-items: center;
     gap: 24px;
   }
 
   .membership-card {
     width: 100%;
     max-width: 380px;
+  }
+
+  /* Light-mode banner: collapse to single column stack */
+  html[data-theme="light"] .hero-inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "welcome"
+      "tiger"
+      "card"
+      "stats";
+    justify-items: center;
+    gap: 20px;
+    text-align: center;
+    padding: 24px 20px;
+    border-radius: 28px;
+  }
+  html[data-theme="light"] .hero-welcome { align-items: center; text-align: center; justify-self: stretch; }
+  html[data-theme="light"] .hero-tier-line { justify-content: center; }
+  html[data-theme="light"] .membership-card { justify-self: center; }
+  html[data-theme="light"] .hero-stats { align-items: center; }
+  html[data-theme="light"] .hero-tiger-walk {
+    width: 100%;
+    min-height: 180px;
+    max-height: 220px;
+    justify-self: center;
   }
 
   .dash-grid-2,
@@ -2600,6 +2658,11 @@ html[data-theme="dark"] .urgent-voucher {
   .hero-name { font-size: 2rem; }
 
   .hero-points-value { font-size: 2.25rem; }
+
+  html[data-theme="light"] .hero-tiger-walk {
+    min-height: 160px;
+    max-height: 200px;
+  }
 
   .membership-card {
     max-width: 340px;
@@ -2661,6 +2724,11 @@ html[data-theme="dark"] .urgent-voucher {
   .hero-cinema { min-height: 380px; }
   .hero-inner { gap: 24px; }
   .hero-name { font-size: 1.75rem; }
+
+  html[data-theme="light"] .hero-tiger-walk {
+    min-height: 140px;
+    max-height: 180px;
+  }
 
   .card { padding: 18px; }
 
@@ -2836,6 +2904,98 @@ html[data-theme="light"] .dark-only { display: none !important; }
 @keyframes float {
   0%, 100% { transform: translateY(0); opacity: 0.8; }
   50% { transform: translateY(-8px); opacity: 1; }
+}
+
+/* ----------------------------------------------------------------
+   29.7b. MATCHA TIGER BANNER (light mode)
+   ---------------------------------------------------------------- */
+
+.matcha-banner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 1.2fr;
+  align-items: center;
+  gap: 16px;
+  min-height: 260px;
+  padding: 28px 36px 28px 20px;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255, 184, 0, 0.12) 0%, transparent 55%),
+    linear-gradient(135deg, #FFFFFF 0%, #FFF9F0 100%);
+  box-shadow: 0 8px 28px rgba(255, 107, 0, 0.1);
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.matcha-banner-video {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.matcha-banner-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: contrast(1.02);
+}
+
+.matcha-banner-content {
+  position: relative;
+  z-index: 1;
+  padding-right: 8px;
+}
+
+.matcha-banner-eyebrow {
+  display: inline-block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: #FF6B00;
+  margin-bottom: 12px;
+}
+
+.matcha-banner-content h2 {
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #1A1A1A;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.matcha-banner-content p {
+  font-size: 0.9rem;
+  color: #5A5A5A;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .matcha-banner {
+    grid-template-columns: 1fr;
+    padding: 24px 24px 12px;
+    text-align: center;
+  }
+  .matcha-banner-content { padding-right: 0; order: 2; }
+  .matcha-banner-video { height: 200px; order: 1; }
+}
+
+@media (max-width: 768px) {
+  .matcha-banner-video { height: 180px; }
+  .matcha-banner-content h2 { font-size: 1.35rem; }
+}
+
+@media (max-width: 640px) {
+  .matcha-banner { padding: 20px 18px 6px; }
+  .matcha-banner-video { height: 160px; }
+  .matcha-banner-content h2 { font-size: 1.2rem; }
+  .matcha-banner-content p { font-size: 0.82rem; }
 }
 
 /* ----------------------------------------------------------------
