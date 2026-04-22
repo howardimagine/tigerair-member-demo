@@ -8,9 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initThemeToggle();
     initParallax();
     initMemberCardTilt();
-    initCheckin();
     initOrderTabs();
     initHeroSlideshow();
+    initNotifPanel();
+    initPassportModal();
+    initMealModal();
+    initVoucherSelect();
     animateCounters();
     triggerPageAnimations('dashboard');
 });
@@ -171,28 +174,170 @@ function initMemberCardTilt() {
     });
 }
 
-/* ========== DAILY CHECK-IN ========== */
-function initCheckin() {
-    const btn = document.getElementById('btnCheckin');
-    if (!btn) return;
+/* ========== NOTIFICATION PANEL ========== */
+function initNotifPanel() {
+    const panel = document.getElementById('notifPanel');
+    const btnNotif = document.getElementById('btnNotif');
+    if (!panel || !btnNotif) return;
 
-    btn.addEventListener('click', () => {
-        const today = document.querySelector('.day.today');
-        if (today) {
-            today.classList.remove('today');
-            today.classList.add('checked');
-            today.innerHTML = '<span class="material-icons-round">check</span><small>五</small>';
+    btnNotif.addEventListener('click', e => {
+        e.stopPropagation();
+        panel.classList.toggle('open');
+    });
+    document.addEventListener('click', e => {
+        if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btnNotif && !btnNotif.contains(e.target)) {
+            panel.classList.remove('open');
         }
-        btn.innerHTML = '<span class="material-icons-round">check_circle</span> 已簽到';
-        btn.classList.add('checked-state');
-        btn.disabled = true;
-
-        const streak = document.querySelector('.streak-badge');
-        if (streak) streak.innerHTML = '<span class="material-icons-round">local_fire_department</span> 5 天連續';
-
-        showToast('+10 虎足跡', 'success');
     });
 }
+function toggleNotif() {
+    document.getElementById('notifPanel')?.classList.toggle('open');
+    document.querySelectorAll('.notif-item.unread').forEach(el => el.classList.remove('unread'));
+    document.querySelector('.notif-dot')?.remove();
+}
+window.toggleNotif = toggleNotif;
+
+/* ========== PASSPORT OCR MODAL ========== */
+function initPassportModal() {
+    document.getElementById('passportModal')?.addEventListener('click', e => {
+        if (e.target === e.currentTarget) closePassportOCR();
+    });
+}
+function openPassportOCR() {
+    const modal = document.getElementById('passportModal');
+    if (!modal) return;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Sequentially reveal OCR fields for effect
+    const fields = modal.querySelectorAll('.ocr-field');
+    fields.forEach(f => f.classList.remove('ok'));
+    fields.forEach((f, i) => setTimeout(() => f.classList.add('ok'), 600 + i * 350));
+}
+function closePassportOCR() {
+    const modal = document.getElementById('passportModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    // If on register flow, auto-fill both steps
+    if (document.getElementById('page-register')?.classList.contains('active')) {
+        const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+        set('regLastName', 'CHEN');
+        set('regFirstName', 'ALEX');
+        set('regDOB', '1990-08-15');
+        set('regPassportNum', '300000045');
+        set('regPassportExp', '2030-08-15');
+        showToast('已自動帶入護照資料', 'success');
+    } else {
+        showToast('護照資料已儲存', 'success');
+    }
+}
+window.openPassportOCR = openPassportOCR;
+window.closePassportOCR = closePassportOCR;
+
+/* ========== MEAL ORDERING MODAL ========== */
+let USER_POINTS = 2580;
+function initMealModal() {
+    const modal = document.getElementById('mealModal');
+    if (!modal) return;
+    modal.addEventListener('click', e => { if (e.target === e.currentTarget) closeMealModal(); });
+    modal.querySelectorAll('.meal-option input').forEach(i => i.addEventListener('change', updateMealTotal));
+    document.getElementById('mealUsePoints')?.addEventListener('change', updateMealTotal);
+}
+function openMealModal() {
+    const modal = document.getElementById('mealModal');
+    if (!modal) return;
+    // reset
+    modal.querySelectorAll('.meal-option input').forEach(i => i.checked = false);
+    const pts = document.getElementById('mealUsePoints'); if (pts) pts.checked = false;
+    const pl = document.getElementById('mealAvailPts'); if (pl) pl.textContent = USER_POINTS.toLocaleString();
+    updateMealTotal();
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeMealModal() {
+    const modal = document.getElementById('mealModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+function updateMealTotal() {
+    const inputs = document.querySelectorAll('#mealGrid .meal-option input:checked');
+    const count = inputs.length;
+    let subtotal = 0;
+    inputs.forEach(i => subtotal += Number(i.dataset.price || 0));
+    const usePoints = document.getElementById('mealUsePoints')?.checked;
+    const deduct = usePoints ? Math.min(USER_POINTS, subtotal) : 0;
+    const total = Math.max(0, subtotal - deduct);
+    document.getElementById('mealCount').textContent = count;
+    document.getElementById('mealSubtotal').textContent = 'NT$' + subtotal.toLocaleString();
+    document.getElementById('mealDeduct').textContent = '-' + deduct.toLocaleString() + ' pts';
+    document.getElementById('mealTotal').textContent = 'NT$' + total.toLocaleString();
+    document.getElementById('btnConfirmMeal').disabled = count === 0;
+}
+function confirmMeal() {
+    const inputs = document.querySelectorAll('#mealGrid .meal-option input:checked');
+    const names = Array.from(inputs).map(i => i.dataset.name);
+    const usePoints = document.getElementById('mealUsePoints')?.checked;
+    const subtotal = Array.from(inputs).reduce((s, i) => s + Number(i.dataset.price || 0), 0);
+    const deduct = usePoints ? Math.min(USER_POINTS, subtotal) : 0;
+    if (usePoints) {
+        USER_POINTS -= deduct;
+        // update hero + sidebar points
+        const fmt = USER_POINTS.toLocaleString();
+        const hp = document.getElementById('heroPointsVal'); if (hp) hp.textContent = fmt;
+        const sp = document.getElementById('sidebarPoints'); if (sp) sp.textContent = fmt;
+    }
+    closeMealModal();
+    showToast('已加購 ' + names.length + ' 項機上餐點' + (usePoints ? `（折抵 ${deduct} pts）` : ''), 'success');
+    // Mark the meal chip as added on the corresponding flight card
+    document.querySelectorAll('.fa-chip').forEach(chip => {
+        if (chip.querySelector('.fa-label')?.textContent.includes('機上餐')) {
+            chip.classList.add('added');
+            const price = chip.querySelector('.fa-price');
+            if (price) { price.className = 'fa-state'; price.textContent = '已加購'; }
+        }
+    });
+}
+window.openMealModal = openMealModal;
+window.closeMealModal = closeMealModal;
+window.confirmMeal = confirmMeal;
+
+/* ========== REGISTER STEPPER ========== */
+let currentStep = 1;
+const totalSteps = 5;
+function goToStep(n) {
+    currentStep = Math.max(1, Math.min(totalSteps, n));
+    document.querySelectorAll('#registerStepper .step-dot').forEach(d => {
+        const s = Number(d.dataset.step);
+        d.classList.toggle('active', s === currentStep);
+        d.classList.toggle('done', s < currentStep);
+    });
+    document.querySelectorAll('.register-step').forEach(s => {
+        s.classList.toggle('active', Number(s.dataset.step) === currentStep);
+    });
+    const prev = document.getElementById('btnStepPrev');
+    const next = document.getElementById('btnStepNext');
+    const actions = document.getElementById('registerActions');
+    if (prev) prev.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+    if (next) next.innerHTML = currentStep === totalSteps - 1
+        ? '完成註冊<span class="material-icons-round">check</span>'
+        : '下一步<span class="material-icons-round">arrow_forward</span>';
+    if (actions) actions.style.display = currentStep === totalSteps ? 'none' : 'flex';
+}
+function stepNext() {
+    if (currentStep < totalSteps) goToStep(currentStep + 1);
+}
+function stepPrev() {
+    if (currentStep > 1) goToStep(currentStep - 1);
+}
+window.stepNext = stepNext;
+window.stepPrev = stepPrev;
+// Reset stepper each time /register opens
+const _navOrig = window.navigateTo;
+window.navigateTo = function(page) {
+    _navOrig(page);
+    if (page === 'register') goToStep(1);
+};
 
 /* ========== ORDER TABS ========== */
 function initOrderTabs() {
@@ -218,10 +363,69 @@ function showToast(message, type = 'success') {
     }, 2500);
 }
 
-/* ========== MODAL ========== */
+/* ========== VOUCHER REDEMPTION FLOW ========== */
+let vsSelectedPts = 0;
+
 function showRedemption() {
+    openVoucherSelect();
+}
+function openVoucherSelect() {
+    const modal = document.getElementById('voucherSelectModal');
+    if (!modal) return;
+    vsSelectedPts = 0;
+    document.querySelectorAll('#vsGrid .vden-card').forEach(c => {
+        c.classList.remove('selected');
+        const pts = Number(c.dataset.pts || 0);
+        c.classList.toggle('disabled', pts > USER_POINTS);
+    });
+    document.getElementById('vsAvailPts').textContent = USER_POINTS.toLocaleString();
+    document.getElementById('vsSummary').hidden = true;
+    document.getElementById('btnConfirmVoucher').disabled = true;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeVoucherSelect() {
+    const modal = document.getElementById('voucherSelectModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+function initVoucherSelect() {
+    const modal = document.getElementById('voucherSelectModal');
+    if (!modal) return;
+    modal.addEventListener('click', e => { if (e.target === e.currentTarget) closeVoucherSelect(); });
+    modal.querySelectorAll('#vsGrid .vden-card').forEach(card => {
+        card.addEventListener('click', () => {
+            if (card.classList.contains('disabled')) return;
+            modal.querySelectorAll('#vsGrid .vden-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            vsSelectedPts = Number(card.dataset.pts);
+            document.getElementById('vsPickAmt').textContent = 'NT$' + vsSelectedPts.toLocaleString();
+            document.getElementById('vsPickPts').textContent = '-' + vsSelectedPts.toLocaleString() + ' pts';
+            document.getElementById('vsPickRemain').textContent = (USER_POINTS - vsSelectedPts).toLocaleString() + ' pts';
+            document.getElementById('vsSummary').hidden = false;
+            document.getElementById('btnConfirmVoucher').disabled = false;
+        });
+    });
+}
+function confirmVoucher() {
+    if (!vsSelectedPts || vsSelectedPts > USER_POINTS) return;
+    USER_POINTS -= vsSelectedPts;
+    const fmt = USER_POINTS.toLocaleString();
+    const hp = document.getElementById('heroPointsVal'); if (hp) hp.textContent = fmt;
+    const sp = document.getElementById('sidebarPoints'); if (sp) sp.textContent = fmt;
+    closeVoucherSelect();
+    // Show success with correct amount
     const modal = document.getElementById('modalOverlay');
     if (modal) {
+        modal.querySelector('.modal-desc').innerHTML = `已成功兌換 <strong>NT$${vsSelectedPts.toLocaleString()} Voucher</strong>，請於 60 天內使用。`;
+        const rows = modal.querySelectorAll('.mvp-row strong');
+        if (rows[0]) rows[0].textContent = 'NT$' + vsSelectedPts.toLocaleString();
+        if (rows[1]) rows[1].textContent = '-' + vsSelectedPts.toLocaleString() + ' pts';
+        if (rows[2]) {
+            const d = new Date(); d.setDate(d.getDate() + 60);
+            rows[2].textContent = d.getFullYear() + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0');
+        }
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -234,12 +438,15 @@ function closeModal() {
     }
 }
 window.showRedemption = showRedemption;
+window.openVoucherSelect = openVoucherSelect;
+window.closeVoucherSelect = closeVoucherSelect;
+window.confirmVoucher = confirmVoucher;
 window.closeModal = closeModal;
 
 document.getElementById('modalOverlay')?.addEventListener('click', e => {
     if (e.target === e.currentTarget) closeModal();
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeVoucherSelect(); closeMealModal(); closePassportOCR(); } });
 
 /* ========== COUNTER ANIMATION ========== */
 function animateCounters() {

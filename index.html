@@ -65,7 +65,7 @@
                     <span class="material-icons-round">toll</span>
                     <div><strong id="sidebarPoints">2,580</strong><span> pts</span></div>
                 </div>
-                <button class="sidebar-cta-btn" onclick="showRedemption()">兌換 Voucher</button>
+                <button class="sidebar-cta-btn sidebar-logout" onclick="navigateTo('login')"><span class="material-icons-round">logout</span>登出</button>
             </div>
         </aside>
 
@@ -160,30 +160,20 @@
                         </button>
                     </div>
 
-                    <!-- 我的行程 -->
+                    <!-- 我的行程 (compact tickets) -->
                     <section class="dash-section">
                         <div class="section-head">
                             <h2>我的行程</h2>
                             <button class="link-btn" onclick="navigateTo('orders')">查看全部 →</button>
                         </div>
                         <div class="trips-scroll">
-                            <div class="trip-ticket">
+                            <div class="trip-ticket" onclick="navigateTo('orders')">
                                 <div class="ticket-accent"></div>
                                 <div class="ticket-body">
                                     <div class="ticket-route">
-                                        <div class="ticket-port">
-                                            <span class="port-code">TPE</span>
-                                            <span class="port-city">台北桃園</span>
-                                        </div>
-                                        <div class="ticket-route-mid">
-                                            <span class="route-line"></span>
-                                            <span class="material-icons-round route-icon">flight</span>
-                                            <span class="route-line"></span>
-                                        </div>
-                                        <div class="ticket-port">
-                                            <span class="port-code">NRT</span>
-                                            <span class="port-city">東京成田</span>
-                                        </div>
+                                        <div class="ticket-port"><span class="port-code">TPE</span><span class="port-city">台北桃園</span></div>
+                                        <div class="ticket-route-mid"><span class="route-line"></span><span class="material-icons-round route-icon">flight</span><span class="route-line"></span></div>
+                                        <div class="ticket-port"><span class="port-code">NRT</span><span class="port-city">東京成田</span></div>
                                     </div>
                                     <div class="ticket-meta">
                                         <div class="ticket-info"><span class="ticket-info-lbl">航班</span><span>IT 200</span></div>
@@ -196,23 +186,13 @@
                                     <span class="ticket-countdown">29 天後</span>
                                 </div>
                             </div>
-                            <div class="trip-ticket">
+                            <div class="trip-ticket" onclick="navigateTo('orders')">
                                 <div class="ticket-accent"></div>
                                 <div class="ticket-body">
                                     <div class="ticket-route">
-                                        <div class="ticket-port">
-                                            <span class="port-code">NRT</span>
-                                            <span class="port-city">東京成田</span>
-                                        </div>
-                                        <div class="ticket-route-mid">
-                                            <span class="route-line"></span>
-                                            <span class="material-icons-round route-icon">flight</span>
-                                            <span class="route-line"></span>
-                                        </div>
-                                        <div class="ticket-port">
-                                            <span class="port-code">TPE</span>
-                                            <span class="port-city">台北桃園</span>
-                                        </div>
+                                        <div class="ticket-port"><span class="port-code">NRT</span><span class="port-city">東京成田</span></div>
+                                        <div class="ticket-route-mid"><span class="route-line"></span><span class="material-icons-round route-icon">flight</span><span class="route-line"></span></div>
+                                        <div class="ticket-port"><span class="port-code">TPE</span><span class="port-city">台北桃園</span></div>
                                     </div>
                                     <div class="ticket-meta">
                                         <div class="ticket-info"><span class="ticket-info-lbl">航班</span><span>IT 201</span></div>
@@ -241,20 +221,6 @@
                         </div>
                     </div>
 
-                    <!-- PLAYFUL CELEBRATION CARD (light mode) -->
-                    <div class="playful-celebration light-only">
-                        <div class="playful-emoji">✈️</div>
-                        <div class="playful-text">
-                            <h3>恭喜！您已累積 68 虎足跡</h3>
-                            <p>再 <strong>1 趟旅行</strong>，就能升等尊榮虎，回饋 2 倍！</p>
-                        </div>
-                        <div class="playful-deco">
-                            <span class="deco-dot d1"></span>
-                            <span class="deco-dot d2"></span>
-                            <span class="deco-dot d3"></span>
-                        </div>
-                    </div>
-
                     <!-- MATCHA TIGER BANNER (light mode) -->
                     <div class="matcha-banner light-only">
                         <div class="matcha-banner-video" aria-hidden="true">
@@ -267,38 +233,21 @@
                         </div>
                     </div>
 
-                    <!-- TIER PROGRESS + CHECK-IN -->
-                    <div class="dash-grid-2">
-                        <div class="card tier-progress-card">
-                            <div class="card-head">
-                                <div><span class="card-eyebrow">下一會員等級</span><h3>尊榮虎 tigerprime</h3></div>
-                                <div class="tier-icon-badge"><span class="material-icons-round">emoji_events</span></div>
-                            </div>
-                            <p class="tier-desc">還差 <strong>82</strong> 虎足跡即可升等 — 約 <strong>1 趟旅行</strong></p>
-                            <div class="progress-bar">
-                                <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
-                                <div class="progress-labels"><span>68 / 150 虎足跡</span><span>180天內</span></div>
-                            </div>
-                            <div class="benefit-chips">
-                                <span class="benefit-chip"><span class="material-icons-round">arrow_upward</span>回饋 2%</span>
-                                <span class="benefit-chip"><span class="material-icons-round">bolt</span>促銷優先</span>
-                            </div>
+                    <!-- TIER PROGRESS (full width) -->
+                    <div class="card tier-progress-card tier-progress-full">
+                        <div class="card-head">
+                            <div><span class="card-eyebrow">下一會員等級</span><h3>尊榮虎 tigerprime</h3></div>
+                            <div class="tier-icon-badge"><span class="material-icons-round">emoji_events</span></div>
                         </div>
-                        <div class="card checkin-card">
-                            <div class="card-head">
-                                <div><h3>每日簽到</h3><span class="streak-badge"><span class="material-icons-round">local_fire_department</span>4 天連續</span></div>
-                                <span class="badge badge-active">進行中</span>
-                            </div>
-                            <div class="checkin-days">
-                                <div class="day checked"><span class="material-icons-round">check</span><small>一</small></div>
-                                <div class="day checked"><span class="material-icons-round">check</span><small>二</small></div>
-                                <div class="day checked"><span class="material-icons-round">check</span><small>三</small></div>
-                                <div class="day checked"><span class="material-icons-round">check</span><small>四</small></div>
-                                <div class="day today"><span class="material-icons-round">card_giftcard</span><small>五</small></div>
-                                <div class="day"><small>六</small></div>
-                                <div class="day bonus"><span class="material-icons-round">star</span><small>日</small></div>
-                            </div>
-                            <button class="btn-checkin" id="btnCheckin"><span class="material-icons-round">touch_app</span>立即簽到 (+10 虎足跡)</button>
+                        <p class="tier-desc">還差 <strong>82</strong> 虎足跡即可升等 — 約 <strong>1 趟旅行</strong></p>
+                        <div class="progress-bar">
+                            <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
+                            <div class="progress-labels"><span>68 / 150 虎足跡</span><span>180天內</span></div>
+                        </div>
+                        <div class="benefit-chips">
+                            <span class="benefit-chip"><span class="material-icons-round">arrow_upward</span>回饋 2%</span>
+                            <span class="benefit-chip"><span class="material-icons-round">bolt</span>促銷優先</span>
+                            <span class="benefit-chip"><span class="material-icons-round">flight_class</span>優先登機</span>
                         </div>
                     </div>
 
@@ -331,24 +280,246 @@
             <!-- ===================== REWARDS ===================== -->
             <section class="page" id="page-rewards">
                 <div class="page-content">
-                    <div class="page-header"><h1 class="page-title">tigerselect 虎禮選</h1><p class="page-subtitle">用回饋金兌換，折抵機票與附加服務</p></div>
-                    <div class="featured-reward parallax-container">
-                        <div class="featured-bg" data-parallax="0.2"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1200&q=80" alt=""></div>
-                        <div class="featured-overlay"></div>
-                        <div class="featured-content">
-                            <span class="featured-badge">精選推薦</span>
-                            <h2>東京來回機票折抵</h2>
-                            <p>TPE ⇄ NRT 經濟艙</p>
-                            <div class="featured-price"><span class="price-val">5,000</span><span class="price-unit">tigerpoints 起</span></div>
-                            <button class="btn-primary" onclick="showRedemption()">立即兌換</button>
+                    <div class="page-header"><h1 class="page-title">tigerselect 虎禮選</h1><p class="page-subtitle">用回饋金兌換機票、加值服務與合作品牌商品</p></div>
+
+                    <!-- Category tabs -->
+                    <div class="rewards-tabs">
+                        <button class="rtab active">全部</button>
+                        <button class="rtab">機票折抵</button>
+                        <button class="rtab">機上服務</button>
+                        <button class="rtab">飯店住宿</button>
+                        <button class="rtab">Voucher</button>
+                        <button class="rtab">虎航周邊</button>
+                        <button class="rtab">美食伴手禮</button>
+                        <button class="rtab">合作品牌</button>
+                    </div>
+
+                    <!-- Dense marketplace grid -->
+                    <div class="market-grid">
+
+                        <!-- 機票 -->
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>東京成田來回機票折抵 TPE ⇄ NRT 經濟艙</h4>
+                                <div class="mc-price">5,000 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 航班</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>大阪單程折抵 TPE → KIX 限時特惠</h4>
+                                <div class="mc-price">3,000 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 航班</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>沖繩度假機票 TPE → OKA 單程</h4>
+                                <div class="mc-price">2,000 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 航班</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>首爾仁川來回 TPE ⇄ ICN 經濟艙</h4>
+                                <div class="mc-price">4,500 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 航班</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>福岡單程機票 TPE → FUK 九州之旅</h4>
+                                <div class="mc-price">3,800 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 航班</span>
+                            </div>
+                        </div>
+
+                        <!-- 機上服務 -->
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>額外行李加購 20kg 國際航線</h4>
+                                <div class="mc-price">500 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 機上</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>前排座位升等 經濟艙任選</h4>
+                                <div class="mc-price">450 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 機上</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1555992336-fb0d29498b13?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>機上經典餐組合 六款可選</h4>
+                                <div class="mc-price">280 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 機上</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>旅遊保險 旅平險+不便險</h4>
+                                <div class="mc-price">199 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>富邦產險</span>
+                            </div>
+                        </div>
+
+                        <!-- 飯店 -->
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>東京新宿 4 星酒店 2 晚含早餐</h4>
+                                <div class="mc-price">8,000 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>Agoda</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>大阪心齋橋精品酒店 1 晚雙人</h4>
+                                <div class="mc-price">6,500 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>Booking.com</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>沖繩海景度假村 含早晚餐</h4>
+                                <div class="mc-price">4,200 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>Klook</span>
+                            </div>
+                        </div>
+
+                        <!-- Voucher 面額 -->
+                        <div class="market-card">
+                            <div class="mc-img voucher-img"><div class="voucher-visual">NT$1,000</div></div>
+                            <div class="mc-body">
+                                <h4>NT$1,000 Voucher 折抵機票 最受歡迎</h4>
+                                <div class="mc-price">1,000 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerclub</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img voucher-img"><div class="voucher-visual">NT$500</div></div>
+                            <div class="mc-body">
+                                <h4>NT$500 Voucher 折抵機票與加值服務</h4>
+                                <div class="mc-price">500 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerclub</span>
+                            </div>
+                        </div>
+
+                        <!-- 虎航周邊 -->
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1559533834-3f7d3c968f85?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>tigerair 小虎布偶 限量版 14 吋</h4>
+                                <div class="mc-price">1,200 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 官方</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>tigerair 行李箱 20 吋 靜音輪</h4>
+                                <div class="mc-price">3,800 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 官方</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>tigerair 經典棒球帽 橘黑配色</h4>
+                                <div class="mc-price">480 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 官方</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>tigerair 隨行保溫瓶 500ml</h4>
+                                <div class="mc-price">350 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>tigerair 官方</span>
+                            </div>
+                        </div>
+
+                        <!-- 美食伴手禮 -->
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>一蘭拉麵 居家包裝 5 入組</h4>
+                                <div class="mc-price">890 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>一蘭</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>金門高粱 58 度精裝禮盒</h4>
+                                <div class="mc-price">1,200 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>台灣菸酒</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>星巴克隨行卡 NT$200 儲值</h4>
+                                <div class="mc-price">250 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>星巴克</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1610632380989-680fe40816c6?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>北海道白色戀人 36 入禮盒</h4>
+                                <div class="mc-price">980 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>白い恋人</span>
+                            </div>
+                        </div>
+
+                        <!-- 合作品牌 -->
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>KKday 行程門票 全站 85 折券</h4>
+                                <div class="mc-price">200 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>KKday</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>Klook 全球租車 88 折券</h4>
+                                <div class="mc-price">300 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>Klook</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>中華電信 日本 eSIM 7 天無限</h4>
+                                <div class="mc-price">400 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>中華電信</span>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="mc-img"><img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80" alt=""></div>
+                            <div class="mc-body">
+                                <h4>樂天信用卡 加碼 3% 回饋活動</h4>
+                                <div class="mc-price">0 <small>pts</small></div>
+                                <span class="mc-shop"><span class="material-icons-round">storefront</span>樂天銀行</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="rewards-grid">
-                        <div class="reward-card"><div class="reward-img"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&q=80" alt=""><span class="reward-price-tag">3,000 pts</span></div><div class="reward-body"><h4>大阪單程折抵</h4><p>TPE → KIX</p></div></div>
-                        <div class="reward-card"><div class="reward-img"><img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=600&q=80" alt=""><span class="reward-price-tag">2,000 pts</span></div><div class="reward-body"><h4>沖繩度假折抵</h4><p>TPE → OKA</p></div></div>
-                        <div class="reward-card"><div class="reward-img"><img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80" alt=""><span class="reward-price-tag">4,500 pts</span></div><div class="reward-body"><h4>首爾來回折抵</h4><p>TPE ⇄ ICN</p></div></div>
-                        <div class="reward-card"><div class="reward-img"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt=""><span class="reward-price-tag">500 pts</span></div><div class="reward-body"><h4>額外行李 20kg</h4><p>任一國際航線</p></div></div>
-                    </div>
+
                     <div class="tier-reminder"><span class="material-icons-round">emoji_events</span><p>升為<strong>尊榮虎</strong>後，回饋倍率提升至 <strong>2%</strong>，累積更快！</p></div>
                 </div>
             </section>
@@ -366,39 +537,150 @@
                     </div>
 
                     <div class="orders-list">
-                        <!-- Order 1 — Upcoming -->
-                        <div class="order-card">
-                            <div class="order-header">
-                                <div class="order-id">
-                                    <span class="order-label">訂單編號</span>
-                                    <span class="order-num">TG-20260415-8821</span>
+                        <!-- Upcoming flights with full ancillary services -->
+
+                        <!-- Flight 1: TPE → NRT -->
+                        <article class="flight-card">
+                            <header class="flight-card-head">
+                                <div class="fc-route">
+                                    <div class="fc-port">
+                                        <span class="fc-port-code">TPE</span>
+                                        <span class="fc-port-city">台北桃園</span>
+                                        <span class="fc-port-time">08:30</span>
+                                    </div>
+                                    <div class="fc-route-mid">
+                                        <span class="fc-flight-num">IT 200</span>
+                                        <div class="fc-route-line"><span></span><span class="material-icons-round">flight</span><span></span></div>
+                                        <span class="fc-duration">4h 15m</span>
+                                    </div>
+                                    <div class="fc-port">
+                                        <span class="fc-port-code">NRT</span>
+                                        <span class="fc-port-city">東京成田</span>
+                                        <span class="fc-port-time">12:45</span>
+                                    </div>
                                 </div>
-                                <span class="order-status upcoming">即將出發</span>
-                            </div>
-                            <div class="order-route-row">
-                                <div class="order-leg">
-                                    <div class="order-port"><span class="order-port-code">TPE</span><span class="order-port-city">台北桃園</span></div>
-                                    <div class="order-route-line"><span class="route-dash"></span><span class="material-icons-round">flight</span><span class="route-dash"></span></div>
-                                    <div class="order-port"><span class="order-port-code">NRT</span><span class="order-port-city">東京成田</span></div>
+                                <div class="fc-meta">
+                                    <span class="fc-date"><span class="material-icons-round">event</span>2026/05/15</span>
+                                    <span class="fc-status upcoming">29 天後出發</span>
                                 </div>
-                                <div class="order-leg">
-                                    <div class="order-port"><span class="order-port-code">NRT</span><span class="order-port-city">東京成田</span></div>
-                                    <div class="order-route-line"><span class="route-dash"></span><span class="material-icons-round">flight</span><span class="route-dash"></span></div>
-                                    <div class="order-port"><span class="order-port-code">TPE</span><span class="order-port-city">台北桃園</span></div>
+                            </header>
+                            <div class="flight-anc">
+                                <div class="fa-head">
+                                    <span class="fa-title"><span class="material-icons-round">add_shopping_cart</span>加值服務</span>
+                                    <span class="fa-hint">為此航班加購，享會員 9 折</span>
+                                </div>
+                                <div class="fa-row">
+                                    <button class="fa-chip added">
+                                        <span class="material-icons-round fa-icon">luggage</span>
+                                        <div class="fa-label">行李 20kg</div>
+                                        <span class="fa-state">已加購</span>
+                                    </button>
+                                    <button class="fa-chip">
+                                        <span class="material-icons-round fa-icon">event_seat</span>
+                                        <div class="fa-label">選位</div>
+                                        <span class="fa-price">NT$450 起</span>
+                                    </button>
+                                    <button class="fa-chip" onclick="openMealModal()">
+                                        <span class="material-icons-round fa-icon">restaurant</span>
+                                        <div class="fa-label">機上餐</div>
+                                        <span class="fa-price">NT$280 起</span>
+                                    </button>
+                                    <button class="fa-chip">
+                                        <span class="material-icons-round fa-icon">health_and_safety</span>
+                                        <div class="fa-label">旅遊險</div>
+                                        <span class="fa-price">NT$199 起</span>
+                                    </button>
+                                    <button class="fa-chip">
+                                        <span class="material-icons-round fa-icon">directions_car</span>
+                                        <div class="fa-label">機場接駁</div>
+                                        <span class="fa-price">NT$800 起</span>
+                                    </button>
+                                    <button class="fa-chip">
+                                        <span class="material-icons-round fa-icon">hotel</span>
+                                        <div class="fa-label">合作飯店</div>
+                                        <span class="fa-price">享 10% 回饋</span>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="order-info-row">
-                                <div class="order-info"><span class="oi-label">去程</span><span>2026/05/15 08:30</span></div>
-                                <div class="order-info"><span class="oi-label">回程</span><span>2026/05/20 14:00</span></div>
-                                <div class="order-info"><span class="oi-label">旅客</span><span>1 位成人</span></div>
-                                <div class="order-info"><span class="oi-label">金額</span><span class="order-price">NT$8,420</span></div>
+                            <footer class="flight-card-foot">
+                                <span class="order-num-label">訂單編號 <strong>TG-20260415-8821</strong> · <span class="text-primary">NT$8,420</span></span>
+                                <div class="flight-card-cta">
+                                    <button class="btn-primary btn-sm">線上報到</button>
+                                    <button class="btn-ghost btn-sm"><span class="material-icons-round">receipt_long</span>明細</button>
+                                </div>
+                            </footer>
+                        </article>
+
+                        <!-- Flight 2: NRT → TPE -->
+                        <article class="flight-card">
+                            <header class="flight-card-head">
+                                <div class="fc-route">
+                                    <div class="fc-port">
+                                        <span class="fc-port-code">NRT</span>
+                                        <span class="fc-port-city">東京成田</span>
+                                        <span class="fc-port-time">14:00</span>
+                                    </div>
+                                    <div class="fc-route-mid">
+                                        <span class="fc-flight-num">IT 201</span>
+                                        <div class="fc-route-line"><span></span><span class="material-icons-round">flight</span><span></span></div>
+                                        <span class="fc-duration">3h 15m</span>
+                                    </div>
+                                    <div class="fc-port">
+                                        <span class="fc-port-code">TPE</span>
+                                        <span class="fc-port-city">台北桃園</span>
+                                        <span class="fc-port-time">17:15</span>
+                                    </div>
+                                </div>
+                                <div class="fc-meta">
+                                    <span class="fc-date"><span class="material-icons-round">event</span>2026/05/20</span>
+                                    <span class="fc-status upcoming">34 天後出發</span>
+                                </div>
+                            </header>
+                            <div class="flight-anc">
+                                <div class="fa-head">
+                                    <span class="fa-title"><span class="material-icons-round">add_shopping_cart</span>加值服務</span>
+                                    <span class="fa-hint">為此航班加購</span>
+                                </div>
+                                <div class="fa-row">
+                                    <button class="fa-chip">
+                                        <span class="material-icons-round fa-icon">luggage</span>
+                                        <div class="fa-label">行李 20kg</div>
+                                        <span class="fa-price">NT$680 起</span>
+                                    </button>
+                                    <button class="fa-chip">
+                                        <span class="material-icons-round fa-icon">event_seat</span>
+                                        <div class="fa-label">選位</div>
+                                        <span class="fa-price">NT$450 起</span>
+                                    </button>
+                                    <button class="fa-chip" onclick="openMealModal()">
+                                        <span class="material-icons-round fa-icon">restaurant</span>
+                                        <div class="fa-label">機上餐</div>
+                                        <span class="fa-price">NT$280 起</span>
+                                    </button>
+                                    <button class="fa-chip">
+                                        <span class="material-icons-round fa-icon">health_and_safety</span>
+                                        <div class="fa-label">旅遊險</div>
+                                        <span class="fa-price">NT$199 起</span>
+                                    </button>
+                                    <button class="fa-chip">
+                                        <span class="material-icons-round fa-icon">luggage</span>
+                                        <div class="fa-label">隨身行李</div>
+                                        <span class="fa-price">NT$350 起</span>
+                                    </button>
+                                    <button class="fa-chip">
+                                        <span class="material-icons-round fa-icon">local_taxi</span>
+                                        <div class="fa-label">機場快線</div>
+                                        <span class="fa-price">NT$280 起</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="order-actions">
-                                <button class="btn-primary btn-sm">線上報到</button>
-                                <button class="btn-ghost btn-sm">管理訂單</button>
-                                <span class="order-earn">預計獲得 <strong>84</strong> 虎足跡 + <strong>84</strong> 回饋金</span>
-                            </div>
-                        </div>
+                            <footer class="flight-card-foot">
+                                <span class="order-num-label">訂單編號 <strong>TG-20260415-8821</strong> · <span class="text-primary">同訂單回程</span></span>
+                                <div class="flight-card-cta">
+                                    <button class="btn-ghost btn-sm"><span class="material-icons-round">receipt_long</span>明細</button>
+                                </div>
+                            </footer>
+                        </article>
 
                         <!-- Order 2 — Completed -->
                         <div class="order-card completed">
@@ -462,31 +744,142 @@
             <!-- ===================== TIER ===================== -->
             <section class="page" id="page-tier">
                 <div class="page-content">
-                    <div class="page-header"><h1 class="page-title">會員資訊</h1></div>
-                    <div class="tier-top-grid">
-                        <div class="card tier-status-card">
-                            <div class="tier-badge-row">
-                                <div class="tier-trophy"><span class="material-icons-round">emoji_events</span></div>
-                                <div><span class="tier-current-badge">目前等級</span><h2 class="tier-current-name">菁英虎 tigerexpert</h2><p class="tier-since">效期：永久有效</p></div>
-                            </div>
-                            <div class="tier-progress-section">
-                                <span class="card-eyebrow">升等至 尊榮虎 tigerprime</span>
-                                <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
-                                <div class="progress-labels"><span>68 / 150 虎足跡</span><span>180天內累計</span></div>
-                            </div>
+                    <div class="page-header"><h1 class="page-title">會員資訊</h1><p class="page-subtitle">查看您的會員等級、晉升資格與專屬權益</p></div>
+
+                    <!-- Current Status Hero -->
+                    <div class="card tier-hero">
+                        <div class="tier-hero-badge">
+                            <span class="material-icons-round">workspace_premium</span>
                         </div>
-                        <div class="tier-stats-col">
-                            <div class="card stat-card"><span class="stat-eyebrow">已搭乘航班</span><div class="stat-value-row"><span class="stat-value">6</span><span class="material-icons-round stat-icon">flight_takeoff</span></div></div>
-                            <div class="card stat-card"><span class="stat-eyebrow">回饋金倍率</span><div class="stat-value-row"><span class="stat-value">1%</span><span class="material-icons-round stat-icon">percent</span></div></div>
+                        <div class="tier-hero-body">
+                            <span class="tier-hero-eyebrow">目前等級</span>
+                            <h2>菁英虎 <small>tigerexpert</small></h2>
+                            <p class="tier-hero-since">會員編號 7470 0231 81 · 效期永久有效</p>
+                        </div>
+                        <div class="tier-hero-stats">
+                            <div class="ths-item"><span class="ths-val">6</span><span class="ths-lbl">已搭乘航班</span></div>
+                            <div class="ths-item"><span class="ths-val">1%</span><span class="ths-lbl">回饋金倍率</span></div>
+                            <div class="ths-item"><span class="ths-val">68</span><span class="ths-lbl">累計虎足跡</span></div>
                         </div>
                     </div>
+
+                    <!-- Qualification Calculator + Benefits Grid -->
+                    <div class="tier-upgrade-grid">
+                        <!-- Left: Dual-path Upgrade Calculator -->
+                        <div class="card tier-calc-card">
+                            <div class="calc-head">
+                                <h3>晉升資格計算</h3>
+                                <span class="calc-target">晉升 <strong>尊榮虎 tigerprime</strong></span>
+                            </div>
+                            <div class="calc-paths">
+                                <div class="calc-path">
+                                    <div class="calc-path-ring-wrap">
+                                        <svg class="calc-ring" viewBox="0 0 120 120">
+                                            <circle cx="60" cy="60" r="52" class="cr-track"/>
+                                            <circle cx="60" cy="60" r="52" class="cr-fill" style="stroke-dashoffset: calc(326.7 - 326.7 * 0.453);"/>
+                                        </svg>
+                                        <div class="calc-path-content">
+                                            <span class="calc-path-lbl">需要</span>
+                                            <strong class="calc-path-val">150</strong>
+                                            <span class="calc-path-unit">虎足跡</span>
+                                        </div>
+                                    </div>
+                                    <div class="calc-path-foot">
+                                        <span class="calc-path-foot-lbl">已累積</span>
+                                        <strong class="text-primary">68</strong>
+                                        <span class="calc-path-foot-unit">虎足跡</span>
+                                    </div>
+                                </div>
+
+                                <div class="calc-or">或</div>
+
+                                <div class="calc-path">
+                                    <div class="calc-path-ring-wrap">
+                                        <svg class="calc-ring" viewBox="0 0 120 120">
+                                            <circle cx="60" cy="60" r="52" class="cr-track"/>
+                                            <circle cx="60" cy="60" r="52" class="cr-fill" style="stroke-dashoffset: calc(326.7 - 326.7 * 0.3);"/>
+                                        </svg>
+                                        <div class="calc-path-content">
+                                            <span class="calc-path-lbl">需要</span>
+                                            <strong class="calc-path-val">10</strong>
+                                            <span class="calc-path-unit">有效航段</span>
+                                        </div>
+                                    </div>
+                                    <div class="calc-path-foot">
+                                        <span class="calc-path-foot-lbl">已累積</span>
+                                        <strong class="text-primary">3</strong>
+                                        <span class="calc-path-foot-unit">航段</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="calc-hint">
+                                <span class="material-icons-round">schedule</span>
+                                累計期間 <strong>180 天</strong>（自 2026/04/01 起算），達標即自動升等
+                            </div>
+                        </div>
+
+                        <!-- Right: Benefits Icon Grid -->
+                        <div class="card tier-benefits-card">
+                            <div class="calc-head">
+                                <h3>尊榮虎 tigerprime 卡級禮遇</h3>
+                                <span class="calc-target">升等即享以下權益</span>
+                            </div>
+                            <div class="benefits-grid">
+                                <div class="benefit-item">
+                                    <div class="benefit-icon"><span class="material-icons-round">redeem</span></div>
+                                    <div class="benefit-text">
+                                        <h4>回饋金倍率翻倍</h4>
+                                        <p>每趟機票獲得 <strong class="text-primary">2% 回饋金</strong>，折抵下次旅程</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon"><span class="material-icons-round">bolt</span></div>
+                                    <div class="benefit-text">
+                                        <h4>促銷優先搶購</h4>
+                                        <p>熱門航線促銷開賣 <strong class="text-primary">提早 24 小時</strong> 搶購</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon"><span class="material-icons-round">flight_class</span></div>
+                                    <div class="benefit-text">
+                                        <h4>優先登機</h4>
+                                        <p>尊榮虎<strong class="text-primary">專屬通道</strong>，免排隊快速登機</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon"><span class="material-icons-round">luggage</span></div>
+                                    <div class="benefit-text">
+                                        <h4>託運行李額外 5kg</h4>
+                                        <p>每趟航班加贈 <strong class="text-primary">5kg</strong> 免費託運額度</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon"><span class="material-icons-round">event_seat</span></div>
+                                    <div class="benefit-text">
+                                        <h4>免費選位</h4>
+                                        <p>標準座位 <strong class="text-primary">免費</strong>，前排加價 9 折</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon"><span class="material-icons-round">support_agent</span></div>
+                                    <div class="benefit-text">
+                                        <h4>專屬客服專線</h4>
+                                        <p>24 小時 <strong class="text-primary">VIP 客服</strong>，優先接聽</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tier Compare -->
                     <div class="card tier-compare-card">
-                        <h3>等級權益比較</h3>
+                        <h3>三級會員完整比較</h3>
                         <div class="tier-table">
-                            <div class="tier-col"><div class="tier-col-header expert">菁英虎<br><small>tigerexpert</small></div><div class="tier-cell">回饋金 = 機票 <strong>1%</strong></div><div class="tier-cell">註冊即取得</div><div class="tier-cell">永久有效</div><div class="tier-cell dim">促銷優先 ✕</div></div>
-                            <div class="tier-col highlight"><div class="tier-col-header prime">尊榮虎<br><small>tigerprime</small></div><div class="tier-cell">回饋金 = 機票 <strong>2%</strong></div><div class="tier-cell">180天累計 150 虎足跡</div><div class="tier-cell">180天（搭乘即續）</div><div class="tier-cell accent">促銷優先 ✓</div></div>
+                            <div class="tier-col"><div class="tier-col-header expert">菁英虎<br><small>tigerexpert</small></div><div class="tier-cell">回饋金 機票 <strong>1%</strong></div><div class="tier-cell">註冊即取得</div><div class="tier-cell">永久有效</div><div class="tier-cell dim">促銷優先 ✕</div></div>
+                            <div class="tier-col highlight"><div class="tier-col-header prime">尊榮虎<br><small>tigerprime</small></div><div class="tier-cell">回饋金 機票 <strong>2%</strong></div><div class="tier-cell">180 天 150 足跡</div><div class="tier-cell">180 天（搭乘即續）</div><div class="tier-cell accent">促銷優先 ✓</div></div>
                         </div>
                     </div>
+
                     <div class="upgrade-cta parallax-container">
                         <div class="upgrade-bg" data-parallax="0.15"><img src="images/masaaki-komori-qwPSnBvdhtI-unsplash.jpg" alt=""></div>
                         <div class="upgrade-overlay"></div>
@@ -511,7 +904,6 @@
                             <div class="voucher-right"><div class="voucher-status warning-status">即將到期</div><div class="voucher-expiry urgent"><span class="material-icons-round">warning</span>剩餘 <strong>5</strong> 天</div><button class="btn-primary btn-sm btn-urgent">立即使用 →</button><small class="voucher-hint">逾期失效不補發</small></div>
                         </div>
                     </div>
-                    <div class="referral-banner"><div class="referral-icon"><span class="material-icons-round">group_add</span></div><div class="referral-text"><h3>推薦好友加入 tigerclub</h3><p>每成功推薦 1 位，雙方各得 <strong>500 tigerpoints</strong></p></div><button class="btn-primary">邀請好友</button></div>
                     <div class="card how-to-card">
                         <h3>Voucher 使用說明</h3>
                         <div class="steps-row">
@@ -525,14 +917,252 @@
                 </div>
             </section>
 
-            <!-- ===================== SETTINGS ===================== -->
+            <!-- ===================== SETTINGS / MY ACCOUNT ===================== -->
             <section class="page" id="page-settings">
                 <div class="page-content">
-                    <div class="page-header"><h1 class="page-title">安全性設定</h1></div>
+                    <div class="page-header"><h1 class="page-title">我的帳戶</h1><p class="page-subtitle">個人資料、護照與安全性設定</p></div>
                     <div class="settings-alert"><span class="material-icons-round">warning</span><p>會員資料須與<strong>護照完全一致</strong>（含空格、標點），否則影響回饋金累計及 Voucher 使用。</p></div>
+
+                    <!-- Passport OCR quick-action card -->
+                    <div class="card passport-card">
+                        <div class="passport-icon"><span class="material-icons-round">document_scanner</span></div>
+                        <div class="passport-body">
+                            <h3>護照資料 <span class="passport-verified"><span class="material-icons-round">verified</span>已驗證</span></h3>
+                            <p>姓名拼音 <strong>CHEN ALEX</strong> · 到期 <strong>2030/08/15</strong> · 與訂票資料一致</p>
+                        </div>
+                        <button class="btn-primary btn-sm" onclick="openPassportOCR()"><span class="material-icons-round">camera_alt</span>掃描更新</button>
+                    </div>
+
                     <div class="settings-grid">
-                        <div class="card settings-card"><h3>個人資料</h3><div class="setting-row"><span class="setting-label">姓名</span><span class="setting-value">Alex Chen</span></div><div class="setting-row"><span class="setting-label">電子郵件</span><span class="setting-value">alex.chen@email.com</span></div><div class="setting-row"><span class="setting-label">會員編號</span><span class="setting-value">7470023181</span></div><div class="setting-row"><span class="setting-label">手機</span><span class="setting-value">+886 912-345-678</span></div></div>
-                        <div class="card settings-card"><h3>偏好設定</h3><div class="setting-row"><span class="setting-label">語言</span><span class="setting-value">繁體中文</span></div><div class="setting-row"><span class="setting-label">貨幣</span><span class="setting-value">TWD (新台幣)</span></div><div class="setting-row"><span class="setting-label">通知</span><span class="setting-value toggle-on">已開啟</span></div></div>
+                        <div class="card settings-card">
+                            <h3>個人資料</h3>
+                            <div class="setting-row"><span class="setting-label">姓名（護照拼音）</span><span class="setting-value">CHEN ALEX</span></div>
+                            <div class="setting-row"><span class="setting-label">護照號碼</span><span class="setting-value">3•••••••45</span></div>
+                            <div class="setting-row"><span class="setting-label">電子郵件</span><span class="setting-value">alex.chen@email.com</span></div>
+                            <div class="setting-row"><span class="setting-label">會員編號</span><span class="setting-value">7470023181</span></div>
+                            <div class="setting-row"><span class="setting-label">手機</span><span class="setting-value">+886 912-345-678</span></div>
+                        </div>
+                        <div class="card settings-card">
+                            <h3>帳戶安全</h3>
+                            <div class="setting-row"><span class="setting-label">登入方式</span><span class="setting-value"><span class="provider-chip google">G</span>Google</span></div>
+                            <div class="setting-row"><span class="setting-label">雙重驗證</span><span class="setting-value toggle-on">已開啟</span></div>
+                            <div class="setting-row"><span class="setting-label">上次登入</span><span class="setting-value">2026/04/22 09:12</span></div>
+                            <div class="setting-row"><span class="setting-label">語言</span><span class="setting-value">繁體中文</span></div>
+                            <div class="setting-row"><span class="setting-label">通知</span><span class="setting-value toggle-on">已開啟</span></div>
+                        </div>
+                    </div>
+
+                    <div class="logout-row">
+                        <button class="btn-ghost" onclick="navigateTo('login')"><span class="material-icons-round">logout</span>登出並回到登入畫面</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== LOGIN ===================== -->
+            <section class="page" id="page-login">
+                <div class="login-shell">
+                    <div class="login-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Tigerair.svg" alt="tigerair" class="login-logo">
+                        <h1>歡迎回來 tigerclub</h1>
+                        <p class="login-sub">登入後即可累積虎足跡、管理訂單與加值服務</p>
+
+                        <div class="social-login">
+                            <button class="social-btn social-google" onclick="navigateTo('dashboard')">
+                                <span class="provider-chip google">G</span>使用 Google 繼續
+                            </button>
+                            <button class="social-btn social-apple" onclick="navigateTo('dashboard')">
+                                <span class="provider-chip apple"></span>使用 Apple 繼續
+                            </button>
+                            <button class="social-btn social-line" onclick="navigateTo('dashboard')">
+                                <span class="provider-chip line">L</span>使用 LINE 繼續
+                            </button>
+                            <button class="social-btn social-fb" onclick="navigateTo('dashboard')">
+                                <span class="provider-chip fb">f</span>使用 Facebook 繼續
+                            </button>
+                        </div>
+
+                        <div class="login-sep"><span>或使用 Email</span></div>
+
+                        <div class="login-form">
+                            <label class="login-field"><span>Email</span><input type="email" placeholder="alex.chen@email.com"></label>
+                            <label class="login-field"><span>密碼</span><input type="password" placeholder="••••••••"></label>
+                            <button class="btn-primary btn-block" onclick="navigateTo('dashboard')">登入</button>
+                        </div>
+
+                        <div class="login-register">
+                            <span>還不是會員？</span>
+                            <button class="link-btn" onclick="navigateTo('register')">立即註冊 →</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== REGISTER (multi-step) ===================== -->
+            <section class="page" id="page-register">
+                <div class="login-shell">
+                    <div class="register-card">
+                        <header class="register-head">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Tigerair.svg" alt="tigerair" class="login-logo">
+                            <h1>加入 tigerclub</h1>
+                            <p class="login-sub">註冊後立即累積虎足跡，資料須與護照一致</p>
+                        </header>
+
+                        <!-- Stepper -->
+                        <ol class="stepper" id="registerStepper">
+                            <li class="step-dot active" data-step="1"><span>1</span><small>帳號</small></li>
+                            <li class="step-dot" data-step="2"><span>2</span><small>個人資料</small></li>
+                            <li class="step-dot" data-step="3"><span>3</span><small>護照</small></li>
+                            <li class="step-dot" data-step="4"><span>4</span><small>偏好</small></li>
+                            <li class="step-dot" data-step="5"><span>✓</span><small>完成</small></li>
+                        </ol>
+
+                        <!-- Step 1: Account -->
+                        <div class="register-step active" data-step="1">
+                            <div class="form-grid">
+                                <label class="form-field full">
+                                    <span class="form-lbl">Email <em>*</em></span>
+                                    <input type="email" placeholder="your@email.com" value="alex.chen@email.com">
+                                </label>
+                                <label class="form-field">
+                                    <span class="form-lbl">密碼 <em>*</em></span>
+                                    <input type="password" placeholder="至少 8 字元">
+                                </label>
+                                <label class="form-field">
+                                    <span class="form-lbl">確認密碼 <em>*</em></span>
+                                    <input type="password" placeholder="再次輸入">
+                                </label>
+                                <label class="form-field full">
+                                    <span class="form-lbl">手機號碼 <em>*</em></span>
+                                    <div class="phone-input">
+                                        <select><option>+886</option><option>+852</option><option>+81</option></select>
+                                        <input type="tel" placeholder="912-345-678">
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="form-hint"><span class="material-icons-round">info</span>Email 將作為登入帳號並接收行程通知</div>
+                        </div>
+
+                        <!-- Step 2: Personal Info (with optional OCR helper) -->
+                        <div class="register-step" data-step="2">
+                            <div class="ocr-assist-banner">
+                                <span class="material-icons-round">auto_fix_high</span>
+                                <div>
+                                    <strong>加速填寫</strong>
+                                    <small>使用護照掃描自動帶入姓名、生日、國籍</small>
+                                </div>
+                                <button class="btn-ghost btn-sm" onclick="openPassportOCR()"><span class="material-icons-round">document_scanner</span>掃描護照</button>
+                            </div>
+
+                            <div class="form-grid">
+                                <label class="form-field">
+                                    <span class="form-lbl">英文姓 <em>*</em></span>
+                                    <input type="text" id="regLastName" placeholder="CHEN" autocomplete="family-name">
+                                </label>
+                                <label class="form-field">
+                                    <span class="form-lbl">英文名 <em>*</em></span>
+                                    <input type="text" id="regFirstName" placeholder="ALEX" autocomplete="given-name">
+                                </label>
+                                <label class="form-field">
+                                    <span class="form-lbl">中文姓名</span>
+                                    <input type="text" placeholder="陳小明">
+                                </label>
+                                <label class="form-field">
+                                    <span class="form-lbl">性別 <em>*</em></span>
+                                    <select><option>男</option><option>女</option><option>不透露</option></select>
+                                </label>
+                                <label class="form-field">
+                                    <span class="form-lbl">出生日期 <em>*</em></span>
+                                    <input type="date" id="regDOB" value="1990-08-15">
+                                </label>
+                                <label class="form-field">
+                                    <span class="form-lbl">國籍 <em>*</em></span>
+                                    <select id="regNationality"><option>TWN 中華民國</option><option>HKG 香港</option><option>JPN 日本</option></select>
+                                </label>
+                            </div>
+                            <div class="form-hint warn"><span class="material-icons-round">warning</span>姓名拼音須與護照一致（含空格、標點）</div>
+                        </div>
+
+                        <!-- Step 3: Passport -->
+                        <div class="register-step" data-step="3">
+                            <div class="ocr-assist-banner">
+                                <span class="material-icons-round">auto_fix_high</span>
+                                <div>
+                                    <strong>自動填入護照資料</strong>
+                                    <small>拍一張護照照片即可免手動輸入</small>
+                                </div>
+                                <button class="btn-ghost btn-sm" onclick="openPassportOCR()"><span class="material-icons-round">camera_alt</span>使用 OCR 掃描</button>
+                            </div>
+
+                            <div class="form-grid">
+                                <label class="form-field">
+                                    <span class="form-lbl">護照號碼 <em>*</em></span>
+                                    <input type="text" id="regPassportNum" placeholder="300000045">
+                                </label>
+                                <label class="form-field">
+                                    <span class="form-lbl">護照到期日 <em>*</em></span>
+                                    <input type="date" id="regPassportExp" value="2030-08-15">
+                                </label>
+                                <label class="form-field full">
+                                    <span class="form-lbl">核發國家 <em>*</em></span>
+                                    <select><option>中華民國 (TWN)</option><option>香港 (HKG)</option><option>日本 (JPN)</option></select>
+                                </label>
+                            </div>
+                            <div class="form-hint"><span class="material-icons-round">lock</span>資料加密儲存，僅用於報到、回饋金計算與 Voucher 使用</div>
+                        </div>
+
+                        <!-- Step 4: Preferences -->
+                        <div class="register-step" data-step="4">
+                            <div class="form-grid">
+                                <label class="form-field">
+                                    <span class="form-lbl">介面語言</span>
+                                    <select><option>繁體中文</option><option>English</option><option>日本語</option></select>
+                                </label>
+                                <label class="form-field">
+                                    <span class="form-lbl">貨幣</span>
+                                    <select><option>TWD (新台幣)</option><option>USD</option><option>JPY</option></select>
+                                </label>
+                                <div class="form-field full">
+                                    <span class="form-lbl">行銷與優惠推播</span>
+                                    <div class="pref-toggles">
+                                        <label class="pref-row"><input type="checkbox" checked><span>航線降價通知</span></label>
+                                        <label class="pref-row"><input type="checkbox" checked><span>Voucher 到期提醒</span></label>
+                                        <label class="pref-row"><input type="checkbox"><span>合作夥伴優惠</span></label>
+                                        <label class="pref-row"><input type="checkbox" checked><span>航班異動 / 報到提醒</span></label>
+                                    </div>
+                                </div>
+                                <label class="form-field full">
+                                    <label class="pref-row"><input type="checkbox" required><span>我已閱讀並同意 <a href="#" class="link-inline">會員條款</a> 與 <a href="#" class="link-inline">隱私政策</a></span></label>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Success -->
+                        <div class="register-step" data-step="5">
+                            <div class="register-success">
+                                <div class="rs-check"><span class="material-icons-round">check_circle</span></div>
+                                <h2>歡迎加入 tigerclub！</h2>
+                                <p>您的會員編號 <strong>7470023181</strong> 已啟用</p>
+                                <div class="rs-reward">
+                                    <span class="material-icons-round">card_giftcard</span>
+                                    <div>
+                                        <strong>新會員禮</strong>
+                                        <small>註冊即得 <b>200 虎足跡</b> + 首次訂票 9 折 Voucher</small>
+                                    </div>
+                                </div>
+                                <button class="btn-primary btn-block" onclick="navigateTo('dashboard')">前往會員中心</button>
+                            </div>
+                        </div>
+
+                        <!-- Step Actions -->
+                        <div class="register-actions" id="registerActions">
+                            <button class="btn-ghost" id="btnStepPrev" onclick="stepPrev()"><span class="material-icons-round">arrow_back</span>上一步</button>
+                            <button class="btn-primary" id="btnStepNext" onclick="stepNext()">下一步<span class="material-icons-round">arrow_forward</span></button>
+                        </div>
+
+                        <div class="register-foot">
+                            <span>已經是會員？</span>
+                            <button class="link-btn" onclick="navigateTo('login')">直接登入</button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -551,6 +1181,219 @@
                     <div class="modal-actions"><button class="btn-primary" onclick="closeModal()">返回首頁</button><button class="btn-ghost">前往訂票 →</button></div>
                 </div>
             </div>
+
+            <!-- PASSPORT OCR MODAL -->
+            <div class="modal-overlay" id="passportModal">
+                <div class="modal-card passport-modal-card">
+                    <div class="passport-scan-frame">
+                        <div class="passport-scan-line"></div>
+                        <div class="passport-mock">
+                            <div class="pm-row"><span>P&lt;TWN</span><span class="pm-glow">CHEN&lt;&lt;ALEX</span></div>
+                            <div class="pm-row dim">3••••••••45TWN9008154M300815</div>
+                            <div class="pm-photo"><span class="material-icons-round">person</span></div>
+                        </div>
+                    </div>
+                    <h2>護照辨識中…</h2>
+                    <p class="modal-desc">系統正在讀取 MRZ 區並自動帶入會員資料</p>
+                    <div class="ocr-fields">
+                        <div class="ocr-field"><span class="material-icons-round">check_circle</span><span class="ocr-label">姓名拼音</span><strong>CHEN ALEX</strong></div>
+                        <div class="ocr-field"><span class="material-icons-round">check_circle</span><span class="ocr-label">護照號碼</span><strong>3•••••••45</strong></div>
+                        <div class="ocr-field"><span class="material-icons-round">check_circle</span><span class="ocr-label">有效期限</span><strong>2030/08/15</strong></div>
+                        <div class="ocr-field"><span class="material-icons-round">check_circle</span><span class="ocr-label">國籍</span><strong>TWN</strong></div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-primary" onclick="closePassportOCR()">確認並儲存</button>
+                        <button class="btn-ghost" onclick="closePassportOCR()">重新掃描</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VOUCHER REDEMPTION SELECT MODAL -->
+            <div class="modal-overlay" id="voucherSelectModal">
+                <div class="modal-card voucher-select-card">
+                    <div class="meal-modal-head">
+                        <div>
+                            <span class="card-eyebrow">回饋金兌換 Voucher</span>
+                            <h2>選擇兌換面額</h2>
+                        </div>
+                        <button class="modal-close" onclick="closeVoucherSelect()"><span class="material-icons-round">close</span></button>
+                    </div>
+
+                    <div class="meal-balance">
+                        <span class="material-icons-round">toll</span>
+                        目前回饋金 <strong id="vsAvailPts">2,580</strong> pts
+                        <span class="meal-balance-hint">1 pt = NT$1 · 60 天內使用</span>
+                    </div>
+
+                    <div class="voucher-denominations voucher-select-grid" id="vsGrid">
+                        <button class="vden-card" data-pts="500"><span class="vden-amt">NT$500</span><span class="vden-pts">500 pts</span></button>
+                        <button class="vden-card popular" data-pts="1000"><span class="vden-badge">最受歡迎</span><span class="vden-amt">NT$1,000</span><span class="vden-pts">1,000 pts</span></button>
+                        <button class="vden-card" data-pts="2000"><span class="vden-amt">NT$2,000</span><span class="vden-pts">2,000 pts</span></button>
+                        <button class="vden-card disabled" data-pts="5000"><span class="vden-amt">NT$5,000</span><span class="vden-pts">5,000 pts</span></button>
+                    </div>
+
+                    <div class="vs-summary" id="vsSummary" hidden>
+                        <div class="vs-row"><span>選擇面額</span><strong id="vsPickAmt">NT$1,000</strong></div>
+                        <div class="vs-row"><span>扣除回饋金</span><strong class="negative" id="vsPickPts">-1,000 pts</strong></div>
+                        <div class="vs-row"><span>剩餘回饋金</span><strong id="vsPickRemain">1,580 pts</strong></div>
+                        <div class="vs-row"><span>Voucher 有效期限</span><strong id="vsExpiry">60 天</strong></div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button class="btn-ghost" onclick="closeVoucherSelect()">取消</button>
+                        <button class="btn-primary" id="btnConfirmVoucher" onclick="confirmVoucher()" disabled>確認兌換</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEAL ORDERING MODAL -->
+            <div class="modal-overlay" id="mealModal">
+                <div class="modal-card meal-modal-card">
+                    <div class="meal-modal-head">
+                        <div>
+                            <span class="card-eyebrow">TPE → NRT · IT 200 · 5/15</span>
+                            <h2>預訂機上餐點</h2>
+                        </div>
+                        <button class="modal-close" onclick="closeMealModal()"><span class="material-icons-round">close</span></button>
+                    </div>
+
+                    <div class="meal-balance">
+                        <span class="material-icons-round">toll</span>
+                        可用 tigerpoints <strong id="mealAvailPts">2,580</strong>
+                        <span class="meal-balance-hint">1 pt = NT$1 折抵</span>
+                    </div>
+
+                    <div class="meal-grid" id="mealGrid">
+                        <label class="meal-option">
+                            <input type="checkbox" data-price="280" data-name="經典雞肉飯">
+                            <div class="meal-content">
+                                <div class="meal-emoji">🍛</div>
+                                <div class="meal-info">
+                                    <h4>經典雞肉飯</h4>
+                                    <p>含飲料 · 沙拉</p>
+                                </div>
+                                <span class="meal-price">NT$280</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" data-price="320" data-name="和風牛肉蓋飯">
+                            <div class="meal-content">
+                                <div class="meal-emoji">🍜</div>
+                                <div class="meal-info">
+                                    <h4>和風牛肉蓋飯</h4>
+                                    <p>含味噌湯</p>
+                                </div>
+                                <span class="meal-price">NT$320</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" data-price="260" data-name="蔬食義大利麵">
+                            <div class="meal-content">
+                                <div class="meal-emoji">🍝</div>
+                                <div class="meal-info">
+                                    <h4>蔬食義大利麵</h4>
+                                    <p>素食可 · 含麵包</p>
+                                </div>
+                                <span class="meal-price">NT$260</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" data-price="180" data-name="日式炸雞便當">
+                            <div class="meal-content">
+                                <div class="meal-emoji">🍱</div>
+                                <div class="meal-info">
+                                    <h4>日式炸雞便當</h4>
+                                    <p>兒童友善</p>
+                                </div>
+                                <span class="meal-price">NT$180</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" data-price="150" data-name="虎航特調飲料">
+                            <div class="meal-content">
+                                <div class="meal-emoji">🥤</div>
+                                <div class="meal-info">
+                                    <h4>虎航特調飲料</h4>
+                                    <p>芒果 / 抹茶 / 可樂</p>
+                                </div>
+                                <span class="meal-price">NT$150</span>
+                            </div>
+                        </label>
+                        <label class="meal-option">
+                            <input type="checkbox" data-price="120" data-name="經典甜點">
+                            <div class="meal-content">
+                                <div class="meal-emoji">🍮</div>
+                                <div class="meal-info">
+                                    <h4>經典甜點</h4>
+                                    <p>布丁 / 蛋糕</p>
+                                </div>
+                                <span class="meal-price">NT$120</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="meal-summary">
+                        <div class="ms-row">
+                            <span>已選 <strong id="mealCount">0</strong> 項</span>
+                            <strong id="mealSubtotal">NT$0</strong>
+                        </div>
+                        <label class="ms-row points-toggle">
+                            <div>
+                                <input type="checkbox" id="mealUsePoints">
+                                <span>使用 tigerpoints 折抵</span>
+                            </div>
+                            <strong class="ms-deduct" id="mealDeduct">-0 pts</strong>
+                        </label>
+                        <div class="ms-row total">
+                            <span>應付金額</span>
+                            <strong id="mealTotal">NT$0</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button class="btn-ghost" onclick="closeMealModal()">取消</button>
+                        <button class="btn-primary" id="btnConfirmMeal" onclick="confirmMeal()" disabled>確認加購</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOTIFICATION PANEL -->
+            <aside class="notif-panel" id="notifPanel">
+                <div class="notif-head">
+                    <h3>通知</h3>
+                    <button class="link-btn" onclick="toggleNotif()">全部標示已讀</button>
+                </div>
+                <div class="notif-list">
+                    <div class="notif-item unread">
+                        <div class="notif-icon price-down"><span class="material-icons-round">trending_down</span></div>
+                        <div class="notif-body">
+                            <p><strong>TPE → NRT 降價</strong> 6 月單程最低 NT$2,880</p>
+                            <span class="notif-time">2 小時前</span>
+                        </div>
+                    </div>
+                    <div class="notif-item unread">
+                        <div class="notif-icon flight"><span class="material-icons-round">flight_takeoff</span></div>
+                        <div class="notif-body">
+                            <p>航班 <strong>IT200</strong> 預計 24 小時後開放線上報到</p>
+                            <span class="notif-time">5 小時前</span>
+                        </div>
+                    </div>
+                    <div class="notif-item">
+                        <div class="notif-icon voucher"><span class="material-icons-round">confirmation_number</span></div>
+                        <div class="notif-body">
+                            <p>Voucher <strong>NT$500</strong> 剩餘 5 天，立即使用避免失效</p>
+                            <span class="notif-time">昨天</span>
+                        </div>
+                    </div>
+                    <div class="notif-item">
+                        <div class="notif-icon tier"><span class="material-icons-round">military_tech</span></div>
+                        <div class="notif-body">
+                            <p>再搭乘 <strong>1 趟</strong> 即可升等尊榮虎 tigerprime</p>
+                            <span class="notif-time">2 天前</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
 
             <!-- Bottom Nav (mobile) -->
             <nav class="bottom-nav" id="bottomNav">
