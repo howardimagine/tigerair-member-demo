@@ -54,6 +54,7 @@
             </div>
             <nav class="sidebar-nav">
                 <a href="#" class="nav-item active" data-page="dashboard"><span class="material-icons-round">dashboard</span><span class="nav-label">首頁</span></a>
+                <a href="#" class="nav-item nav-tasks" data-page="tasks"><span class="material-icons-round">task_alt</span><span class="nav-label">會員任務</span><span class="nav-badge" id="navTaskBadge">3</span></a>
                 <a href="#" class="nav-item" data-page="rewards"><span class="material-icons-round">redeem</span><span class="nav-label">tigerselect 虎禮選</span></a>
                 <a href="#" class="nav-item" data-page="orders"><span class="material-icons-round">receipt_long</span><span class="nav-label">我的訂單</span></a>
                 <a href="#" class="nav-item" data-page="tier"><span class="material-icons-round">military_tech</span><span class="nav-label">會員資訊</span></a>
@@ -90,10 +91,6 @@
                         <div class="hero-identity">
                             <span class="hero-greeting-v2">Welcome back</span>
                             <h1 class="hero-name-v2">Alex Chen</h1>
-                            <div class="hero-tier-row">
-                                <span class="hero-tier-pill"><span class="material-icons-round">workspace_premium</span>菁英虎 tigerexpert</span>
-                                <span class="hero-id-pill">No. 7470 0231 81</span>
-                            </div>
 
                             <!-- Points row, floating -->
                             <div class="hero-points-block">
@@ -163,10 +160,12 @@
                             <div class="qa-icon"><span class="material-icons-round">flight_class</span></div>
                             <span class="qa-text">里程補登</span>
                         </button>
-                        <button class="qa-btn qa-highlight" onclick="scrollToTasks()">
-                            <div class="qa-icon"><span class="material-icons-round">task_alt</span></div>
+                        <button class="qa-btn qa-highlight" onclick="navigateTo('tasks')">
+                            <div class="qa-icon">
+                                <span class="material-icons-round">task_alt</span>
+                                <span class="qa-dot">3</span>
+                            </div>
                             <span class="qa-text">會員任務</span>
-                            <span class="qa-dot">3</span>
                         </button>
                         <button class="qa-btn" onclick="navigateTo('settings')">
                             <div class="qa-icon"><span class="material-icons-round">support_agent</span></div>
@@ -222,87 +221,6 @@
                         </div>
                     </section>
 
-                    <!-- ===== 會員任務 TASK CENTER ===== -->
-                    <section class="dash-section" id="taskCenter">
-                        <div class="section-head">
-                            <div>
-                                <h2>會員任務</h2>
-                                <p class="section-sub">完成任務即賺虎足跡，加速升等到完整會員權益</p>
-                            </div>
-                            <div class="task-progress-badge">
-                                <span class="material-icons-round">emoji_events</span>
-                                <strong id="taskProgressText">1 / 5 已完成</strong>
-                            </div>
-                        </div>
-
-                        <div class="task-grid" id="taskGrid">
-                            <!-- Task 1: LINE bound (done) -->
-                            <div class="task-card done" data-task="line">
-                                <div class="task-icon task-line"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></div>
-                                <div class="task-body">
-                                    <h4>綁定 LINE 帳號</h4>
-                                    <p>已完成 · 你可即時收到航班與促銷推播</p>
-                                </div>
-                                <div class="task-reward">
-                                    <span class="material-icons-round">check_circle</span>
-                                    <strong>+200 pts</strong>
-                                </div>
-                            </div>
-
-                            <!-- Task 2: Email -->
-                            <div class="task-card" data-task="email" onclick="completeTask('email', 100)">
-                                <div class="task-icon task-email"><span class="material-icons-round">mark_email_read</span></div>
-                                <div class="task-body">
-                                    <h4>驗證 Email</h4>
-                                    <p>確認你的訂票通知與 Voucher 發送</p>
-                                </div>
-                                <div class="task-reward task-pending">
-                                    <strong>+100 pts</strong>
-                                    <span class="task-cta">驗證 →</span>
-                                </div>
-                            </div>
-
-                            <!-- Task 3: Phone -->
-                            <div class="task-card" data-task="phone" onclick="completeTask('phone', 100)">
-                                <div class="task-icon task-phone"><span class="material-icons-round">smartphone</span></div>
-                                <div class="task-body">
-                                    <h4>驗證手機號碼</h4>
-                                    <p>用於航班異動即時通知與報到</p>
-                                </div>
-                                <div class="task-reward task-pending">
-                                    <strong>+100 pts</strong>
-                                    <span class="task-cta">驗證 →</span>
-                                </div>
-                            </div>
-
-                            <!-- Task 4: Passport (most rewarding) -->
-                            <div class="task-card task-card-feature" data-task="passport" onclick="completeTaskPassport()">
-                                <div class="task-icon task-passport"><span class="material-icons-round">document_scanner</span></div>
-                                <div class="task-body">
-                                    <h4>掃描護照確認英文姓名 <span class="task-tag-hot">熱門</span></h4>
-                                    <p>OCR 自動讀取，10 秒完成 · 訂票更順暢</p>
-                                </div>
-                                <div class="task-reward task-pending">
-                                    <strong class="task-reward-big">+300 pts</strong>
-                                    <span class="task-cta">立即掃描 →</span>
-                                </div>
-                            </div>
-
-                            <!-- Task 5: Preferences -->
-                            <div class="task-card" data-task="prefs" onclick="completeTask('prefs', 50)">
-                                <div class="task-icon task-prefs"><span class="material-icons-round">tune</span></div>
-                                <div class="task-body">
-                                    <h4>設定旅行偏好</h4>
-                                    <p>收到更精準的航線推薦</p>
-                                </div>
-                                <div class="task-reward task-pending">
-                                    <strong>+50 pts</strong>
-                                    <span class="task-cta">設定 →</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
                     <!-- CINEMATIC TRAVEL BANNER (dark mode) -->
                     <div class="travel-banner parallax-container dark-only">
                         <div class="travel-banner-bg" data-parallax="0.2">
@@ -328,6 +246,113 @@
                         </div>
                     </div>
 
+                </div>
+            </section>
+
+            <!-- ===================== TASKS ===================== -->
+            <section class="page" id="page-tasks">
+                <div class="page-content">
+                    <div class="page-header">
+                        <h1 class="page-title">會員任務</h1>
+                        <p class="page-subtitle">完成任務即賺取虎足跡，加速升等到完整會員，享受所有優惠權益</p>
+                    </div>
+
+                    <!-- Task summary banner -->
+                    <div class="tasks-summary">
+                        <div class="ts-progress">
+                            <div class="ts-progress-info">
+                                <span class="ts-eyebrow">完成進度</span>
+                                <strong class="ts-progress-text"><span id="taskProgressText">1 / 5</span> 已完成</strong>
+                            </div>
+                            <div class="ts-bar">
+                                <div class="ts-bar-track"><div class="ts-bar-fill" id="taskBarFill" style="width:20%"></div></div>
+                            </div>
+                        </div>
+                        <div class="ts-reward">
+                            <span class="material-icons-round">card_giftcard</span>
+                            <div>
+                                <span class="ts-reward-lbl">完成所有任務可賺</span>
+                                <strong class="ts-reward-pts">+750 pts</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Featured passport task -->
+                    <div class="task-feature-banner" onclick="completeTaskPassport()">
+                        <div class="tfb-icon"><span class="material-icons-round">document_scanner</span></div>
+                        <div class="tfb-body">
+                            <span class="tfb-tag">熱門 · 最高獎勵</span>
+                            <h3>掃描護照確認英文姓名</h3>
+                            <p>OCR 自動讀取護照資料，10 秒完成 · 完成後訂票免再手動輸入</p>
+                        </div>
+                        <div class="tfb-reward">
+                            <strong>+300</strong>
+                            <span>pts</span>
+                            <button class="btn-primary tfb-btn">立即掃描</button>
+                        </div>
+                    </div>
+
+                    <h3 class="tasks-section-title">基本驗證任務</h3>
+                    <div class="task-list">
+                        <div class="task-row done" data-task="line">
+                            <div class="task-icon task-line"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></div>
+                            <div class="task-row-info">
+                                <h4>綁定 LINE 帳號</h4>
+                                <p>即時收到航班與促銷推播</p>
+                            </div>
+                            <div class="task-row-reward"><strong>+200 pts</strong></div>
+                            <div class="task-row-state state-done">
+                                <span class="material-icons-round">check_circle</span>
+                                <span>已完成</span>
+                            </div>
+                        </div>
+
+                        <div class="task-row" data-task="email" onclick="completeTask('email', 100)">
+                            <div class="task-icon task-email"><span class="material-icons-round">mark_email_read</span></div>
+                            <div class="task-row-info">
+                                <h4>驗證 Email</h4>
+                                <p>確認訂票通知與 Voucher 寄送地址</p>
+                            </div>
+                            <div class="task-row-reward"><strong>+100 pts</strong></div>
+                            <div class="task-row-state state-pending">
+                                <button class="btn-ghost btn-sm">驗證</button>
+                            </div>
+                        </div>
+
+                        <div class="task-row" data-task="phone" onclick="completeTask('phone', 100)">
+                            <div class="task-icon task-phone"><span class="material-icons-round">smartphone</span></div>
+                            <div class="task-row-info">
+                                <h4>驗證手機號碼</h4>
+                                <p>用於航班異動即時通知與線上報到</p>
+                            </div>
+                            <div class="task-row-reward"><strong>+100 pts</strong></div>
+                            <div class="task-row-state state-pending">
+                                <button class="btn-ghost btn-sm">驗證</button>
+                            </div>
+                        </div>
+
+                        <div class="task-row" data-task="prefs" onclick="completeTask('prefs', 50)">
+                            <div class="task-icon task-prefs"><span class="material-icons-round">tune</span></div>
+                            <div class="task-row-info">
+                                <h4>設定旅行偏好</h4>
+                                <p>選擇常用航線、座位偏好，收到精準推薦</p>
+                            </div>
+                            <div class="task-row-reward"><strong>+50 pts</strong></div>
+                            <div class="task-row-state state-pending">
+                                <button class="btn-ghost btn-sm">設定</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tier upgrade tease -->
+                    <div class="tasks-tier-tease">
+                        <span class="material-icons-round">military_tech</span>
+                        <div>
+                            <strong>完成全部任務後</strong>
+                            <p>自動升級為「完整會員」，享有 Voucher 折抵、會籍升等、合作品牌優惠等完整權益</p>
+                        </div>
+                        <button class="btn-ghost" onclick="navigateTo('tier')">了解完整權益 →</button>
+                    </div>
                 </div>
             </section>
 

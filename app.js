@@ -680,13 +680,14 @@ window.hideFullRegister = hideFullRegister;
 
 /* ========== TASK CENTER ========== */
 function completeTask(key, pts) {
-    const card = document.querySelector(`.task-card[data-task="${key}"]`);
-    if (!card || card.classList.contains('done')) return;
-    card.classList.add('done');
-    const reward = card.querySelector('.task-reward');
-    if (reward) {
-        reward.classList.remove('task-pending');
-        reward.innerHTML = `<span class="material-icons-round">check_circle</span><strong>+${pts} pts</strong>`;
+    const row = document.querySelector(`.task-row[data-task="${key}"]`);
+    if (!row || row.classList.contains('done')) return;
+    row.classList.add('done');
+    const state = row.querySelector('.task-row-state');
+    if (state) {
+        state.classList.remove('state-pending');
+        state.classList.add('state-done');
+        state.innerHTML = '<span class="material-icons-round">check_circle</span><span>已完成</span>';
     }
     USER_POINTS += pts;
     syncPointsDisplay();
@@ -694,31 +695,66 @@ function completeTask(key, pts) {
     showToast(`任務完成！+${pts} pts`, 'success');
 }
 function completeTaskPassport() {
-    const card = document.querySelector('.task-card[data-task="passport"]');
-    if (!card || card.classList.contains('done')) return;
+    const row = document.querySelector('.task-row[data-task="passport"]');
+    // We add passport as a row dynamically via the feature banner, so first ensure it's tracked
     openPassportOCR();
-    // After OCR closes, mark passport task done and reward
     const origClose = window.closePassportOCR;
     window.closePassportOCR = function() {
         origClose();
-        if (!card.classList.contains('done')) {
-            setTimeout(() => completeTask('passport', 300), 300);
+        // Mark passport done in the feature banner
+        const banner = document.querySelector('.task-feature-banner');
+        if (banner && !banner.classList.contains('done')) {
+            banner.classList.add('done');
+            const btn = banner.querySelector('.tfb-btn');
+            if (btn) {
+                btn.textContent = '已完成 ✓';
+                btn.style.background = '#06C755';
+                btn.style.color = '#fff';
+            }
+            USER_POINTS += 300;
+            syncPointsDisplay();
+            updateTaskProgress();
+            setTimeout(() => showToast('任務完成！+300 pts', 'success'), 200);
         }
         window.closePassportOCR = origClose;
     };
 }
 function updateTaskProgress() {
-    const total = document.querySelectorAll('.task-card').length;
-    const done = document.querySelectorAll('.task-card.done').length;
+    const rows = document.querySelectorAll('.task-row');
+    const banner = document.querySelector('.task-feature-banner');
+    const total = rows.length + (banner ? 1 : 0);
+    let done = document.querySelectorAll('.task-row.done').length;
+    if (banner && banner.classList.contains('done')) done += 1;
+
     const txt = document.getElementById('taskProgressText');
-    if (txt) txt.textContent = `${done} / ${total} 已完成`;
+    if (txt) txt.textContent = `${done} / ${total}`;
+
+    const bar = document.getElementById('taskBarFill');
+    if (bar) bar.style.width = (total ? (done / total * 100) : 0) + '%';
+
+    const navBadge = document.getElementById('navTaskBadge');
+    const remaining = total - done;
+    if (navBadge) {
+        if (remaining > 0) {
+            navBadge.textContent = remaining;
+            navBadge.style.display = '';
+        } else {
+            navBadge.style.display = 'none';
+        }
+    }
+    // Sync the QA dot too
+    const qaDot = document.querySelector('.qa-highlight .qa-dot');
+    if (qaDot) {
+        if (remaining > 0) {
+            qaDot.textContent = remaining;
+            qaDot.style.display = '';
+        } else {
+            qaDot.style.display = 'none';
+        }
+    }
 }
 function scrollToTasks() {
-    const el = document.getElementById('taskCenter');
-    if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    el.style.animation = 'taskPulse 1.4s ease 1';
-    setTimeout(() => { el.style.animation = ''; }, 1500);
+    navigateTo('tasks');
 }
 function openMileageClaim() {
     showToast('里程補登：請於航班結束 14 天內提供登機證', 'info');
