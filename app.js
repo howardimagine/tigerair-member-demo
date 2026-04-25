@@ -583,7 +583,7 @@ window.closeModal = closeModal;
 document.getElementById('modalOverlay')?.addEventListener('click', e => {
     if (e.target === e.currentTarget) closeModal();
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeVoucherSelect(); closeMealModal(); closePassportOCR(); closeLineModal(); closeLineWelcome(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeVoucherSelect(); closeMealModal(); closePassportOCR(); closeLineModal(); closeLineWelcome(); closeAncillary(); closeMileage(); closeSupport(); } });
 
 /* ========== LINE QUICK JOIN ========== */
 function initLineModal() {
@@ -756,13 +756,189 @@ function updateTaskProgress() {
 function scrollToTasks() {
     navigateTo('tasks');
 }
-function openMileageClaim() {
-    showToast('里程補登：請於航班結束 14 天內提供登機證', 'info');
-}
 window.completeTask = completeTask;
 window.completeTaskPassport = completeTaskPassport;
 window.scrollToTasks = scrollToTasks;
+
+/* ========== ANCILLARY SERVICE MODAL ========== */
+const ANC_CONFIG = {
+    baggage: {
+        title: '行李加購',
+        icon: 'luggage',
+        hint: '託運行李重量選擇',
+        options: [
+            { name: '15 kg', price: 480, label: '基本', feats: ['含 1 件託運', '經濟艙適用', '無冷凍包裝'] },
+            { name: '20 kg', price: 680, label: '推薦', popular: true, feats: ['含 1 件託運', '可分裝 2 件', '含基本保護'] },
+            { name: '25 kg', price: 880, label: '寬鬆', feats: ['含 2 件託運', '伴手禮空間', '含基本保護'] },
+            { name: '30 kg', price: 1180, label: '充裕', feats: ['含 2 件託運', '搬家/長住', '含全程保險'] },
+        ],
+    },
+    seat: {
+        title: '座位選擇',
+        icon: 'event_seat',
+        hint: '選擇你的航程座位',
+        options: [
+            { name: '標準座位', price: 0, label: '免費', feats: ['系統隨機分配', '可同行緊鄰', '報到時確認'] },
+            { name: '靠窗 / 走道', price: 450, label: '指定', feats: ['前 15 排優先', '指定靠窗或走道', '同行可選'] },
+            { name: '前艙加大', price: 880, label: '推薦', popular: true, feats: ['前 5 排寬敞', '加長腿部空間', '優先登機'] },
+            { name: '緊急出口', price: 1280, label: '寬敞', feats: ['最大腿部空間', '需限定身高', '優先登機'] },
+        ],
+    },
+    insurance: {
+        title: '旅遊險方案',
+        icon: 'health_and_safety',
+        hint: '選擇適合的旅平+不便險方案',
+        options: [
+            { name: '基本不便險', price: 199, label: '經濟', feats: ['班機延誤 4 小時起賠', '行李遺失 NT$5,000', '14 天內有效'] },
+            { name: '進階旅平險', price: 480, label: '推薦', popular: true, feats: ['含 200 萬旅平', '行李遺失 NT$15,000', '醫療緊急救援'] },
+            { name: '尊榮全險', price: 880, label: '完整', feats: ['含 500 萬旅平', '海外醫療上限 NT$50 萬', '24h 全球支援'] },
+            { name: '家庭方案', price: 1280, label: '家庭', feats: ['2 大 1 小組合', '完整旅平+不便險', '兒童另享 60% 額度'] },
+        ],
+    },
+};
+let ancSelectedIdx = -1;
+let ancCurrent = null;
+
+function openAncillary(type, flight) {
+    const cfg = ANC_CONFIG[type];
+    if (!cfg) return;
+    ancCurrent = { type, cfg };
+    ancSelectedIdx = -1;
+
+    const modal = document.getElementById('ancillaryModal');
+    document.getElementById('ancTitle').textContent = cfg.title;
+    document.getElementById('ancFlight').textContent = `航班 ${flight} · 加值服務`;
+    document.getElementById('ancHeadIcon').textContent = cfg.icon;
+    document.getElementById('ancHint').textContent = cfg.hint;
+
+    const host = document.getElementById('ancOptions');
+    host.innerHTML = '';
+    cfg.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'anc-option' + (opt.popular ? ' popular' : '');
+        btn.dataset.idx = i;
+        btn.innerHTML = `
+            <span class="anc-opt-label">${opt.label}</span>
+            <span class="anc-opt-name">${opt.name}</span>
+            <ul class="anc-opt-feats">${opt.feats.map(f => `<li>${f}</li>`).join('')}</ul>
+            <span class="anc-opt-price">${opt.price === 0 ? '免費' : 'NT$' + opt.price.toLocaleString()}</span>
+        `;
+        btn.addEventListener('click', () => {
+            host.querySelectorAll('.anc-option').forEach(o => o.classList.remove('selected'));
+            btn.classList.add('selected');
+            ancSelectedIdx = i;
+            document.getElementById('ancPickName').textContent = opt.name;
+            document.getElementById('ancPickPrice').textContent = opt.price === 0 ? '免費' : 'NT$' + opt.price.toLocaleString();
+            document.getElementById('btnAncConfirm').disabled = false;
+        });
+        host.appendChild(btn);
+    });
+
+    // Reset summary
+    document.getElementById('ancPickName').textContent = '—';
+    document.getElementById('ancPickPrice').textContent = 'NT$0';
+    document.getElementById('btnAncConfirm').disabled = true;
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeAncillary() {
+    document.getElementById('ancillaryModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+function confirmAncillary() {
+    if (ancSelectedIdx < 0 || !ancCurrent) return;
+    const opt = ancCurrent.cfg.options[ancSelectedIdx];
+    const labelMap = { baggage: '行李', seat: '選位', insurance: '旅遊險' };
+    closeAncillary();
+    showToast(`已加購 ${labelMap[ancCurrent.type]}：${opt.name}（NT$${opt.price}）`, 'success');
+    // Mark the chip as added on the corresponding flight card
+    document.querySelectorAll('.fa-chip').forEach(chip => {
+        const lbl = chip.querySelector('.fa-label')?.textContent || '';
+        if (
+            (ancCurrent.type === 'baggage' && lbl.includes('行李')) ||
+            (ancCurrent.type === 'seat' && lbl.includes('選位')) ||
+            (ancCurrent.type === 'insurance' && lbl.includes('旅遊險'))
+        ) {
+            chip.classList.add('added');
+            const price = chip.querySelector('.fa-price');
+            if (price) { price.className = 'fa-state'; price.textContent = '已加購'; }
+        }
+    });
+}
+window.openAncillary = openAncillary;
+window.closeAncillary = closeAncillary;
+window.confirmAncillary = confirmAncillary;
+document.getElementById('ancillaryModal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeAncillary();
+});
+
+/* ========== MILEAGE CLAIM MODAL ========== */
+function openMileageClaim() {
+    const modal = document.getElementById('mileageModal');
+    if (!modal) return;
+    // Reset
+    document.getElementById('mileageEstimate').hidden = true;
+    const upload = document.getElementById('mileageUpload');
+    upload.classList.remove('uploaded');
+    document.getElementById('mileageUploadTitle').textContent = '上傳登機證 / 電子票根';
+    document.getElementById('mileageUploadHint').textContent = 'JPG / PNG / PDF，自動辨識航班編號';
+    document.getElementById('mileageUploadBtn').textContent = '選擇檔案';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeMileage() {
+    document.getElementById('mileageModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+function simulateBoardingPassUpload() {
+    const upload = document.getElementById('mileageUpload');
+    document.getElementById('mileageUploadTitle').textContent = '辨識中… IT 198 TPE→KIX';
+    document.getElementById('mileageUploadHint').textContent = '請稍候，正在比對航班記錄';
+    document.getElementById('mileageUploadBtn').textContent = '處理中';
+    setTimeout(() => {
+        upload.classList.add('uploaded');
+        document.getElementById('mileageUploadTitle').textContent = '✓ 已成功辨識：IT 198 (2026/04/10)';
+        document.getElementById('mileageUploadHint').textContent = 'TPE → KIX · 經濟艙 · 已比對訂位記錄';
+        document.getElementById('mileageUploadBtn').textContent = '已上傳';
+        document.getElementById('mileageEstimate').hidden = false;
+    }, 1100);
+}
+function submitMileage() {
+    closeMileage();
+    USER_POINTS += 120;
+    syncPointsDisplay();
+    showToast('補登申請已送出！+120 虎足跡 預計 7 個工作天內入帳', 'success');
+}
 window.openMileageClaim = openMileageClaim;
+window.closeMileage = closeMileage;
+window.simulateBoardingPassUpload = simulateBoardingPassUpload;
+window.submitMileage = submitMileage;
+document.getElementById('mileageModal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeMileage();
+});
+
+/* ========== SUPPORT MODAL ========== */
+function openSupport() {
+    const modal = document.getElementById('supportModal');
+    if (!modal) return;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeSupport() {
+    document.getElementById('supportModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+function supportPick(topic) {
+    closeSupport();
+    showToast(`已將「${topic}」轉接客服，將於 LINE 收到專員訊息`, 'success');
+}
+window.openSupport = openSupport;
+window.closeSupport = closeSupport;
+window.supportPick = supportPick;
+document.getElementById('supportModal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeSupport();
+});
 
 /* ========== COUNTER ANIMATION ========== */
 function animateCounters() {

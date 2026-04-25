@@ -115,12 +115,12 @@
                                     <div class="htp-track"><div class="htp-fill" style="width:45%"></div></div>
                                     <div class="htp-labels"><span>68 / 150 虎足跡</span><span>180 天內</span></div>
                                 </div>
-                            </div>
-
-                            <!-- Activity pills -->
-                            <div class="hero-pills-v2">
-                                <span class="stat-pill"><span class="material-icons-round">trending_up</span>本月 +320 虎足跡</span>
-                                <span class="stat-pill"><span class="material-icons-round">flight_takeoff</span>已搭乘 6 趟航班</span>
+                                <!-- Activity pills inside progress block -->
+                                <div class="htp-pills">
+                                    <span class="htp-pill"><span class="material-icons-round">trending_up</span>本月 +320 虎足跡</span>
+                                    <span class="htp-divider"></span>
+                                    <span class="htp-pill"><span class="material-icons-round">flight_takeoff</span>已搭乘 6 趟航班</span>
+                                </div>
                             </div>
                         </div>
 
@@ -167,7 +167,7 @@
                             </div>
                             <span class="qa-text">會員任務</span>
                         </button>
-                        <button class="qa-btn" onclick="navigateTo('settings')">
+                        <button class="qa-btn" onclick="openSupport()">
                             <div class="qa-icon"><span class="material-icons-round">support_agent</span></div>
                             <span class="qa-text">客服中心</span>
                         </button>
@@ -648,13 +648,13 @@
                                     <span class="fa-title"><span class="material-icons-round">add_shopping_cart</span>加值服務</span>
                                     <span class="fa-hint">為此航班加購，享會員 9 折</span>
                                 </div>
-                                <div class="fa-row">
+                                <div class="fa-row fa-row-4">
                                     <button class="fa-chip added">
                                         <span class="material-icons-round fa-icon">luggage</span>
                                         <div class="fa-label">行李 20kg</div>
                                         <span class="fa-state">已加購</span>
                                     </button>
-                                    <button class="fa-chip">
+                                    <button class="fa-chip" onclick="openAncillary('seat', 'IT 200')">
                                         <span class="material-icons-round fa-icon">event_seat</span>
                                         <div class="fa-label">選位</div>
                                         <span class="fa-price">NT$450 起</span>
@@ -664,20 +664,10 @@
                                         <div class="fa-label">機上餐</div>
                                         <span class="fa-price">NT$280 起</span>
                                     </button>
-                                    <button class="fa-chip">
+                                    <button class="fa-chip" onclick="openAncillary('insurance', 'IT 200')">
                                         <span class="material-icons-round fa-icon">health_and_safety</span>
                                         <div class="fa-label">旅遊險</div>
                                         <span class="fa-price">NT$199 起</span>
-                                    </button>
-                                    <button class="fa-chip">
-                                        <span class="material-icons-round fa-icon">directions_car</span>
-                                        <div class="fa-label">機場接駁</div>
-                                        <span class="fa-price">NT$800 起</span>
-                                    </button>
-                                    <button class="fa-chip">
-                                        <span class="material-icons-round fa-icon">hotel</span>
-                                        <div class="fa-label">合作飯店</div>
-                                        <span class="fa-price">享 10% 回饋</span>
                                     </button>
                                 </div>
                             </div>
@@ -720,13 +710,13 @@
                                     <span class="fa-title"><span class="material-icons-round">add_shopping_cart</span>加值服務</span>
                                     <span class="fa-hint">為此航班加購</span>
                                 </div>
-                                <div class="fa-row">
-                                    <button class="fa-chip">
+                                <div class="fa-row fa-row-4">
+                                    <button class="fa-chip" onclick="openAncillary('baggage', 'IT 201')">
                                         <span class="material-icons-round fa-icon">luggage</span>
                                         <div class="fa-label">行李 20kg</div>
                                         <span class="fa-price">NT$680 起</span>
                                     </button>
-                                    <button class="fa-chip">
+                                    <button class="fa-chip" onclick="openAncillary('seat', 'IT 201')">
                                         <span class="material-icons-round fa-icon">event_seat</span>
                                         <div class="fa-label">選位</div>
                                         <span class="fa-price">NT$450 起</span>
@@ -736,20 +726,10 @@
                                         <div class="fa-label">機上餐</div>
                                         <span class="fa-price">NT$280 起</span>
                                     </button>
-                                    <button class="fa-chip">
+                                    <button class="fa-chip" onclick="openAncillary('insurance', 'IT 201')">
                                         <span class="material-icons-round fa-icon">health_and_safety</span>
                                         <div class="fa-label">旅遊險</div>
                                         <span class="fa-price">NT$199 起</span>
-                                    </button>
-                                    <button class="fa-chip">
-                                        <span class="material-icons-round fa-icon">luggage</span>
-                                        <div class="fa-label">隨身行李</div>
-                                        <span class="fa-price">NT$350 起</span>
-                                    </button>
-                                    <button class="fa-chip">
-                                        <span class="material-icons-round fa-icon">local_taxi</span>
-                                        <div class="fa-label">機場快線</div>
-                                        <span class="fa-price">NT$280 起</span>
                                     </button>
                                 </div>
                             </div>
@@ -1315,7 +1295,7 @@
 
                     <!-- Tab content: QR -->
                     <div class="line-pane active" data-line-pane="qr">
-                        <div class="line-qr-frame">
+                        <div class="line-qr-frame line-qr-static">
                             <div class="line-qr-corners"></div>
                             <div class="line-qr-mock">
                                 <!-- Mock QR with grid pattern -->
@@ -1345,7 +1325,6 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="line-qr-scanline"></div>
                             <div class="line-qr-status" id="lineQrStatus"><span class="material-icons-round">qr_code_scanner</span>請使用 LINE App 掃描</div>
                         </div>
                         <p class="line-qr-hint">打開 LINE App → 點選右上角好友 → 掃描 QR</p>
@@ -1598,6 +1577,155 @@
                     <div class="modal-actions">
                         <button class="btn-ghost" onclick="closeMealModal()">取消</button>
                         <button class="btn-primary" id="btnConfirmMeal" onclick="confirmMeal()" disabled>確認加購</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== UNIVERSAL ANCILLARY MODAL ===== -->
+            <div class="modal-overlay" id="ancillaryModal">
+                <div class="modal-card ancillary-card">
+                    <div class="meal-modal-head">
+                        <div>
+                            <span class="card-eyebrow" id="ancFlight">TPE → NRT · IT 200</span>
+                            <h2 id="ancTitle">加值服務</h2>
+                        </div>
+                        <button class="modal-close" onclick="closeAncillary()"><span class="material-icons-round">close</span></button>
+                    </div>
+
+                    <div class="meal-balance">
+                        <span class="material-icons-round" id="ancHeadIcon">add_shopping_cart</span>
+                        <span id="ancHint">選擇方案，立即加購</span>
+                        <span class="meal-balance-hint">會員 9 折</span>
+                    </div>
+
+                    <div class="anc-options" id="ancOptions"></div>
+
+                    <div class="meal-summary">
+                        <div class="ms-row">
+                            <span>已選方案</span>
+                            <strong id="ancPickName">—</strong>
+                        </div>
+                        <div class="ms-row total">
+                            <span>應付金額</span>
+                            <strong id="ancPickPrice">NT$0</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button class="btn-ghost" onclick="closeAncillary()">取消</button>
+                        <button class="btn-primary" id="btnAncConfirm" onclick="confirmAncillary()" disabled>確認加購</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== MILEAGE CLAIM MODAL ===== -->
+            <div class="modal-overlay" id="mileageModal">
+                <div class="modal-card mileage-card">
+                    <div class="meal-modal-head">
+                        <div>
+                            <span class="card-eyebrow">補登虎足跡</span>
+                            <h2>里程補登</h2>
+                        </div>
+                        <button class="modal-close" onclick="closeMileage()"><span class="material-icons-round">close</span></button>
+                    </div>
+
+                    <p class="mileage-hint">航班結束 14 天內可補登；登機證副本將自動辨識並核對</p>
+
+                    <div class="mileage-form">
+                        <label class="form-field full">
+                            <span class="form-lbl">航班編號 <em>*</em></span>
+                            <input type="text" placeholder="例如 IT 200" value="IT 198">
+                        </label>
+                        <label class="form-field">
+                            <span class="form-lbl">出發日期 <em>*</em></span>
+                            <input type="date" value="2026-04-10">
+                        </label>
+                        <label class="form-field">
+                            <span class="form-lbl">出發機場</span>
+                            <select><option>TPE 台北桃園</option><option>KHH 高雄</option><option>RMQ 台中</option></select>
+                        </label>
+                    </div>
+
+                    <div class="mileage-upload" id="mileageUpload" onclick="simulateBoardingPassUpload()">
+                        <div class="mu-icon"><span class="material-icons-round">add_photo_alternate</span></div>
+                        <div class="mu-body">
+                            <strong id="mileageUploadTitle">上傳登機證 / 電子票根</strong>
+                            <small id="mileageUploadHint">JPG / PNG / PDF，自動辨識航班編號</small>
+                        </div>
+                        <span class="mu-cta" id="mileageUploadBtn">選擇檔案</span>
+                    </div>
+
+                    <div class="mileage-estimate" id="mileageEstimate" hidden>
+                        <span class="me-lbl">預估可補登</span>
+                        <strong class="me-val">+120 虎足跡</strong>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button class="btn-ghost" onclick="closeMileage()">取消</button>
+                        <button class="btn-primary" id="btnMileageSubmit" onclick="submitMileage()">送出申請</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== CUSTOMER SUPPORT MODAL ===== -->
+            <div class="modal-overlay" id="supportModal">
+                <div class="modal-card support-card">
+                    <div class="meal-modal-head">
+                        <div>
+                            <span class="card-eyebrow">線上客服</span>
+                            <h2>哈囉 Alex，需要什麼協助？</h2>
+                        </div>
+                        <button class="modal-close" onclick="closeSupport()"><span class="material-icons-round">close</span></button>
+                    </div>
+
+                    <div class="support-quick-grid">
+                        <button class="sq-card" onclick="supportPick('航班異動')">
+                            <span class="material-icons-round">schedule</span>
+                            <strong>航班異動 / 改期</strong>
+                            <small>更改日期、時刻、航線</small>
+                        </button>
+                        <button class="sq-card" onclick="supportPick('退票')">
+                            <span class="material-icons-round">undo</span>
+                            <strong>取消 / 退票</strong>
+                            <small>退款進度查詢</small>
+                        </button>
+                        <button class="sq-card" onclick="supportPick('行李')">
+                            <span class="material-icons-round">luggage</span>
+                            <strong>行李問題</strong>
+                            <small>遺失、超重、加購</small>
+                        </button>
+                        <button class="sq-card" onclick="supportPick('Voucher')">
+                            <span class="material-icons-round">confirmation_number</span>
+                            <strong>Voucher 使用</strong>
+                            <small>折抵、效期、兌換</small>
+                        </button>
+                    </div>
+
+                    <div class="support-channels">
+                        <a href="#" class="sc-link">
+                            <span class="material-icons-round">chat</span>
+                            <div>
+                                <strong>線上客服 (LINE)</strong>
+                                <small>每日 06:00–24:00 即時回覆</small>
+                            </div>
+                            <span class="sc-arrow">→</span>
+                        </a>
+                        <a href="#" class="sc-link">
+                            <span class="material-icons-round">call</span>
+                            <div>
+                                <strong>專屬電話 02-5599-9989</strong>
+                                <small>菁英虎會員專線 · 每日 09:00–22:00</small>
+                            </div>
+                            <span class="sc-arrow">→</span>
+                        </a>
+                        <a href="#" class="sc-link">
+                            <span class="material-icons-round">help_outline</span>
+                            <div>
+                                <strong>常見問題</strong>
+                                <small>自助查詢 80% 客戶問題</small>
+                            </div>
+                            <span class="sc-arrow">→</span>
+                        </a>
                     </div>
                 </div>
             </div>
