@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initPassportModal();
     initMealModal();
     initVoucherSelect();
+    initLineModal();
+    initCoverFlow();
     animateCounters();
     triggerPageAnimations('dashboard');
 });
@@ -234,22 +236,142 @@ function closePassportOCR() {
 window.openPassportOCR = openPassportOCR;
 window.closePassportOCR = closePassportOCR;
 
-/* ========== MEAL ORDERING MODAL ========== */
+/* ========== MEAL ORDERING MODAL (Cover Flow) ========== */
 let USER_POINTS = 2580;
+let cfIndex = 0;
+let cfSelected = new Set(); // selected card indices
+
 function initMealModal() {
     const modal = document.getElementById('mealModal');
     if (!modal) return;
     modal.addEventListener('click', e => { if (e.target === e.currentTarget) closeMealModal(); });
-    modal.querySelectorAll('.meal-option input').forEach(i => i.addEventListener('change', updateMealTotal));
     document.getElementById('mealUsePoints')?.addEventListener('change', updateMealTotal);
 }
+
+function initCoverFlow() {
+    const stage = document.getElementById('coverflowStage');
+    if (!stage) return;
+    // Click side cards to focus
+    stage.querySelectorAll('.cf-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const idx = Number(card.dataset.cfIdx);
+            if (idx === cfIndex) {
+                cfToggleSelect();
+            } else {
+                cfGoTo(idx);
+            }
+        });
+    });
+    // Build dots
+    const dotsHost = document.getElementById('cfDots');
+    if (dotsHost) {
+        const total = stage.querySelectorAll('.cf-card').length;
+        dotsHost.innerHTML = '';
+        for (let i = 0; i < total; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'cf-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => cfGoTo(i));
+            dotsHost.appendChild(dot);
+        }
+    }
+    // Keyboard arrows when modal open
+    document.addEventListener('keydown', e => {
+        const open = document.getElementById('mealModal')?.classList.contains('active');
+        if (!open) return;
+        if (e.key === 'ArrowLeft') cfPrev();
+        else if (e.key === 'ArrowRight') cfNext();
+        else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); cfToggleSelect(); }
+    });
+    cfRender();
+}
+
+function cfRender() {
+    const cards = document.querySelectorAll('#coverflowTrack .cf-card');
+    const total = cards.length;
+    cards.forEach(card => {
+        const i = Number(card.dataset.cfIdx);
+        let pos;
+        const diff = i - cfIndex;
+        if (diff === 0) pos = 'center';
+        else if (diff === -1 || diff === total - 1) pos = 'left-1';
+        else if (diff === -2 || diff === total - 2) pos = 'left-2';
+        else if (diff === 1 || diff === -(total - 1)) pos = 'right-1';
+        else if (diff === 2 || diff === -(total - 2)) pos = 'right-2';
+        else pos = 'hidden';
+        card.dataset.pos = pos;
+        card.classList.toggle('selected', cfSelected.has(i));
+    });
+    // Dots
+    document.querySelectorAll('#cfDots .cf-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === cfIndex);
+    });
+    // Add button label
+    const btn = document.getElementById('cfAddBtn');
+    if (btn) {
+        if (cfSelected.has(cfIndex)) {
+            btn.classList.add('added');
+            btn.innerHTML = '<span class="material-icons-round">remove_circle</span><span>取消加入</span>';
+        } else {
+            btn.classList.remove('added');
+            btn.innerHTML = '<span class="material-icons-round">add_circle</span><span>加入餐點</span>';
+        }
+    }
+    renderSelectedChips();
+}
+
+function renderSelectedChips() {
+    const host = document.getElementById('cfSelectedChips');
+    if (!host) return;
+    host.innerHTML = '';
+    cfSelected.forEach(i => {
+        const card = document.querySelector(`#coverflowTrack .cf-card[data-cf-idx="${i}"]`);
+        if (!card) return;
+        const name = card.dataset.name;
+        const chip = document.createElement('span');
+        chip.className = 'cf-chip';
+        chip.innerHTML = `<span class="material-icons-round">check</span>${name}<span class="material-icons-round" data-rm="${i}">close</span>`;
+        host.appendChild(chip);
+    });
+    host.querySelectorAll('[data-rm]').forEach(el => {
+        el.addEventListener('click', e => {
+            e.stopPropagation();
+            cfSelected.delete(Number(el.dataset.rm));
+            cfRender();
+            updateMealTotal();
+        });
+    });
+}
+
+function cfPrev() {
+    const total = document.querySelectorAll('#coverflowTrack .cf-card').length;
+    cfIndex = (cfIndex - 1 + total) % total;
+    cfRender();
+}
+function cfNext() {
+    const total = document.querySelectorAll('#coverflowTrack .cf-card').length;
+    cfIndex = (cfIndex + 1) % total;
+    cfRender();
+}
+function cfGoTo(idx) {
+    const total = document.querySelectorAll('#coverflowTrack .cf-card').length;
+    cfIndex = ((idx % total) + total) % total;
+    cfRender();
+}
+function cfToggleSelect() {
+    if (cfSelected.has(cfIndex)) cfSelected.delete(cfIndex);
+    else cfSelected.add(cfIndex);
+    cfRender();
+    updateMealTotal();
+}
+
 function openMealModal() {
     const modal = document.getElementById('mealModal');
     if (!modal) return;
-    // reset
-    modal.querySelectorAll('.meal-option input').forEach(i => i.checked = false);
+    cfSelected.clear();
+    cfIndex = 0;
     const pts = document.getElementById('mealUsePoints'); if (pts) pts.checked = false;
     const pl = document.getElementById('mealAvailPts'); if (pl) pl.textContent = USER_POINTS.toLocaleString();
+    cfRender();
     updateMealTotal();
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -261,13 +383,15 @@ function closeMealModal() {
     document.body.style.overflow = '';
 }
 function updateMealTotal() {
-    const inputs = document.querySelectorAll('#mealGrid .meal-option input:checked');
-    const count = inputs.length;
     let subtotal = 0;
-    inputs.forEach(i => subtotal += Number(i.dataset.price || 0));
+    cfSelected.forEach(i => {
+        const card = document.querySelector(`#coverflowTrack .cf-card[data-cf-idx="${i}"]`);
+        if (card) subtotal += Number(card.dataset.price || 0);
+    });
     const usePoints = document.getElementById('mealUsePoints')?.checked;
     const deduct = usePoints ? Math.min(USER_POINTS, subtotal) : 0;
     const total = Math.max(0, subtotal - deduct);
+    const count = cfSelected.size;
     document.getElementById('mealCount').textContent = count;
     document.getElementById('mealSubtotal').textContent = 'NT$' + subtotal.toLocaleString();
     document.getElementById('mealDeduct').textContent = '-' + deduct.toLocaleString() + ' pts';
@@ -275,21 +399,24 @@ function updateMealTotal() {
     document.getElementById('btnConfirmMeal').disabled = count === 0;
 }
 function confirmMeal() {
-    const inputs = document.querySelectorAll('#mealGrid .meal-option input:checked');
-    const names = Array.from(inputs).map(i => i.dataset.name);
+    if (!cfSelected.size) return;
+    const names = [];
+    let subtotal = 0;
+    cfSelected.forEach(i => {
+        const card = document.querySelector(`#coverflowTrack .cf-card[data-cf-idx="${i}"]`);
+        if (card) {
+            names.push(card.dataset.name);
+            subtotal += Number(card.dataset.price || 0);
+        }
+    });
     const usePoints = document.getElementById('mealUsePoints')?.checked;
-    const subtotal = Array.from(inputs).reduce((s, i) => s + Number(i.dataset.price || 0), 0);
     const deduct = usePoints ? Math.min(USER_POINTS, subtotal) : 0;
     if (usePoints) {
         USER_POINTS -= deduct;
-        // update hero + sidebar points
-        const fmt = USER_POINTS.toLocaleString();
-        const hp = document.getElementById('heroPointsVal'); if (hp) hp.textContent = fmt;
-        const sp = document.getElementById('sidebarPoints'); if (sp) sp.textContent = fmt;
+        syncPointsDisplay();
     }
     closeMealModal();
     showToast('已加購 ' + names.length + ' 項機上餐點' + (usePoints ? `（折抵 ${deduct} pts）` : ''), 'success');
-    // Mark the meal chip as added on the corresponding flight card
     document.querySelectorAll('.fa-chip').forEach(chip => {
         if (chip.querySelector('.fa-label')?.textContent.includes('機上餐')) {
             chip.classList.add('added');
@@ -301,6 +428,16 @@ function confirmMeal() {
 window.openMealModal = openMealModal;
 window.closeMealModal = closeMealModal;
 window.confirmMeal = confirmMeal;
+window.cfPrev = cfPrev;
+window.cfNext = cfNext;
+window.cfToggleSelect = cfToggleSelect;
+
+function syncPointsDisplay() {
+    const fmt = USER_POINTS.toLocaleString();
+    const hp = document.getElementById('heroPointsVal'); if (hp) hp.textContent = fmt;
+    const sp = document.getElementById('sidebarPoints'); if (sp) sp.textContent = fmt;
+}
+window.syncPointsDisplay = syncPointsDisplay;
 
 /* ========== REGISTER STEPPER ========== */
 let currentStep = 1;
@@ -446,7 +583,150 @@ window.closeModal = closeModal;
 document.getElementById('modalOverlay')?.addEventListener('click', e => {
     if (e.target === e.currentTarget) closeModal();
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeVoucherSelect(); closeMealModal(); closePassportOCR(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeVoucherSelect(); closeMealModal(); closePassportOCR(); closeLineModal(); closeLineWelcome(); } });
+
+/* ========== LINE QUICK JOIN ========== */
+function initLineModal() {
+    const modal = document.getElementById('lineModal');
+    if (!modal) return;
+    modal.addEventListener('click', e => { if (e.target === e.currentTarget) closeLineModal(); });
+    modal.querySelectorAll('.line-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            const which = tab.dataset.lineTab;
+            modal.querySelectorAll('.line-tab').forEach(t => t.classList.toggle('active', t === tab));
+            modal.querySelectorAll('.line-pane').forEach(p => p.classList.toggle('active', p.dataset.linePane === which));
+        });
+    });
+    const welcome = document.getElementById('lineWelcomeModal');
+    if (welcome) welcome.addEventListener('click', e => { if (e.target === e.currentTarget) closeLineWelcome(); });
+}
+function openLineModal() {
+    const modal = document.getElementById('lineModal');
+    if (!modal) return;
+    // Reset to QR tab
+    modal.querySelectorAll('.line-tab').forEach((t, i) => t.classList.toggle('active', i === 0));
+    modal.querySelectorAll('.line-pane').forEach((p, i) => p.classList.toggle('active', i === 0));
+    const status = document.getElementById('lineQrStatus');
+    if (status) {
+        status.classList.remove('success');
+        status.innerHTML = '<span class="material-icons-round">qr_code_scanner</span>請使用 LINE App 掃描';
+    }
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeLineModal() {
+    const modal = document.getElementById('lineModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+function simulateLineScan() {
+    const status = document.getElementById('lineQrStatus');
+    if (status) {
+        status.innerHTML = '<span class="material-icons-round">sync</span>等待 LINE App 確認…';
+    }
+    setTimeout(() => {
+        if (status) {
+            status.classList.add('success');
+            status.innerHTML = '<span class="material-icons-round">check_circle</span>已成功識別';
+        }
+        setTimeout(completeLineJoin, 700);
+    }, 1100);
+}
+function completeLineJoin() {
+    closeLineModal();
+    const welcome = document.getElementById('lineWelcomeModal');
+    if (!welcome) return;
+    welcome.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeLineWelcome() {
+    const w = document.getElementById('lineWelcomeModal');
+    if (!w) return;
+    w.classList.remove('active');
+    document.body.style.overflow = '';
+}
+function finishLineJoin() {
+    closeLineWelcome();
+    // Bonus 200 pts already accounted in welcome
+    USER_POINTS = 200; // Reset to lightweight member starting pts
+    syncPointsDisplay();
+    navigateTo('dashboard');
+    setTimeout(() => showToast('歡迎加入 tigerclub 輕量會員！+200 pts 已入帳', 'success'), 400);
+}
+window.openLineModal = openLineModal;
+window.closeLineModal = closeLineModal;
+window.simulateLineScan = simulateLineScan;
+window.completeLineJoin = completeLineJoin;
+window.closeLineWelcome = closeLineWelcome;
+window.finishLineJoin = finishLineJoin;
+
+/* ========== REGISTER PATH SELECTOR ========== */
+function showFullRegister() {
+    const sel = document.getElementById('pathSelector');
+    const flow = document.getElementById('fullRegisterFlow');
+    if (sel) sel.style.display = 'none';
+    if (flow) flow.hidden = false;
+    goToStep(1);
+}
+function hideFullRegister() {
+    const sel = document.getElementById('pathSelector');
+    const flow = document.getElementById('fullRegisterFlow');
+    if (sel) sel.style.display = '';
+    if (flow) flow.hidden = true;
+}
+window.showFullRegister = showFullRegister;
+window.hideFullRegister = hideFullRegister;
+
+/* ========== TASK CENTER ========== */
+function completeTask(key, pts) {
+    const card = document.querySelector(`.task-card[data-task="${key}"]`);
+    if (!card || card.classList.contains('done')) return;
+    card.classList.add('done');
+    const reward = card.querySelector('.task-reward');
+    if (reward) {
+        reward.classList.remove('task-pending');
+        reward.innerHTML = `<span class="material-icons-round">check_circle</span><strong>+${pts} pts</strong>`;
+    }
+    USER_POINTS += pts;
+    syncPointsDisplay();
+    updateTaskProgress();
+    showToast(`任務完成！+${pts} pts`, 'success');
+}
+function completeTaskPassport() {
+    const card = document.querySelector('.task-card[data-task="passport"]');
+    if (!card || card.classList.contains('done')) return;
+    openPassportOCR();
+    // After OCR closes, mark passport task done and reward
+    const origClose = window.closePassportOCR;
+    window.closePassportOCR = function() {
+        origClose();
+        if (!card.classList.contains('done')) {
+            setTimeout(() => completeTask('passport', 300), 300);
+        }
+        window.closePassportOCR = origClose;
+    };
+}
+function updateTaskProgress() {
+    const total = document.querySelectorAll('.task-card').length;
+    const done = document.querySelectorAll('.task-card.done').length;
+    const txt = document.getElementById('taskProgressText');
+    if (txt) txt.textContent = `${done} / ${total} 已完成`;
+}
+function scrollToTasks() {
+    const el = document.getElementById('taskCenter');
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.style.animation = 'taskPulse 1.4s ease 1';
+    setTimeout(() => { el.style.animation = ''; }, 1500);
+}
+function openMileageClaim() {
+    showToast('里程補登：請於航班結束 14 天內提供登機證', 'info');
+}
+window.completeTask = completeTask;
+window.completeTaskPassport = completeTaskPassport;
+window.scrollToTasks = scrollToTasks;
+window.openMileageClaim = openMileageClaim;
 
 /* ========== COUNTER ANIMATION ========== */
 function animateCounters() {

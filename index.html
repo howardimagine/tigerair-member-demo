@@ -75,8 +75,8 @@
             <!-- ===================== DASHBOARD ===================== -->
             <section class="page active" id="page-dashboard">
 
-                <!-- NETFLIX-STYLE HERO -->
-                <div class="hero-cinema parallax-container">
+                <!-- NETFLIX-STYLE HERO (Cinematic, info floats over bg) -->
+                <div class="hero-cinema parallax-container hero-v2">
                     <div class="hero-bg-wrap" data-parallax="0.12">
                         <img src="images/jezael-melgoza-alY6_OpdwRQ-unsplash.jpg" alt="" class="hero-bg-img active" data-slide="0">
                         <img src="images/su-san-lee-E_eWwM29wfU-unsplash.jpg" alt="" class="hero-bg-img" data-slide="1">
@@ -84,20 +84,51 @@
                     </div>
                     <div class="hero-gradient"></div>
                     <div class="hero-noise"></div>
-                    <div class="hero-illustration">
-                        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.4"/>
-                            <circle cx="100" cy="100" r="50" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4" opacity="0.25"/>
-                            <circle cx="100" cy="100" r="30" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1 3" opacity="0.2"/>
-                        </svg>
-                    </div>
-                    <div class="hero-inner">
-                        <div class="hero-welcome">
-                            <span class="hero-greeting">Welcome back,</span>
-                            <h1 class="hero-name">Alex Chen</h1>
-                            <p class="hero-tier-line"><span class="material-icons-round">workspace_premium</span>菁英虎 tigerexpert<span class="hero-dot">·</span>會員編號 7470 0231 81</p>
+
+                    <div class="hero-inner hero-inner-v2">
+                        <!-- LEFT: Member identity floats over bg -->
+                        <div class="hero-identity">
+                            <span class="hero-greeting-v2">Welcome back</span>
+                            <h1 class="hero-name-v2">Alex Chen</h1>
+                            <div class="hero-tier-row">
+                                <span class="hero-tier-pill"><span class="material-icons-round">workspace_premium</span>菁英虎 tigerexpert</span>
+                                <span class="hero-id-pill">No. 7470 0231 81</span>
+                            </div>
+
+                            <!-- Points row, floating -->
+                            <div class="hero-points-block">
+                                <span class="hero-points-lbl">旅遊基金</span>
+                                <div class="hero-points-line">
+                                    <span class="hero-points-value" id="heroPointsVal">2,580</span>
+                                    <span class="hero-points-unit">tigerpoints</span>
+                                </div>
+                                <span class="hero-equiv-v2">≈ NT$2,580 可折抵機票與附加服務</span>
+                            </div>
+
+                            <!-- Tier progress integrated into hero (no card wrap) -->
+                            <div class="hero-tier-progress">
+                                <div class="htp-head">
+                                    <div>
+                                        <span class="htp-eyebrow">下一等級</span>
+                                        <strong class="htp-next">尊榮虎 tigerprime</strong>
+                                    </div>
+                                    <span class="htp-remain">還差 <strong>82</strong> 虎足跡 · 約 1 趟旅行</span>
+                                </div>
+                                <div class="htp-bar">
+                                    <div class="htp-track"><div class="htp-fill" style="width:45%"></div></div>
+                                    <div class="htp-labels"><span>68 / 150 虎足跡</span><span>180 天內</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Activity pills -->
+                            <div class="hero-pills-v2">
+                                <span class="stat-pill"><span class="material-icons-round">trending_up</span>本月 +320 虎足跡</span>
+                                <span class="stat-pill"><span class="material-icons-round">flight_takeoff</span>已搭乘 6 趟航班</span>
+                            </div>
                         </div>
-                        <div class="hero-row">
+
+                        <!-- RIGHT: Membership card floats -->
+                        <div class="hero-card-area">
                             <div class="membership-card" id="memberCard">
                                 <div class="card-shine"></div>
                                 <div class="mc-top">
@@ -112,18 +143,8 @@
                                 </div>
                                 <div class="mc-pattern"></div>
                             </div>
-                            <div class="hero-stats">
-                                <div class="hero-stat-main">
-                                    <span class="hero-label">旅遊基金</span>
-                                    <div class="hero-points-row"><span class="hero-points-value" id="heroPointsVal">2,580</span><span class="hero-points-unit">tigerpoints</span></div>
-                                    <span class="hero-equiv">≈ NT$2,580 可折抵機票與附加服務</span>
-                                </div>
-                                <div class="hero-pills">
-                                    <span class="stat-pill"><span class="material-icons-round">trending_up</span>本月 +320 虎足跡</span>
-                                    <span class="stat-pill"><span class="material-icons-round">flight_takeoff</span>已搭乘 6 趟航班</span>
-                                </div>
-                            </div>
                         </div>
+
                         <!-- Tiger walking video (light mode only) -->
                         <div class="hero-tiger-walk light-only" aria-hidden="true">
                             <video src="images/tiger walking.mp4" autoplay muted loop playsinline preload="auto"></video>
@@ -132,27 +153,20 @@
                 </div>
 
                 <div class="page-content">
-                    <!-- QUICK ACTIONS -->
-                    <div class="quick-actions">
+                    <!-- QUICK ACTIONS (4 only) -->
+                    <div class="quick-actions quick-actions-4">
                         <button class="qa-btn" onclick="showRedemption()">
                             <div class="qa-icon"><span class="material-icons-round">swap_horiz</span></div>
                             <span class="qa-text">兌換 Voucher</span>
                         </button>
-                        <button class="qa-btn" onclick="navigateTo('rewards')">
-                            <div class="qa-icon"><span class="material-icons-round">flight</span></div>
-                            <span class="qa-text">登錄航班</span>
+                        <button class="qa-btn" onclick="openMileageClaim()">
+                            <div class="qa-icon"><span class="material-icons-round">flight_class</span></div>
+                            <span class="qa-text">里程補登</span>
                         </button>
-                        <button class="qa-btn" onclick="navigateTo('tier')">
-                            <div class="qa-icon"><span class="material-icons-round">rocket_launch</span></div>
-                            <span class="qa-text">升等攻略</span>
-                        </button>
-                        <button class="qa-btn" onclick="navigateTo('orders')">
-                            <div class="qa-icon"><span class="material-icons-round">airplane_ticket</span></div>
-                            <span class="qa-text">立即訂票</span>
-                        </button>
-                        <button class="qa-btn" onclick="navigateTo('vouchers')">
-                            <div class="qa-icon"><span class="material-icons-round">confirmation_number</span></div>
-                            <span class="qa-text">我的 Voucher</span>
+                        <button class="qa-btn qa-highlight" onclick="scrollToTasks()">
+                            <div class="qa-icon"><span class="material-icons-round">task_alt</span></div>
+                            <span class="qa-text">會員任務</span>
+                            <span class="qa-dot">3</span>
                         </button>
                         <button class="qa-btn" onclick="navigateTo('settings')">
                             <div class="qa-icon"><span class="material-icons-round">support_agent</span></div>
@@ -208,6 +222,87 @@
                         </div>
                     </section>
 
+                    <!-- ===== 會員任務 TASK CENTER ===== -->
+                    <section class="dash-section" id="taskCenter">
+                        <div class="section-head">
+                            <div>
+                                <h2>會員任務</h2>
+                                <p class="section-sub">完成任務即賺虎足跡，加速升等到完整會員權益</p>
+                            </div>
+                            <div class="task-progress-badge">
+                                <span class="material-icons-round">emoji_events</span>
+                                <strong id="taskProgressText">1 / 5 已完成</strong>
+                            </div>
+                        </div>
+
+                        <div class="task-grid" id="taskGrid">
+                            <!-- Task 1: LINE bound (done) -->
+                            <div class="task-card done" data-task="line">
+                                <div class="task-icon task-line"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></div>
+                                <div class="task-body">
+                                    <h4>綁定 LINE 帳號</h4>
+                                    <p>已完成 · 你可即時收到航班與促銷推播</p>
+                                </div>
+                                <div class="task-reward">
+                                    <span class="material-icons-round">check_circle</span>
+                                    <strong>+200 pts</strong>
+                                </div>
+                            </div>
+
+                            <!-- Task 2: Email -->
+                            <div class="task-card" data-task="email" onclick="completeTask('email', 100)">
+                                <div class="task-icon task-email"><span class="material-icons-round">mark_email_read</span></div>
+                                <div class="task-body">
+                                    <h4>驗證 Email</h4>
+                                    <p>確認你的訂票通知與 Voucher 發送</p>
+                                </div>
+                                <div class="task-reward task-pending">
+                                    <strong>+100 pts</strong>
+                                    <span class="task-cta">驗證 →</span>
+                                </div>
+                            </div>
+
+                            <!-- Task 3: Phone -->
+                            <div class="task-card" data-task="phone" onclick="completeTask('phone', 100)">
+                                <div class="task-icon task-phone"><span class="material-icons-round">smartphone</span></div>
+                                <div class="task-body">
+                                    <h4>驗證手機號碼</h4>
+                                    <p>用於航班異動即時通知與報到</p>
+                                </div>
+                                <div class="task-reward task-pending">
+                                    <strong>+100 pts</strong>
+                                    <span class="task-cta">驗證 →</span>
+                                </div>
+                            </div>
+
+                            <!-- Task 4: Passport (most rewarding) -->
+                            <div class="task-card task-card-feature" data-task="passport" onclick="completeTaskPassport()">
+                                <div class="task-icon task-passport"><span class="material-icons-round">document_scanner</span></div>
+                                <div class="task-body">
+                                    <h4>掃描護照確認英文姓名 <span class="task-tag-hot">熱門</span></h4>
+                                    <p>OCR 自動讀取，10 秒完成 · 訂票更順暢</p>
+                                </div>
+                                <div class="task-reward task-pending">
+                                    <strong class="task-reward-big">+300 pts</strong>
+                                    <span class="task-cta">立即掃描 →</span>
+                                </div>
+                            </div>
+
+                            <!-- Task 5: Preferences -->
+                            <div class="task-card" data-task="prefs" onclick="completeTask('prefs', 50)">
+                                <div class="task-icon task-prefs"><span class="material-icons-round">tune</span></div>
+                                <div class="task-body">
+                                    <h4>設定旅行偏好</h4>
+                                    <p>收到更精準的航線推薦</p>
+                                </div>
+                                <div class="task-reward task-pending">
+                                    <strong>+50 pts</strong>
+                                    <span class="task-cta">設定 →</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
                     <!-- CINEMATIC TRAVEL BANNER (dark mode) -->
                     <div class="travel-banner parallax-container dark-only">
                         <div class="travel-banner-bg" data-parallax="0.2">
@@ -233,47 +328,6 @@
                         </div>
                     </div>
 
-                    <!-- TIER PROGRESS (full width) -->
-                    <div class="card tier-progress-card tier-progress-full">
-                        <div class="card-head">
-                            <div><span class="card-eyebrow">下一會員等級</span><h3>尊榮虎 tigerprime</h3></div>
-                            <div class="tier-icon-badge"><span class="material-icons-round">emoji_events</span></div>
-                        </div>
-                        <p class="tier-desc">還差 <strong>82</strong> 虎足跡即可升等 — 約 <strong>1 趟旅行</strong></p>
-                        <div class="progress-bar">
-                            <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
-                            <div class="progress-labels"><span>68 / 150 虎足跡</span><span>180天內</span></div>
-                        </div>
-                        <div class="benefit-chips">
-                            <span class="benefit-chip"><span class="material-icons-round">arrow_upward</span>回饋 2%</span>
-                            <span class="benefit-chip"><span class="material-icons-round">bolt</span>促銷優先</span>
-                            <span class="benefit-chip"><span class="material-icons-round">flight_class</span>優先登機</span>
-                        </div>
-                    </div>
-
-                    <!-- ACTIVITY -->
-                    <section class="dash-section">
-                        <div class="section-head"><h2>回饋金紀錄</h2><button class="link-btn">查看全部 →</button></div>
-                        <div class="card">
-                            <div class="activity-list">
-                                <div class="activity-item">
-                                    <div class="activity-icon flight-icon"><span class="material-icons-round">flight</span></div>
-                                    <div class="activity-details"><h4>航班：TPE → NRT</h4><p>2026/04/10 · 經濟艙</p></div>
-                                    <div class="activity-points positive">+1,200</div>
-                                </div>
-                                <div class="activity-item">
-                                    <div class="activity-icon partner-icon"><span class="material-icons-round">credit_card</span></div>
-                                    <div class="activity-details"><h4>樂天聯名卡加碼</h4><p>2026/04/08 · 活動加碼</p></div>
-                                    <div class="activity-points positive">+380</div>
-                                </div>
-                                <div class="activity-item">
-                                    <div class="activity-icon redeem-icon"><span class="material-icons-round">confirmation_number</span></div>
-                                    <div class="activity-details"><h4>Voucher 兌換</h4><p>2026/04/05 · NT$1,000</p></div>
-                                    <div class="activity-points negative">-1,000</div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
             </section>
 
@@ -966,32 +1020,41 @@
                         <h1>歡迎回來 tigerclub</h1>
                         <p class="login-sub">登入後即可累積虎足跡、管理訂單與加值服務</p>
 
-                        <div class="social-login">
+                        <!-- ⭐ HERO LINE BUTTON -->
+                        <button class="line-hero-btn" onclick="openLineModal()">
+                            <span class="line-logo-svg">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+                            </span>
+                            <span class="line-hero-text">
+                                <strong>使用 LINE 一鍵加入</strong>
+                                <small>10 秒完成 · 免填資料 · 立即接收降價通知</small>
+                            </span>
+                            <span class="line-hero-badge">推薦</span>
+                        </button>
+
+                        <div class="login-sep"><span>或選擇其他方式</span></div>
+
+                        <div class="social-login social-login-mini">
                             <button class="social-btn social-google" onclick="navigateTo('dashboard')">
-                                <span class="provider-chip google">G</span>使用 Google 繼續
+                                <span class="provider-chip google">G</span>Google
                             </button>
                             <button class="social-btn social-apple" onclick="navigateTo('dashboard')">
-                                <span class="provider-chip apple"></span>使用 Apple 繼續
-                            </button>
-                            <button class="social-btn social-line" onclick="navigateTo('dashboard')">
-                                <span class="provider-chip line">L</span>使用 LINE 繼續
+                                <span class="provider-chip apple"></span>Apple
                             </button>
                             <button class="social-btn social-fb" onclick="navigateTo('dashboard')">
-                                <span class="provider-chip fb">f</span>使用 Facebook 繼續
+                                <span class="provider-chip fb">f</span>Facebook
                             </button>
                         </div>
-
-                        <div class="login-sep"><span>或使用 Email</span></div>
 
                         <div class="login-form">
                             <label class="login-field"><span>Email</span><input type="email" placeholder="alex.chen@email.com"></label>
                             <label class="login-field"><span>密碼</span><input type="password" placeholder="••••••••"></label>
-                            <button class="btn-primary btn-block" onclick="navigateTo('dashboard')">登入</button>
+                            <button class="btn-primary btn-block" onclick="navigateTo('dashboard')">使用 Email 登入</button>
                         </div>
 
                         <div class="login-register">
-                            <span>還不是會員？</span>
-                            <button class="link-btn" onclick="navigateTo('register')">立即註冊 →</button>
+                            <span>想要完整會員權益？</span>
+                            <button class="link-btn" onclick="navigateTo('register')">完整註冊（500 pts 禮）→</button>
                         </div>
                     </div>
                 </div>
@@ -1004,8 +1067,43 @@
                         <header class="register-head">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Tigerair.svg" alt="tigerair" class="login-logo">
                             <h1>加入 tigerclub</h1>
-                            <p class="login-sub">註冊後立即累積虎足跡，資料須與護照一致</p>
+                            <p class="login-sub">選擇適合你的會員方案，之後都能升級</p>
                         </header>
+
+                        <!-- Path Selection -->
+                        <div class="path-selector" id="pathSelector">
+                            <button class="path-card path-light" onclick="openLineModal()">
+                                <div class="path-tag">推薦 · 10 秒完成</div>
+                                <div class="path-icon line-bg">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+                                </div>
+                                <h3>輕量加入 <small>· 旅遊迷</small></h3>
+                                <p class="path-desc">用 LINE 一鍵綁定，免填資料，馬上接收降價通知</p>
+                                <ul class="path-feats">
+                                    <li><span class="material-icons-round">notifications_active</span>降價/促銷推播</li>
+                                    <li><span class="material-icons-round">flight_takeoff</span>累積虎足跡</li>
+                                    <li><span class="material-icons-round">card_giftcard</span>歡迎禮 200 pts</li>
+                                </ul>
+                                <span class="path-cta">立即綁定 LINE →</span>
+                            </button>
+
+                            <button class="path-card path-full" onclick="showFullRegister()">
+                                <div class="path-tag path-tag-pro">完整權益</div>
+                                <div class="path-icon"><span class="material-icons-round">workspace_premium</span></div>
+                                <h3>完整註冊 <small>· 菁英虎</small></h3>
+                                <p class="path-desc">填寫完整資料，享有訂票折抵與所有會員權益</p>
+                                <ul class="path-feats">
+                                    <li><span class="material-icons-round">confirmation_number</span>Voucher 折抵機票</li>
+                                    <li><span class="material-icons-round">military_tech</span>會員等級升等</li>
+                                    <li><span class="material-icons-round">card_giftcard</span>歡迎禮 500 pts</li>
+                                </ul>
+                                <span class="path-cta">填寫完整資料 →</span>
+                            </button>
+                        </div>
+
+                        <!-- Full Register Stepper Wrapper -->
+                        <div class="full-register-flow" id="fullRegisterFlow" hidden>
+                        <button class="link-btn back-to-paths" onclick="hideFullRegister()"><span class="material-icons-round">arrow_back</span>選擇其他註冊方式</button>
 
                         <!-- Stepper -->
                         <ol class="stepper" id="registerStepper">
@@ -1163,9 +1261,126 @@
                             <span>已經是會員？</span>
                             <button class="link-btn" onclick="navigateTo('login')">直接登入</button>
                         </div>
+                        </div><!-- /.full-register-flow -->
                     </div>
                 </div>
             </section>
+
+            <!-- ===== LINE QUICK JOIN MODAL ===== -->
+            <div class="modal-overlay line-modal-overlay" id="lineModal">
+                <div class="modal-card line-modal-card">
+                    <div class="line-modal-head">
+                        <div class="line-modal-brand">
+                            <span class="line-brand-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+                            </span>
+                            <div>
+                                <span class="card-eyebrow">LINE 快速加入</span>
+                                <h2>輕量會員 · 10 秒完成</h2>
+                            </div>
+                        </div>
+                        <button class="modal-close" onclick="closeLineModal()"><span class="material-icons-round">close</span></button>
+                    </div>
+
+                    <!-- Tab Switcher -->
+                    <div class="line-tabs">
+                        <button class="line-tab active" data-line-tab="qr"><span class="material-icons-round">qr_code_scanner</span>掃描 QR Code</button>
+                        <button class="line-tab" data-line-tab="account"><span class="material-icons-round">person</span>輸入帳號</button>
+                    </div>
+
+                    <!-- Tab content: QR -->
+                    <div class="line-pane active" data-line-pane="qr">
+                        <div class="line-qr-frame">
+                            <div class="line-qr-corners"></div>
+                            <div class="line-qr-mock">
+                                <!-- Mock QR with grid pattern -->
+                                <svg viewBox="0 0 100 100" class="line-qr-svg">
+                                    <rect x="0" y="0" width="100" height="100" fill="white"/>
+                                    <g fill="#0C0C0E">
+                                        <rect x="5" y="5" width="22" height="22" rx="2"/>
+                                        <rect x="11" y="11" width="10" height="10" fill="white"/>
+                                        <rect x="13" y="13" width="6" height="6"/>
+                                        <rect x="73" y="5" width="22" height="22" rx="2"/>
+                                        <rect x="79" y="11" width="10" height="10" fill="white"/>
+                                        <rect x="81" y="13" width="6" height="6"/>
+                                        <rect x="5" y="73" width="22" height="22" rx="2"/>
+                                        <rect x="11" y="79" width="10" height="10" fill="white"/>
+                                        <rect x="13" y="81" width="6" height="6"/>
+                                        <rect x="35" y="5" width="4" height="4"/><rect x="42" y="5" width="4" height="4"/><rect x="49" y="5" width="4" height="4"/><rect x="56" y="5" width="4" height="4"/><rect x="63" y="5" width="4" height="4"/>
+                                        <rect x="35" y="12" width="4" height="4"/><rect x="49" y="12" width="4" height="4"/><rect x="63" y="12" width="4" height="4"/>
+                                        <rect x="35" y="19" width="4" height="4"/><rect x="42" y="19" width="4" height="4"/><rect x="56" y="19" width="4" height="4"/><rect x="63" y="19" width="4" height="4"/>
+                                        <rect x="5" y="35" width="4" height="4"/><rect x="12" y="35" width="4" height="4"/><rect x="19" y="35" width="4" height="4"/><rect x="35" y="35" width="4" height="4"/><rect x="49" y="35" width="4" height="4"/><rect x="63" y="35" width="4" height="4"/><rect x="77" y="35" width="4" height="4"/><rect x="91" y="35" width="4" height="4"/>
+                                        <rect x="5" y="42" width="4" height="4"/><rect x="42" y="42" width="4" height="4"/><rect x="56" y="42" width="4" height="4"/><rect x="70" y="42" width="4" height="4"/><rect x="84" y="42" width="4" height="4"/>
+                                        <rect x="19" y="49" width="4" height="4"/><rect x="35" y="49" width="4" height="4"/><rect x="49" y="49" width="4" height="4"/><rect x="63" y="49" width="4" height="4"/><rect x="77" y="49" width="4" height="4"/>
+                                        <rect x="5" y="56" width="4" height="4"/><rect x="12" y="56" width="4" height="4"/><rect x="42" y="56" width="4" height="4"/><rect x="56" y="56" width="4" height="4"/><rect x="84" y="56" width="4" height="4"/><rect x="91" y="56" width="4" height="4"/>
+                                        <rect x="35" y="63" width="4" height="4"/><rect x="49" y="63" width="4" height="4"/><rect x="63" y="63" width="4" height="4"/><rect x="77" y="63" width="4" height="4"/>
+                                        <rect x="35" y="73" width="4" height="4"/><rect x="42" y="73" width="4" height="4"/><rect x="56" y="73" width="4" height="4"/><rect x="63" y="73" width="4" height="4"/><rect x="77" y="73" width="4" height="4"/><rect x="91" y="73" width="4" height="4"/>
+                                        <rect x="35" y="80" width="4" height="4"/><rect x="49" y="80" width="4" height="4"/><rect x="70" y="80" width="4" height="4"/><rect x="84" y="80" width="4" height="4"/>
+                                        <rect x="35" y="87" width="4" height="4"/><rect x="42" y="87" width="4" height="4"/><rect x="49" y="87" width="4" height="4"/><rect x="56" y="87" width="4" height="4"/><rect x="63" y="87" width="4" height="4"/><rect x="77" y="87" width="4" height="4"/><rect x="91" y="87" width="4" height="4"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="line-qr-scanline"></div>
+                            <div class="line-qr-status" id="lineQrStatus"><span class="material-icons-round">qr_code_scanner</span>請使用 LINE App 掃描</div>
+                        </div>
+                        <p class="line-qr-hint">打開 LINE App → 點選右上角好友 → 掃描 QR</p>
+                        <button class="btn-primary btn-block" onclick="simulateLineScan()"><span class="material-icons-round">phone_iphone</span>模擬掃描完成</button>
+                    </div>
+
+                    <!-- Tab content: Account -->
+                    <div class="line-pane" data-line-pane="account">
+                        <div class="line-account-form">
+                            <label class="form-field full">
+                                <span class="form-lbl">LINE ID 或 Email</span>
+                                <input type="text" placeholder="@alexchen 或 email" value="alex.chen.tw">
+                            </label>
+                            <label class="form-field full">
+                                <span class="form-lbl">密碼</span>
+                                <input type="password" placeholder="••••••••" value="••••••••">
+                            </label>
+                            <div class="line-account-foot">
+                                <label class="pref-row"><input type="checkbox" checked><span>記住我的登入</span></label>
+                                <a href="#" class="link-inline">忘記密碼？</a>
+                            </div>
+                        </div>
+                        <button class="btn-primary btn-block btn-line" onclick="completeLineJoin()">
+                            <span class="material-icons-round">arrow_forward</span>使用 LINE 加入 tigerclub
+                        </button>
+                    </div>
+
+                    <!-- Footer notice -->
+                    <p class="line-modal-foot">
+                        <span class="material-icons-round">verified_user</span>
+                        我們僅取得您的 LINE 暱稱與通知權限，不會存取訊息內容
+                    </p>
+                </div>
+            </div>
+
+            <!-- ===== LINE WELCOME (Light Member Success) ===== -->
+            <div class="modal-overlay line-welcome-overlay" id="lineWelcomeModal">
+                <div class="modal-card line-welcome-card">
+                    <div class="line-welcome-burst">
+                        <div class="lw-confetti"></div>
+                        <div class="line-welcome-icon"><span class="material-icons-round">celebration</span></div>
+                    </div>
+                    <span class="lw-tier-badge"><span class="material-icons-round">eco</span>輕量會員 · 旅遊迷</span>
+                    <h2>歡迎加入 tigerclub！</h2>
+                    <p class="lw-desc">你已綁定 LINE，將即時收到航線降價、艙位釋出與限時促銷通知。</p>
+                    <div class="lw-reward-card">
+                        <div class="lw-reward-icon"><span class="material-icons-round">card_giftcard</span></div>
+                        <div class="lw-reward-text">
+                            <strong>歡迎禮 +200 pts</strong>
+                            <small>已自動入帳</small>
+                        </div>
+                        <span class="lw-reward-pts">+200</span>
+                    </div>
+                    <div class="lw-tasks-tease">
+                        <span class="material-icons-round">task_alt</span>
+                        <span>完成「會員任務」最多再賺 <strong>550 pts</strong> 並升級為完整會員</span>
+                    </div>
+                    <button class="btn-primary btn-block" onclick="finishLineJoin()">前往會員中心</button>
+                </div>
+            </div>
 
             <!-- MODAL -->
             <div class="modal-overlay" id="modalOverlay">
@@ -1246,9 +1461,9 @@
                 </div>
             </div>
 
-            <!-- MEAL ORDERING MODAL -->
+            <!-- MEAL ORDERING MODAL — COVER FLOW STYLE -->
             <div class="modal-overlay" id="mealModal">
-                <div class="modal-card meal-modal-card">
+                <div class="modal-card meal-modal-card meal-coverflow-card">
                     <div class="meal-modal-head">
                         <div>
                             <span class="card-eyebrow">TPE → NRT · IT 200 · 5/15</span>
@@ -1260,76 +1475,81 @@
                     <div class="meal-balance">
                         <span class="material-icons-round">toll</span>
                         可用 tigerpoints <strong id="mealAvailPts">2,580</strong>
-                        <span class="meal-balance-hint">1 pt = NT$1 折抵</span>
+                        <span class="meal-balance-hint">滑動選擇 · 1 pt = NT$1 折抵</span>
                     </div>
 
-                    <div class="meal-grid" id="mealGrid">
-                        <label class="meal-option">
-                            <input type="checkbox" data-price="280" data-name="經典雞肉飯">
-                            <div class="meal-content">
-                                <div class="meal-emoji">🍛</div>
-                                <div class="meal-info">
-                                    <h4>經典雞肉飯</h4>
-                                    <p>含飲料 · 沙拉</p>
+                    <!-- Cover Flow -->
+                    <div class="coverflow-stage" id="coverflowStage">
+                        <button class="cf-nav cf-nav-prev" aria-label="上一道" onclick="cfPrev()"><span class="material-icons-round">chevron_left</span></button>
+                        <div class="coverflow-track" id="coverflowTrack">
+                            <div class="cf-card" data-cf-idx="0" data-price="280" data-name="經典雞肉飯">
+                                <div class="cf-img" style="background-image:url('https://images.unsplash.com/photo-1562967914-608f82629710?w=800&q=80')"></div>
+                                <div class="cf-info">
+                                    <div class="cf-tag">主餐 · 雞</div>
+                                    <h3>經典雞肉飯</h3>
+                                    <p>香嫩雞腿肉 · 香米 · 季節沙拉 · 含飲料</p>
+                                    <div class="cf-price-row"><span class="cf-price">NT$280</span><span class="cf-cal">580 kcal</span></div>
                                 </div>
-                                <span class="meal-price">NT$280</span>
                             </div>
-                        </label>
-                        <label class="meal-option">
-                            <input type="checkbox" data-price="320" data-name="和風牛肉蓋飯">
-                            <div class="meal-content">
-                                <div class="meal-emoji">🍜</div>
-                                <div class="meal-info">
-                                    <h4>和風牛肉蓋飯</h4>
-                                    <p>含味噌湯</p>
+                            <div class="cf-card" data-cf-idx="1" data-price="320" data-name="和風牛肉蓋飯">
+                                <div class="cf-img" style="background-image:url('https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800&q=80')"></div>
+                                <div class="cf-info">
+                                    <div class="cf-tag">主餐 · 牛</div>
+                                    <h3>和風牛肉蓋飯</h3>
+                                    <p>嫩煎牛肉 · 半熟蛋 · 味噌湯 · 漬物</p>
+                                    <div class="cf-price-row"><span class="cf-price">NT$320</span><span class="cf-cal">720 kcal</span></div>
                                 </div>
-                                <span class="meal-price">NT$320</span>
                             </div>
-                        </label>
-                        <label class="meal-option">
-                            <input type="checkbox" data-price="260" data-name="蔬食義大利麵">
-                            <div class="meal-content">
-                                <div class="meal-emoji">🍝</div>
-                                <div class="meal-info">
-                                    <h4>蔬食義大利麵</h4>
-                                    <p>素食可 · 含麵包</p>
+                            <div class="cf-card" data-cf-idx="2" data-price="260" data-name="蔬食義大利麵">
+                                <div class="cf-img" style="background-image:url('https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800&q=80')"></div>
+                                <div class="cf-info">
+                                    <div class="cf-tag">主餐 · 蔬食</div>
+                                    <h3>蔬食義大利麵</h3>
+                                    <p>橄欖油拌時蔬 · 帕馬森起司 · 蒜香麵包</p>
+                                    <div class="cf-price-row"><span class="cf-price">NT$260</span><span class="cf-cal">490 kcal</span></div>
                                 </div>
-                                <span class="meal-price">NT$260</span>
                             </div>
-                        </label>
-                        <label class="meal-option">
-                            <input type="checkbox" data-price="180" data-name="日式炸雞便當">
-                            <div class="meal-content">
-                                <div class="meal-emoji">🍱</div>
-                                <div class="meal-info">
-                                    <h4>日式炸雞便當</h4>
-                                    <p>兒童友善</p>
+                            <div class="cf-card" data-cf-idx="3" data-price="180" data-name="日式炸雞便當">
+                                <div class="cf-img" style="background-image:url('https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=800&q=80')"></div>
+                                <div class="cf-info">
+                                    <div class="cf-tag">輕食 · 兒童友善</div>
+                                    <h3>日式炸雞便當</h3>
+                                    <p>酥炸雞塊 · 蒸蛋 · 玉米筍 · 飯糰</p>
+                                    <div class="cf-price-row"><span class="cf-price">NT$180</span><span class="cf-cal">540 kcal</span></div>
                                 </div>
-                                <span class="meal-price">NT$180</span>
                             </div>
-                        </label>
-                        <label class="meal-option">
-                            <input type="checkbox" data-price="150" data-name="虎航特調飲料">
-                            <div class="meal-content">
-                                <div class="meal-emoji">🥤</div>
-                                <div class="meal-info">
-                                    <h4>虎航特調飲料</h4>
-                                    <p>芒果 / 抹茶 / 可樂</p>
+                            <div class="cf-card" data-cf-idx="4" data-price="150" data-name="虎航特調飲料">
+                                <div class="cf-img" style="background-image:url('https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800&q=80')"></div>
+                                <div class="cf-info">
+                                    <div class="cf-tag">飲料 · 加購</div>
+                                    <h3>虎航特調飲料</h3>
+                                    <p>芒果鳳梨 / 宇治抹茶 / 經典可樂 三選一</p>
+                                    <div class="cf-price-row"><span class="cf-price">NT$150</span><span class="cf-cal">210 kcal</span></div>
                                 </div>
-                                <span class="meal-price">NT$150</span>
                             </div>
-                        </label>
-                        <label class="meal-option">
-                            <input type="checkbox" data-price="120" data-name="經典甜點">
-                            <div class="meal-content">
-                                <div class="meal-emoji">🍮</div>
-                                <div class="meal-info">
-                                    <h4>經典甜點</h4>
-                                    <p>布丁 / 蛋糕</p>
+                            <div class="cf-card" data-cf-idx="5" data-price="120" data-name="經典甜點">
+                                <div class="cf-img" style="background-image:url('https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&q=80')"></div>
+                                <div class="cf-info">
+                                    <div class="cf-tag">甜點 · 加購</div>
+                                    <h3>北海道焦糖布丁</h3>
+                                    <p>濃郁奶香 · 焦糖醬 · 4°C 冷藏供應</p>
+                                    <div class="cf-price-row"><span class="cf-price">NT$120</span><span class="cf-cal">320 kcal</span></div>
                                 </div>
-                                <span class="meal-price">NT$120</span>
                             </div>
-                        </label>
+                        </div>
+                        <button class="cf-nav cf-nav-next" aria-label="下一道" onclick="cfNext()"><span class="material-icons-round">chevron_right</span></button>
+                    </div>
+
+                    <!-- Dot indicator -->
+                    <div class="cf-dots" id="cfDots"></div>
+
+                    <!-- Add/remove control for current center card -->
+                    <div class="cf-action-bar">
+                        <button class="cf-add-btn" id="cfAddBtn" onclick="cfToggleSelect()">
+                            <span class="material-icons-round">add_circle</span>
+                            <span>加入餐點</span>
+                        </button>
+                        <div class="cf-selected-chips" id="cfSelectedChips"></div>
                     </div>
 
                     <div class="meal-summary">
