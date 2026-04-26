@@ -5205,52 +5205,27 @@ html[data-theme="light"] .partner-card {
   box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
 
-.social-login-mini { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+.social-login-mini { grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
 .social-login-mini .social-btn { padding: 10px 12px; font-size: 13px; justify-content: center; }
 .social-login-mini .social-btn .provider-chip { width: 22px; height: 22px; font-size: 12px; }
 
-/* ⭐ Apple Sign-In hero button (sits below LINE) */
-.apple-hero-btn {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 14px 18px;
-  margin: 0 0 14px;
-  background: #000;
-  color: #fff;
-  border: 0;
-  border-radius: 14px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  transition: all 0.22s ease;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
-}
-.apple-hero-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
-}
-.apple-hero-btn:active { transform: translateY(0); }
-.apple-logo-svg {
-  width: 18px;
-  height: 22px;
+/* Apple inline icon (white logo on black button) */
+.social-login-mini .social-apple .apple-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-}
-.apple-logo-svg svg { width: 100%; height: 100%; }
-.apple-hero-text { line-height: 1; }
-
-html[data-theme="light"] .apple-hero-btn {
-  background: #000;
+  width: 16px;
+  height: 18px;
+  margin-right: 4px;
   color: #fff;
 }
+.social-login-mini .social-apple .apple-icon svg { width: 100%; height: 100%; }
+html[data-theme="light"] .social-login-mini .social-apple {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+}
+html[data-theme="light"] .social-login-mini .social-apple .apple-icon { color: #fff; }
 
 /* ================================================================
    42. LINE MODAL
