@@ -5827,10 +5827,11 @@ html[data-theme="light"] .social-login-mini .social-apple .apple-icon { color: #
   position: relative;
   width: 56px; height: 56px;
   border-radius: 18px;
-  background: var(--surface-2);
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.18), rgba(255, 214, 0, 0.10));
   color: var(--brand);
   transition: all 0.25s ease;
   font-size: 1.4rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 107, 53, 0.22);
 }
 .quick-actions-4 .qa-icon .material-icons-round { font-size: 26px; }
 .quick-actions-4 .qa-text {
