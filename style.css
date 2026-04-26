@@ -6175,6 +6175,91 @@ html[data-theme="light"] .qa-dot { border-color: var(--bg); }
   .line-modal-card { max-width: 95vw; }
 }
 
+/* ================================================================
+   60. SELF-SERVICE BLOCK (wraps Quick Actions)
+   ================================================================ */
+.self-service-block {
+  padding: 18px 22px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  margin-bottom: 22px;
+}
+.ssb-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.ssb-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-1);
+  letter-spacing: -0.2px;
+}
+.ssb-sub {
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.2px;
+}
+.self-service-block .quick-actions-4 {
+  padding: 0;
+  background: transparent;
+}
+
+/* ================================================================
+   61. TASKS PAGE — max-width for readability
+   ================================================================ */
+#page-tasks .page-content {
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================================================================
+   62. MOBILE HERO COLLAPSE (hide card + tiger for compact demo)
+   ================================================================ */
+@media (max-width: 720px) {
+  /* Hide membership card and tiger walk on mobile to keep hero minimal */
+  .hero-v2 .hero-card-area,
+  .hero-v2 .hero-tiger-walk { display: none !important; }
+
+  .hero-v2 { min-height: auto; }
+  .hero-v2 .hero-inner-v2 {
+    grid-template-columns: 1fr !important;
+    padding: 24px 18px 22px !important;
+    gap: 14px;
+  }
+  .hero-v2 .hero-identity {
+    max-width: 100%;
+  }
+
+  /* Light mode: also hide card + tiger and switch to single column */
+  [data-theme="light"] .hero-v2 .hero-inner-v2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Strengthen dark gradient on mobile so bg image doesn't leak */
+  html[data-theme="dark"] .hero-v2 .hero-gradient {
+    background:
+      linear-gradient(180deg,
+        rgba(12, 12, 14, 0.78) 0%,
+        rgba(12, 12, 14, 0.74) 30%,
+        rgba(12, 12, 14, 0.88) 70%,
+        rgba(12, 12, 14, 0.97) 90%,
+        #0C0C0E 100%
+      ) !important;
+  }
+  html[data-theme="dark"] .hero-v2::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(12, 12, 14, 0.35);
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
 /* Pulse animation when scrolling to task center */
 @keyframes taskPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(255, 214, 0, 0); }

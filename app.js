@@ -126,6 +126,10 @@ function initThemeToggle() {
             btnDark.classList.toggle('active', theme === 'dark');
             btnLight.classList.toggle('active', theme === 'light');
             localStorage.setItem('tigerclub-theme', theme);
+            // Demo flow: always reset to dashboard after a theme switch
+            if (typeof navigateTo === 'function') navigateTo('dashboard');
+            // Close the toggle panel so the dashboard is fully visible
+            panel.classList.remove('open');
         });
     });
 

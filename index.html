@@ -153,8 +153,13 @@
                 </div>
 
                 <div class="page-content">
-                    <!-- QUICK ACTIONS (4 only) -->
-                    <div class="quick-actions quick-actions-4">
+                    <!-- QUICK ACTIONS (4 only) — wrapped in self-service block -->
+                    <section class="self-service-block">
+                        <div class="ssb-head">
+                            <h2 class="ssb-title">自助服務</h2>
+                            <span class="ssb-sub">常用功能 · 一鍵直達</span>
+                        </div>
+                        <div class="quick-actions quick-actions-4">
                         <button class="qa-btn" onclick="showRedemption()">
                             <div class="qa-icon"><span class="material-icons-round">swap_horiz</span></div>
                             <span class="qa-text">兌換 Voucher</span>
@@ -174,7 +179,8 @@
                             <div class="qa-icon"><span class="material-icons-round">support_agent</span></div>
                             <span class="qa-text">客服中心</span>
                         </button>
-                    </div>
+                        </div>
+                    </section>
 
                     <!-- 我的行程 (compact tickets) -->
                     <section class="dash-section">
