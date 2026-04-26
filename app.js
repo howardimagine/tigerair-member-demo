@@ -46,15 +46,28 @@ function initNavigation() {
     // Mobile menu toggle
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    const syncBackdrop = () => {
+        if (!backdrop) return;
+        backdrop.classList.toggle('show', sidebar.classList.contains('open'));
+    };
     if (menuBtn && sidebar) {
-        menuBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            syncBackdrop();
+        });
         document.addEventListener('click', e => {
             if (sidebar.classList.contains('open') &&
                 !sidebar.contains(e.target) &&
                 e.target !== menuBtn &&
                 !menuBtn.contains(e.target)) {
                 sidebar.classList.remove('open');
+                syncBackdrop();
             }
+        });
+        if (backdrop) backdrop.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            syncBackdrop();
         });
     }
 }
@@ -76,6 +89,7 @@ function navigateTo(pageName) {
 
     // Close mobile sidebar
     document.getElementById('sidebar')?.classList.remove('open');
+    document.getElementById('sidebarBackdrop')?.classList.remove('show');
 
     // Scroll to top
     document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });

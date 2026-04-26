@@ -39,6 +39,9 @@
 
     <!-- ===== APP SHELL ===== -->
     <div class="app-shell">
+        <!-- Sidebar backdrop (mobile) -->
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
         <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -951,18 +954,130 @@
             <section class="page" id="page-vouchers">
                 <div class="page-content">
                     <div class="page-header"><h1 class="page-title">我的 Voucher</h1><p class="page-subtitle">回饋金兌換 Voucher，折抵機票及附加服務</p></div>
-                    <div class="vouchers-grid">
-                        <div class="voucher-card">
-                            <div class="voucher-left"><div class="voucher-amount">NT$1,000</div><div class="voucher-code">VCH-TG-20260405-A1</div></div>
-                            <div class="voucher-divider"></div>
-                            <div class="voucher-right"><div class="voucher-status active-status">可使用</div><div class="voucher-expiry"><span class="material-icons-round">schedule</span>剩餘 <strong>42</strong> 天</div><button class="btn-primary btn-sm">使用 Voucher →</button><small class="voucher-hint">前往訂票，付款選擇 Voucher</small></div>
+
+                    <!-- Summary stats -->
+                    <div class="voucher-stats">
+                        <div class="vs-stat">
+                            <span class="vs-stat-lbl">可用 Voucher</span>
+                            <strong class="vs-stat-val">2 張</strong>
+                            <small class="vs-stat-sub">總值 NT$1,500</small>
                         </div>
-                        <div class="voucher-card urgent-voucher">
-                            <div class="voucher-left"><div class="voucher-amount">NT$500</div><div class="voucher-code">VCH-TG-20260320-B3</div></div>
-                            <div class="voucher-divider"></div>
-                            <div class="voucher-right"><div class="voucher-status warning-status">即將到期</div><div class="voucher-expiry urgent"><span class="material-icons-round">warning</span>剩餘 <strong>5</strong> 天</div><button class="btn-primary btn-sm btn-urgent">立即使用 →</button><small class="voucher-hint">逾期失效不補發</small></div>
+                        <div class="vs-stat vs-stat-warn">
+                            <span class="vs-stat-lbl">即將到期</span>
+                            <strong class="vs-stat-val">1 張</strong>
+                            <small class="vs-stat-sub">5 天內</small>
                         </div>
+                        <div class="vs-stat">
+                            <span class="vs-stat-lbl">本年累計使用</span>
+                            <strong class="vs-stat-val">NT$3,200</strong>
+                            <small class="vs-stat-sub">已折抵 4 次</small>
+                        </div>
+                        <button class="vs-cta" onclick="showRedemption()">
+                            <span class="material-icons-round">add</span>
+                            <span>兌換新 Voucher</span>
+                        </button>
                     </div>
+
+                    <!-- Ticket-style vouchers -->
+                    <div class="ticket-grid">
+                        <!-- Voucher 1 -->
+                        <article class="ticket-voucher">
+                            <span class="tv-corner tv-tl"></span>
+                            <span class="tv-corner tv-tr"></span>
+                            <span class="tv-corner tv-bl"></span>
+                            <span class="tv-corner tv-br"></span>
+                            <div class="tv-stub">
+                                <div class="tv-stub-brand">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Tigerair.svg" alt="">
+                                    <span>tigerclub</span>
+                                </div>
+                                <span class="tv-stub-type">機票折抵 VOUCHER</span>
+                                <div class="tv-amount-row">
+                                    <span class="tv-currency">NT$</span>
+                                    <span class="tv-amount">1,000</span>
+                                </div>
+                                <span class="tv-status active">可使用</span>
+                            </div>
+                            <div class="tv-perforation"></div>
+                            <div class="tv-body">
+                                <div class="tv-meta">
+                                    <div class="tv-meta-row"><span class="tv-meta-lbl">編號</span><strong class="tv-meta-val">VCH-TG-20260405-A1</strong></div>
+                                    <div class="tv-meta-row"><span class="tv-meta-lbl">效期至</span><strong class="tv-meta-val">2026/06/04</strong></div>
+                                    <div class="tv-meta-row"><span class="tv-meta-lbl">適用</span><strong class="tv-meta-val">機票 + 加值服務</strong></div>
+                                </div>
+                                <div class="tv-foot">
+                                    <span class="tv-countdown"><span class="material-icons-round">schedule</span>剩餘 <strong>42</strong> 天</span>
+                                    <button class="btn-primary btn-sm">使用 →</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Voucher 2 (urgent) -->
+                        <article class="ticket-voucher tv-urgent">
+                            <span class="tv-corner tv-tl"></span>
+                            <span class="tv-corner tv-tr"></span>
+                            <span class="tv-corner tv-bl"></span>
+                            <span class="tv-corner tv-br"></span>
+                            <div class="tv-stub">
+                                <div class="tv-stub-brand">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Tigerair.svg" alt="">
+                                    <span>tigerclub</span>
+                                </div>
+                                <span class="tv-stub-type">機票折抵 VOUCHER</span>
+                                <div class="tv-amount-row">
+                                    <span class="tv-currency">NT$</span>
+                                    <span class="tv-amount">500</span>
+                                </div>
+                                <span class="tv-status warn">即將到期</span>
+                            </div>
+                            <div class="tv-perforation"></div>
+                            <div class="tv-body">
+                                <div class="tv-meta">
+                                    <div class="tv-meta-row"><span class="tv-meta-lbl">編號</span><strong class="tv-meta-val">VCH-TG-20260320-B3</strong></div>
+                                    <div class="tv-meta-row"><span class="tv-meta-lbl">效期至</span><strong class="tv-meta-val tv-warn-text">2026/05/01</strong></div>
+                                    <div class="tv-meta-row"><span class="tv-meta-lbl">適用</span><strong class="tv-meta-val">機票 + 加值服務</strong></div>
+                                </div>
+                                <div class="tv-foot">
+                                    <span class="tv-countdown urgent"><span class="material-icons-round">warning</span>僅剩 <strong>5</strong> 天</span>
+                                    <button class="btn-primary btn-sm btn-urgent">立即使用 →</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Voucher 3 — sample additional one -->
+                        <article class="ticket-voucher">
+                            <span class="tv-corner tv-tl"></span>
+                            <span class="tv-corner tv-tr"></span>
+                            <span class="tv-corner tv-bl"></span>
+                            <span class="tv-corner tv-br"></span>
+                            <div class="tv-stub">
+                                <div class="tv-stub-brand">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Tigerair.svg" alt="">
+                                    <span>tigerclub</span>
+                                </div>
+                                <span class="tv-stub-type">機票折抵 VOUCHER</span>
+                                <div class="tv-amount-row">
+                                    <span class="tv-currency">NT$</span>
+                                    <span class="tv-amount">2,000</span>
+                                </div>
+                                <span class="tv-status active">可使用</span>
+                            </div>
+                            <div class="tv-perforation"></div>
+                            <div class="tv-body">
+                                <div class="tv-meta">
+                                    <div class="tv-meta-row"><span class="tv-meta-lbl">編號</span><strong class="tv-meta-val">VCH-TG-20260418-C2</strong></div>
+                                    <div class="tv-meta-row"><span class="tv-meta-lbl">效期至</span><strong class="tv-meta-val">2026/06/17</strong></div>
+                                    <div class="tv-meta-row"><span class="tv-meta-lbl">適用</span><strong class="tv-meta-val">機票 + 加值服務</strong></div>
+                                </div>
+                                <div class="tv-foot">
+                                    <span class="tv-countdown"><span class="material-icons-round">schedule</span>剩餘 <strong>55</strong> 天</span>
+                                    <button class="btn-primary btn-sm">使用 →</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- How-to -->
                     <div class="card how-to-card">
                         <h3>Voucher 使用說明</h3>
                         <div class="steps-row">
