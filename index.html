@@ -1405,8 +1405,8 @@
                                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
                             </span>
                             <div>
-                                <span class="card-eyebrow">LINE 快速加入</span>
-                                <h2>輕量會員 · 10 秒完成</h2>
+                                <span class="card-eyebrow">LINE 一鍵加入</span>
+                                <h2>10 秒完成 · 免填資料</h2>
                             </div>
                         </div>
                         <button class="modal-close" onclick="closeLineModal()"><span class="material-icons-round">close</span></button>
@@ -1420,7 +1420,7 @@
 
                     <!-- Tab content: QR -->
                     <div class="line-pane active" data-line-pane="qr">
-                        <div class="line-qr-frame line-qr-static">
+                        <button type="button" class="line-qr-frame line-qr-static" id="lineQrFrame" onclick="simulateLineScan()" aria-label="模擬掃描成功">
                             <div class="line-qr-corners"></div>
                             <div class="line-qr-mock">
                                 <!-- Mock QR with grid pattern -->
@@ -1451,9 +1451,17 @@
                                 </svg>
                             </div>
                             <div class="line-qr-status" id="lineQrStatus"><span class="material-icons-round">qr_code_scanner</span>請使用 LINE App 掃描</div>
-                        </div>
-                        <p class="line-qr-hint">打開 LINE App → 點選右上角好友 → 掃描 QR</p>
-                        <button class="btn-primary btn-block" onclick="simulateLineScan()"><span class="material-icons-round">phone_iphone</span>模擬掃描完成</button>
+                            <!-- success overlay (shown after scan) -->
+                            <div class="line-qr-success" id="lineQrSuccess" aria-hidden="true">
+                                <div class="lq-check">
+                                    <svg viewBox="0 0 52 52" aria-hidden="true">
+                                        <circle class="lq-check-circle" cx="26" cy="26" r="24"/>
+                                        <path class="lq-check-mark" fill="none" d="M14 27l8 8 16-18"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </button>
+                        <p class="line-qr-hint">點擊 QR Code 模擬使用 LINE App 掃描</p>
                     </div>
 
                     <!-- Tab content: Account -->
@@ -1492,7 +1500,7 @@
                         <div class="lw-confetti"></div>
                         <div class="line-welcome-icon"><span class="material-icons-round">celebration</span></div>
                     </div>
-                    <span class="lw-tier-badge"><span class="material-icons-round">eco</span>輕量會員 · 旅遊迷</span>
+                    <span class="lw-tier-badge"><span class="material-icons-round">verified</span>LINE 一鍵加入</span>
                     <h2>歡迎加入 tigerclub！</h2>
                     <p class="lw-desc">你已綁定 LINE，將即時收到航線降價、艙位釋出與限時促銷通知。</p>
                     <div class="lw-reward-card">

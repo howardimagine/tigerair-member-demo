@@ -622,6 +622,7 @@ function openLineModal() {
         status.classList.remove('success');
         status.innerHTML = '<span class="material-icons-round">qr_code_scanner</span>請使用 LINE App 掃描';
     }
+    document.getElementById('lineQrFrame')?.classList.remove('scanned');
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -632,17 +633,16 @@ function closeLineModal() {
     document.body.style.overflow = '';
 }
 function simulateLineScan() {
+    const frame = document.getElementById('lineQrFrame');
     const status = document.getElementById('lineQrStatus');
+    if (frame?.classList.contains('scanned')) return; // prevent double-clicks
     if (status) {
-        status.innerHTML = '<span class="material-icons-round">sync</span>等待 LINE App 確認…';
+        status.classList.add('success');
+        status.innerHTML = '<span class="material-icons-round">check_circle</span>已成功識別';
     }
-    setTimeout(() => {
-        if (status) {
-            status.classList.add('success');
-            status.innerHTML = '<span class="material-icons-round">check_circle</span>已成功識別';
-        }
-        setTimeout(completeLineJoin, 700);
-    }, 1100);
+    if (frame) frame.classList.add('scanned');
+    // After check animation completes (≈0.85s), proceed to welcome
+    setTimeout(completeLineJoin, 1100);
 }
 function completeLineJoin() {
     closeLineModal();
