@@ -1665,17 +1665,24 @@
                         <button class="cf-nav cf-nav-next" aria-label="下一道" onclick="cfNext()"><span class="material-icons-round">chevron_right</span></button>
                     </div>
 
+                    <!-- Floating quantity stepper, anchored below the centered card -->
+                    <div class="cf-stepper-wrap">
+                        <div class="cf-stepper" id="cfStepper">
+                            <button class="cf-step-btn" id="cfStepMinus" onclick="cfQtyMinus()" aria-label="減少一份">
+                                <span class="material-icons-round">remove</span>
+                            </button>
+                            <div class="cf-step-display">
+                                <span class="cf-step-qty" id="cfStepQty">0</span>
+                                <small class="cf-step-lbl">份</small>
+                            </div>
+                            <button class="cf-step-btn" onclick="cfQtyPlus()" aria-label="增加一份">
+                                <span class="material-icons-round">add</span>
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Dot indicator -->
                     <div class="cf-dots" id="cfDots"></div>
-
-                    <!-- Add/remove control for current center card -->
-                    <div class="cf-action-bar">
-                        <button class="cf-add-btn" id="cfAddBtn" onclick="cfToggleSelect()">
-                            <span class="material-icons-round">add_circle</span>
-                            <span>加入餐點</span>
-                        </button>
-                        <div class="cf-selected-chips" id="cfSelectedChips"></div>
-                    </div>
 
                     <div class="meal-summary">
                         <div class="ms-row">

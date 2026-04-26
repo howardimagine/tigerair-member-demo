@@ -257,7 +257,9 @@ window.closePassportOCR = closePassportOCR;
 /* ========== MEAL ORDERING MODAL (Cover Flow) ========== */
 let USER_POINTS = 2580;
 let cfIndex = 0;
-let cfSelected = new Set(); // selected card indices
+const cfQuantities = new Map(); // idx -> qty (0..CF_MAX_QTY)
+const CF_MAX_QTY = 4;
+function cfQty(idx) { return cfQuantities.get(idx) || 0; }
 
 function initMealModal() {
     const modal = document.getElementById('mealModal');
@@ -274,7 +276,7 @@ function initCoverFlow() {
         card.addEventListener('click', () => {
             const idx = Number(card.dataset.cfIdx);
             if (idx === cfIndex) {
-                cfToggleSelect();
+                cfQtyPlus();
             } else {
                 cfGoTo(idx);
             }
@@ -298,7 +300,8 @@ function initCoverFlow() {
         if (!open) return;
         if (e.key === 'ArrowLeft') cfPrev();
         else if (e.key === 'ArrowRight') cfNext();
-        else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); cfToggleSelect(); }
+        else if (e.key === '+' || e.key === '=' || e.key === 'Enter') { e.preventDefault(); cfQtyPlus(); }
+        else if (e.key === '-' || e.key === '_') { e.preventDefault(); cfQtyMinus(); }
     });
     cfRender();
 }
@@ -317,47 +320,23 @@ function cfRender() {
         else if (diff === 2 || diff === -(total - 2)) pos = 'right-2';
         else pos = 'hidden';
         card.dataset.pos = pos;
-        card.classList.toggle('selected', cfSelected.has(i));
+        card.classList.toggle('selected', cfQty(i) > 0);
     });
     // Dots
     document.querySelectorAll('#cfDots .cf-dot').forEach((d, i) => {
         d.classList.toggle('active', i === cfIndex);
     });
-    // Add button label
-    const btn = document.getElementById('cfAddBtn');
-    if (btn) {
-        if (cfSelected.has(cfIndex)) {
-            btn.classList.add('added');
-            btn.innerHTML = '<span class="material-icons-round">remove_circle</span><span>取消加入</span>';
-        } else {
-            btn.classList.remove('added');
-            btn.innerHTML = '<span class="material-icons-round">add_circle</span><span>加入餐點</span>';
-        }
-    }
-    renderSelectedChips();
+    cfStepperRender();
 }
 
-function renderSelectedChips() {
-    const host = document.getElementById('cfSelectedChips');
-    if (!host) return;
-    host.innerHTML = '';
-    cfSelected.forEach(i => {
-        const card = document.querySelector(`#coverflowTrack .cf-card[data-cf-idx="${i}"]`);
-        if (!card) return;
-        const name = card.dataset.name;
-        const chip = document.createElement('span');
-        chip.className = 'cf-chip';
-        chip.innerHTML = `<span class="material-icons-round">check</span>${name}<span class="material-icons-round" data-rm="${i}">close</span>`;
-        host.appendChild(chip);
-    });
-    host.querySelectorAll('[data-rm]').forEach(el => {
-        el.addEventListener('click', e => {
-            e.stopPropagation();
-            cfSelected.delete(Number(el.dataset.rm));
-            cfRender();
-            updateMealTotal();
-        });
-    });
+function cfStepperRender() {
+    const qty = cfQty(cfIndex);
+    const stepper = document.getElementById('cfStepper');
+    const qtyEl = document.getElementById('cfStepQty');
+    const minusBtn = document.getElementById('cfStepMinus');
+    if (qtyEl) qtyEl.textContent = qty;
+    if (stepper) stepper.classList.toggle('has-qty', qty > 0);
+    if (minusBtn) minusBtn.disabled = qty <= 0;
 }
 
 function cfPrev() {
@@ -375,9 +354,18 @@ function cfGoTo(idx) {
     cfIndex = ((idx % total) + total) % total;
     cfRender();
 }
-function cfToggleSelect() {
-    if (cfSelected.has(cfIndex)) cfSelected.delete(cfIndex);
-    else cfSelected.add(cfIndex);
+function cfQtyPlus() {
+    const cur = cfQty(cfIndex);
+    if (cur >= CF_MAX_QTY) return;
+    cfQuantities.set(cfIndex, cur + 1);
+    cfRender();
+    updateMealTotal();
+}
+function cfQtyMinus() {
+    const cur = cfQty(cfIndex);
+    if (cur <= 0) return;
+    if (cur - 1 === 0) cfQuantities.delete(cfIndex);
+    else cfQuantities.set(cfIndex, cur - 1);
     cfRender();
     updateMealTotal();
 }
@@ -385,7 +373,7 @@ function cfToggleSelect() {
 function openMealModal() {
     const modal = document.getElementById('mealModal');
     if (!modal) return;
-    cfSelected.clear();
+    cfQuantities.clear();
     cfIndex = 0;
     const pts = document.getElementById('mealUsePoints'); if (pts) pts.checked = false;
     const pl = document.getElementById('mealAvailPts'); if (pl) pl.textContent = USER_POINTS.toLocaleString();
@@ -402,31 +390,35 @@ function closeMealModal() {
 }
 function updateMealTotal() {
     let subtotal = 0;
-    cfSelected.forEach(i => {
+    let totalCount = 0;
+    cfQuantities.forEach((qty, i) => {
+        if (qty <= 0) return;
         const card = document.querySelector(`#coverflowTrack .cf-card[data-cf-idx="${i}"]`);
-        if (card) subtotal += Number(card.dataset.price || 0);
+        if (card) {
+            subtotal += Number(card.dataset.price || 0) * qty;
+            totalCount += qty;
+        }
     });
     const usePoints = document.getElementById('mealUsePoints')?.checked;
     const deduct = usePoints ? Math.min(USER_POINTS, subtotal) : 0;
     const total = Math.max(0, subtotal - deduct);
-    const count = cfSelected.size;
-    document.getElementById('mealCount').textContent = count;
+    document.getElementById('mealCount').textContent = totalCount;
     document.getElementById('mealSubtotal').textContent = 'NT$' + subtotal.toLocaleString();
     document.getElementById('mealDeduct').textContent = '-' + deduct.toLocaleString() + ' pts';
     document.getElementById('mealTotal').textContent = 'NT$' + total.toLocaleString();
-    document.getElementById('btnConfirmMeal').disabled = count === 0;
+    document.getElementById('btnConfirmMeal').disabled = totalCount === 0;
 }
 function confirmMeal() {
-    if (!cfSelected.size) return;
-    const names = [];
-    let subtotal = 0;
-    cfSelected.forEach(i => {
+    let totalCount = 0, subtotal = 0;
+    cfQuantities.forEach((qty, i) => {
+        if (qty <= 0) return;
         const card = document.querySelector(`#coverflowTrack .cf-card[data-cf-idx="${i}"]`);
         if (card) {
-            names.push(card.dataset.name);
-            subtotal += Number(card.dataset.price || 0);
+            totalCount += qty;
+            subtotal += Number(card.dataset.price || 0) * qty;
         }
     });
+    if (totalCount === 0) return;
     const usePoints = document.getElementById('mealUsePoints')?.checked;
     const deduct = usePoints ? Math.min(USER_POINTS, subtotal) : 0;
     if (usePoints) {
@@ -434,7 +426,7 @@ function confirmMeal() {
         syncPointsDisplay();
     }
     closeMealModal();
-    showToast('已加購 ' + names.length + ' 項機上餐點' + (usePoints ? `（折抵 ${deduct} pts）` : ''), 'success');
+    showToast('已加購 ' + totalCount + ' 份機上餐點' + (usePoints ? `（折抵 ${deduct} pts）` : ''), 'success');
     document.querySelectorAll('.fa-chip').forEach(chip => {
         if (chip.querySelector('.fa-label')?.textContent.includes('機上餐')) {
             chip.classList.add('added');
@@ -448,7 +440,8 @@ window.closeMealModal = closeMealModal;
 window.confirmMeal = confirmMeal;
 window.cfPrev = cfPrev;
 window.cfNext = cfNext;
-window.cfToggleSelect = cfToggleSelect;
+window.cfQtyPlus = cfQtyPlus;
+window.cfQtyMinus = cfQtyMinus;
 
 function syncPointsDisplay() {
     const fmt = USER_POINTS.toLocaleString();
