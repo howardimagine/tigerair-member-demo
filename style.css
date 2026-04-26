@@ -5845,8 +5845,9 @@ html[data-theme="light"] .quick-actions-4 .qa-btn {
   padding: 8px 6px;
 }
 html[data-theme="light"] .quick-actions-4 .qa-icon {
-  background: linear-gradient(135deg, #FFF5E8, #FFE4C4);
-  color: #FF6B00;
+  background: linear-gradient(135deg, #FFD600, #FF6B35);
+  color: #0C0C0E;
+  box-shadow: 0 6px 14px rgba(255, 107, 53, 0.28);
 }
 
 /* qa-highlight neutralized — all 4 icons share the same orange-tinted style */
