@@ -5849,12 +5849,8 @@ html[data-theme="light"] .quick-actions-4 .qa-icon {
   color: #FF6B00;
 }
 
-.qa-highlight .qa-icon {
-  background: linear-gradient(135deg, #FFD600, #FF6B35) !important;
-  color: #0C0C0E !important;
-  box-shadow: 0 6px 14px rgba(255, 214, 0, 0.32);
-}
-.qa-highlight .qa-text { font-weight: 700; }
+/* qa-highlight neutralized — all 4 icons share the same orange-tinted style */
+.qa-highlight .qa-icon { box-shadow: inset 0 0 0 1px rgba(255, 107, 53, 0.22); }
 
 /* Red dot now sits on icon's top-right */
 .qa-dot {
