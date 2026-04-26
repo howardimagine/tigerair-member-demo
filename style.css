@@ -5928,7 +5928,8 @@ html[data-theme="light"] .qa-dot { border-color: var(--bg); }
 .meal-coverflow-card {
   max-width: 720px;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .meal-coverflow-card .meal-modal-head {
   padding: 20px 24px 14px;
@@ -6048,20 +6049,20 @@ html[data-theme="light"] .qa-dot { border-color: var(--bg); }
   pointer-events: none;
 }
 .cf-card.selected {
-  border-color: #06C755;
-  box-shadow: 0 24px 60px rgba(6,199,85,0.32), 0 0 0 4px rgba(6, 199, 85, 0.22);
+  border-color: var(--brand);
+  box-shadow: 0 24px 60px rgba(255,107,53,0.32), 0 0 0 4px rgba(255, 107, 53, 0.22);
 }
 .cf-card.selected::after {
   content: '✓ 已加入';
   position: absolute;
   top: 12px; right: 12px;
-  background: #06C755;
+  background: var(--brand);
   color: #fff;
   font-size: 11px; font-weight: 800;
   padding: 4px 10px;
   border-radius: 999px;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(6,199,85,0.4);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.42);
 }
 
 .cf-nav {
@@ -6121,7 +6122,8 @@ html[data-theme="light"] .qa-dot { border-color: var(--bg); }
 }
 .cf-add-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255,107,53,0.32); }
 .cf-add-btn.added {
-  background: #06C755;
+  background: linear-gradient(135deg, #FF6B35, #FFD600);
+  color: #0C0C0E;
 }
 .cf-add-btn.added .material-icons-round::before { content: 'remove_circle'; }
 
@@ -6131,8 +6133,8 @@ html[data-theme="light"] .qa-dot { border-color: var(--bg); }
 .cf-chip {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 5px 10px;
-  background: rgba(6,199,85,0.10);
-  color: #06C755;
+  background: rgba(255, 107, 53, 0.10);
+  color: var(--brand);
   border-radius: 999px;
   font-size: 12px; font-weight: 600;
 }
@@ -6211,7 +6213,7 @@ html[data-theme="light"] .qa-dot { border-color: var(--bg); }
    61. TASKS PAGE — max-width for readability
    ================================================================ */
 #page-tasks .page-content {
-  max-width: 880px;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -6562,17 +6564,10 @@ html[data-theme="light"] .qa-dot { border-color: var(--bg); }
 .cf-card[data-pos="right-1"] { transform: translate(-50%, -50%) translateX(180px) rotateY(-28deg) scale(0.85); }
 .cf-card[data-pos="right-2"] { transform: translate(-50%, -50%) translateX(310px) rotateY(-38deg) scale(0.7); }
 
+/* Meal coverflow modal — block scroll, max-height controls overflow */
 .meal-coverflow-card {
-  display: flex;
-  flex-direction: column;
-  max-height: 92vh;
+  max-height: 90vh;
 }
-.meal-coverflow-card .meal-modal-head { flex-shrink: 0; }
-.meal-coverflow-card .meal-balance { flex-shrink: 0; }
-.meal-coverflow-card .cf-dots { flex-shrink: 0; }
-.meal-coverflow-card .cf-action-bar { flex-shrink: 0; }
-.meal-coverflow-card .meal-summary { flex-shrink: 0; }
-.meal-coverflow-card .modal-actions { flex-shrink: 0; }
 
 @media (max-width: 720px) {
   .coverflow-stage { height: 320px; }
