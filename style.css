@@ -6338,7 +6338,8 @@ html[data-theme="light"] .qa-dot { border-color: var(--bg); }
 @media (max-width: 720px) {
   /* Hide membership card and tiger walk on mobile to keep hero minimal */
   .hero-v2 .hero-card-area,
-  .hero-v2 .hero-tiger-walk { display: none !important; }
+  .hero-v2 .hero-tiger-walk,
+  [data-theme="light"] .hero-v2 .hero-tiger-walk { display: none !important; }
 
   .hero-v2 { min-height: auto; }
   .hero-v2 .hero-inner-v2 {
